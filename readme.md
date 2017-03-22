@@ -1,4 +1,4 @@
-To open this link, you need to install gradle. follow this link to do so :
+To open this project, you need to install gradle. follow this link to do so :
 
 https://github.com/spring-projects/eclipse-integration-gradle/#installing-from-the-sts-dashboard
 
