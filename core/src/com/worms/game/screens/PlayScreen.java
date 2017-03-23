@@ -1,5 +1,10 @@
 package com.worms.game.screens;
 
+import java.util.HashMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,19 +13,38 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.worms.game.GameWorms;
 import com.worms.game.entities.Player;
+import com.worms.game.network.Client;
 
-public class Play implements Screen {
+public class PlayScreen implements Screen {
 	
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
 	
 	private Player player;
-
+	private GameWorms g;
+	
+	
+	/**
+	 * 
+	 * 
+	 * VARIABLE MULTI
+	 */
+	private Client client = null;
+	private HashMap<String, Player> friendlyPlayers;
+	private final float UPDATE_TIME = 1 / 60f;
+	float timer = 0;
+	
+	
+	
+	public PlayScreen(GameWorms g) {
+		this.g = g;
+	}
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -60,7 +84,16 @@ public class Play implements Screen {
 		 * Gere les sorties de map (Gauche, droite, bas)
 		 */
 		if(player.getX() < 0 || player.getY() < 0 || player.getX() > (t - player.getWidth())) {
-			Gdx.app.exit();
+			g.setScreen(new MainMenuScreen(g));
+		}
+		
+		
+		
+		updateServer(Gdx.graphics.getDeltaTime());
+		for (HashMap.Entry<String, Player> entry : friendlyPlayers.entrySet()) {
+			//System.out.println(entry.getValue().getX());
+			entry.getValue().draw(renderer.getBatch());
+			//System.out.println(entry.getValue().getX());
 		}
 	}
 
@@ -70,6 +103,23 @@ public class Play implements Screen {
 		camera.viewportHeight = height;
 	}
 	
+	public void updateServer(float dt) {
+		timer += dt;
+		if (timer >= UPDATE_TIME && player != null ) {
+			JSONObject data = new JSONObject();
+			try {
+				//data.put("id", this.socket.id());
+				data.put("x", player.getX());
+				data.put("y", player.getY());
+				client.emit("moved", data);
+			
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+		
 	@Override
 	public void show() {
 		map = new TmxMapLoader().load("sprites/carte.tmx");
@@ -83,7 +133,9 @@ public class Play implements Screen {
 		
 		camera = new OrthographicCamera();
 		
-		player = new Player(new Sprite(new Texture("sprites/Base pack/Player/p1_front.png")), (TiledMapTileLayer) map.getLayers().get("background"));
+		player = new Player(g, new Sprite(new Texture("sprites/Base pack/Player/p1_front.png")), (TiledMapTileLayer) map.getLayers().get("background"), (TiledMapTileLayer) map.getLayers().get("foreground"));
+		
+		
 		
 		/**
 		 *  On le place a 2 tuiles du debut (2 * player.getCollisionLayer().getTileWidth())
@@ -95,6 +147,16 @@ public class Play implements Screen {
 		player.setPosition(2 * player.getCollisionLayer().getTileWidth(), (player.getCollisionLayer().getHeight() - 19) * player.getCollisionLayer().getTileHeight());
 		
 		Gdx.input.setInputProcessor(player);
+		
+		
+		friendlyPlayers = new HashMap<String, Player>();
+		try {
+			client = new Client(g, (TiledMapTileLayer) map.getLayers().get("background"), (TiledMapTileLayer) map.getLayers().get("foreground"), friendlyPlayers);
+			client.configSocketEvents();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -121,6 +183,7 @@ public class Play implements Screen {
 		map.dispose();
 		renderer.dispose();
 		player.getTexture().dispose();
+		client.close();
 	}
 
 }

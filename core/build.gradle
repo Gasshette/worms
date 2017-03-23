@@ -9,3 +9,5 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 eclipse.project {
     name = appName + "-core"
 }
+
+dependencies {compile "io.socket:socket.io-client:0.8.3"}

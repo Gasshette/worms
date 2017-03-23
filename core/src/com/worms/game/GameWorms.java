@@ -1,18 +1,29 @@
 package com.worms.game;
 
 import com.badlogic.gdx.Game;
-import com.worms.game.screens.Play;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.worms.game.network.Client;
+import com.worms.game.screens.MainMenuScreen;
 
 public class GameWorms extends Game {
-
+	
+	private SpriteBatch sb;
+	BitmapFont font;
+	
 	@Override
 	public void create() {
-		setScreen(new Play());
+		setSb(new SpriteBatch());
+		font = new BitmapFont();
+	
+		this.setScreen(new MainMenuScreen(this));
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
+		getSb().dispose();
+		font.dispose();
 	}
 	
 	@Override
@@ -33,6 +44,14 @@ public class GameWorms extends Game {
 	@Override
 	public void resume() {
 		super.resume();
+	}
+
+	public SpriteBatch getSb() {
+		return sb;
+	}
+
+	public void setSb(SpriteBatch sb) {
+		this.sb = sb;
 	}
 
 }

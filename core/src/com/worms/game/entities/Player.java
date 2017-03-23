@@ -8,211 +8,145 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
+import com.worms.game.GameWorms;
+import com.worms.game.screens.MainMenuScreen;
 
 public class Player extends Sprite implements InputProcessor {
-	
+
 	/** The movement velocity */
 	private Vector2 velocity = new Vector2();
-	
+
 	private float speed = 300 * 2, gravity = 600 * 1.0f;
-	
-	private TiledMapTileLayer collisionLayer;
-	
+
+	private TiledMapTileLayer background;
+	private TiledMapTileLayer foreground;
+	private GameWorms g;
 	private boolean canJump;
-	
-	public Player(Sprite sprite, TiledMapTileLayer collisionLayer) {
+
+	public Player(GameWorms g, Sprite sprite, TiledMapTileLayer background, TiledMapTileLayer foreground) {
 		super(sprite);
-		this.collisionLayer = collisionLayer;
+		this.g = g;
+		this.background = background;
+		this.foreground = foreground;
 	}
-	
+
 	@Override
 	public void draw(Batch batch) {
 		update(Gdx.graphics.getDeltaTime());
 		super.draw(batch);
 	}
-	
-//	public void update(float delta) {
-//		// Applique la gravite
-//		this.velocity.y -= gravity * delta;
-//		
-//		// Clamp velocity
-//		if(this.velocity.y > speed) {
-//			this.velocity.y = speed;
-//		} else if(this.velocity.y < -speed) {
-//			this.velocity.y = -speed;
-//		}
-//		
-//		// On sauvegarde les old positions en cas de colisions
-//		float oldX = getX(), oldY = getY(), tileWidth = this.collisionLayer.getTileWidth(), tileHeight = this.collisionLayer.getTileHeight();
-//		boolean collisionX = false, collisionY = false, finish = false;
-//		
-//		// move on x
-//		setX(getX() + this.velocity.x * delta);
-//		
-//		if(this.velocity.x < 0) {
-//			// top left			
-//			collisionX = this.collisionLayer.getCell((int) (getX() / tileWidth), (int) ((getY() / getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			
-//			// middle left
-//			if(!collisionX) {
-//				collisionX = this.collisionLayer.getCell((int) (getX() / tileWidth), (int) ((getY() + getHeight() / 2) / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			}
-//			
-//			// bottom left
-//			if(!collisionX) {
-//				collisionX = this.collisionLayer.getCell((int) (getX() / tileWidth), (int) (getY()  / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			}
-//
-//		} else if(this.velocity.x > 0) {
-//			// top right
-//			collisionX = this.collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-//
-//			// middle right
-//			if(!collisionX) {
-//				collisionX = this.collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) ((getY() + getWidth() / 2) / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			}
-//			
-//			// bottom right
-//			if(!collisionX) {
-//				collisionX = this.collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			}
-//			
-//		}
-//		
-//		/**
-//		 * En cas de collision
-//		 * On remet le personnage à sa place initiale
-//		 * On remet sa vitesse a 0
-//		 */
-//		if(collisionX) {
-//			setX(oldX);
-//			this.velocity.x = 0;
-//		}
-//		
-//		
-//		// move on y
-//		setY(getY() + this.velocity.y * delta);
-//		
-//
-//		if(this.velocity.y < 0) { // going down
-//			// bottom left			
-//			collisionY = this.collisionLayer.getCell((int) (getX() / tileWidth), (int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			
-//			//bottom middle
-//			if(!collisionY) {
-//				collisionY = this.collisionLayer.getCell((int) ((getX() + getWidth() / 2) / tileWidth), (int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			}
-//			
-//			// bottom right
-//			if(!collisionY) {
-//				collisionY = this.collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			}
-//			
-//			this.canJump = collisionY;
-//		} else if(this.velocity.y > 0) { // going up
-//			// top left
-//			collisionY = this.collisionLayer.getCell((int) (getX() / tileWidth), (int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-//
-//			// top middle
-//			if(!collisionY) {
-//				collisionY = this.collisionLayer.getCell((int) ((getX() + getWidth() / 2) / tileWidth), (int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			}
-//			
-//			// top right
-//			if(!collisionY) {
-//				collisionY = this.collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-//			}
-//		}
-//		
-//		/**
-//		 * En cas de collision
-//		 * On remet le personnage à sa place initiale
-//		 * On remet sa vitesse a 0
-//		 */
-//		if(collisionY) {
-//			setY(oldY);
-//			this.velocity.y = 0;
-//		}
-//				
-//	}
-	
-	
 
 	public void update(float delta) {
-		// apply gravity
+		float oldX = getX(), oldY = getY();
+		boolean collisionRight = false, collisionLeft = false, collisionTop = false, collisionBottom = false;
+		boolean finish = false;
+
+		// Gravite
 		velocity.y -= gravity * delta;
 
-		// clamp velocity
-		if(velocity.y > speed)
+		if (velocity.y > speed)
 			velocity.y = speed;
-		else if(velocity.y < -speed)
+		else if (velocity.y < -speed)
 			velocity.y = -speed;
 
-		// save old position
-		float oldX = getX(), oldY = getY();
-		boolean collisionX = false, collisionY = false;
-
-		// move on x
+		/**
+		 * GESTION DES MOUVEMENTS 
+		 * Modification de la position 
+		 * Check si collision
+		 * Recuperation du type de collision + traitement
+		 */
+		// X
 		setX(getX() + velocity.x * delta);
 
-		if(velocity.x < 0) // going left
-			collisionX = collidesLeft();
-		else if(velocity.x > 0) // going right
-			collisionX = collidesRight();
+		if (velocity.x < 0) { // LEFT
+			collisionLeft = collidesLeft(this.background, "blocked");
+			finish = collidesLeft(this.foreground, "finish");
+		}
+		else if (velocity.x > 0) { // RIGHT
+			collisionRight = collidesRight(this.background, "blocked");
+			if(!finish) {
+				finish = collidesRight(this.foreground, "finish");
+			}
+		}
+		
 
-		// react to x collision
-		if(collisionX) {
+		if (collisionRight || collisionLeft) {
 			setX(oldX);
 			velocity.x = 0;
 		}
-
-		// move on y
+		
+		// Y
 		setY(getY() + velocity.y * delta);
+		
+		if (velocity.y < 0) { // DOWN
+			collisionBottom = collidesBottom(this.background, "blocked");
+			canJump = collisionBottom;
+			if(!finish) {
+				finish = collidesBottom(this.foreground, "finish");
+			}
+		}
+		else if (velocity.y > 0) { // UP
+			collisionTop = collidesTop(this.background, "blocked");
+			if(!finish) {
+				finish = collidesTop(this.foreground, "finish");
+			}
+		}
 
-		if(velocity.y < 0) // going down
-			canJump = collisionY = collidesBottom();
-		else if(velocity.y > 0) // going up
-			collisionY = collidesTop();
-
-		// react to y collision
-		if(collisionY) {
+		if (collisionTop || collisionBottom) {
 			setY(oldY);
 			velocity.y = 0;
 		}
-
+		
+		/**
+		 * Fin du niveau
+		 */
+		if(finish) {
+			g.setScreen(new MainMenuScreen(g));
+		}
 	}
 
-	private boolean isCellBlocked(float x, float y) {
-		Cell cell = collisionLayer.getCell((int) (x / collisionLayer.getTileWidth()), (int) (y / collisionLayer.getTileHeight()));
-		return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey("blocked");
+	private boolean isCell(TiledMapTileLayer layer, float x, float y, String property) {
+		Cell cell = layer.getCell((int) (x / layer.getTileWidth()), (int) (y / layer.getTileHeight()));
+		return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(property);
 	}
 
-	public boolean collidesRight() {
-		for(float step = 0; step < getHeight(); step += collisionLayer.getTileHeight() / 2)
-			if(isCellBlocked(getX() + getWidth(), getY() + step))
+	public boolean collidesRight(TiledMapTileLayer layer, String property) {
+		for (float step = 0; step < getHeight(); step += layer.getTileHeight() / 2) {
+			if (isCell(layer, getX() + getWidth(), getY() + step, property)) {
 				return true;
+			}
+		}
+		
 		return false;
 	}
 
-	public boolean collidesLeft() {
-		for(float step = 0; step < getHeight(); step += collisionLayer.getTileHeight() / 2)
-			if(isCellBlocked(getX(), getY() + step))
+	public boolean collidesLeft(TiledMapTileLayer layer, String property) {
+		for (float step = 0; step < getHeight(); step += layer.getTileHeight() / 2) {
+			if (isCell(layer, getX(), getY() + step, property)) {
 				return true;
+			}
+		}
+		
 		return false;
 	}
 
-	public boolean collidesTop() {
-		for(float step = 0; step < getWidth(); step += collisionLayer.getTileWidth() / 2)
-			if(isCellBlocked(getX() + step, getY() + getHeight()))
+	public boolean collidesTop(TiledMapTileLayer layer, String property) {
+		for (float step = 0; step < getWidth(); step += layer.getTileWidth() / 2) {
+			if (isCell(layer, getX() + step, getY() + getHeight(), property)) {
 				return true;
+			}
+		}
+		
 		return false;
-
 	}
 
-	public boolean collidesBottom() {
-		for(float step = 0; step < getWidth(); step += collisionLayer.getTileWidth() / 2)
-			if(isCellBlocked(getX() + step, getY()))
+	public boolean collidesBottom(TiledMapTileLayer layer, String property) {
+		for (float step = 0; step < getWidth(); step += layer.getTileWidth() / 2) {
+			if (isCell(layer, getX() + step, getY(), property)) {
 				return true;
+			}
+		}
+		
 		return false;
 	}
 
@@ -241,82 +175,73 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public TiledMapTileLayer getCollisionLayer() {
-		return collisionLayer;
+		return background;
 	}
 
-	public void setCollisionLayer(TiledMapTileLayer collisionLayer) {
-		this.collisionLayer = collisionLayer;
+	public void setCollisionLayer(TiledMapTileLayer background) {
+		this.background = background;
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-		switch(keycode) {
-			case Keys.Z:
-				if(canJump) {
-					this.velocity.y = speed;
-					canJump = false;
-				}
-				break;
-			case Keys.Q:
-				this.velocity.x = -speed;
-				break;
-			case Keys.D:
-				this.velocity.x = speed;
-				break;
+		switch (keycode) {
+		case Keys.Z:
+			if (canJump) {
+				this.velocity.y = speed;
+				canJump = false;
+			}
+			break;
+		case Keys.Q:
+			this.velocity.x = -speed;
+			break;
+		case Keys.D:
+			this.velocity.x = speed;
+			break;
 		}
-		
+
 		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		switch(keycode) {
-			case Keys.Q:
-			case Keys.D:
-				this.velocity.x = 0;
-				break;
+		switch (keycode) {
+		case Keys.Q:
+		case Keys.D:
+			this.velocity.x = 0;
+			break;
 		}
-		
+
 		return true;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
-	
-	
+
 }
