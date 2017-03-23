@@ -78,7 +78,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		if (timer >= UPDATE_TIME && player != null && player.hasMoved()) {
 			JSONObject data = new JSONObject();
 			try {
-
+				//data.put("id", this.socket.id());
 				data.put("x", player.getX());
 				data.put("y", player.getY());
 				socket.emit("moved", data);
@@ -143,21 +143,30 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 			@Override
 			public void call(Object... args) {
-				JSONObject data = (JSONObject) args[0];
-
+				JSONArray datas = (JSONArray)args[0];
+				
 				try {
-					String playerId = data.getString("id");
-					double x = data.getDouble("x");
-					double y = data.getDouble("y");
-					if (friendlyPlayers.get(playerId) != null) {
+					
+					for(int i=0; i<datas.length();i++){
+						String playerId = datas.getJSONObject(i).getString("id");
+						System.out.println(playerId);
+						double x = datas.getJSONObject(i).getDouble("x");
+						double y = datas.getJSONObject(i).getDouble("y");
+						System.out.println(playerId+" "+x+" "+y);
+						if (friendlyPlayers.get(playerId) != null) {
+							Perso a = friendlyPlayers.get(playerId);
+							a.setPosition(x, y);
+							System.out.println(a.getX());
+							friendlyPlayers.put(playerId, a);
+							//friendlyPlayers.get(playerId).setPosition(x, y);
+							
 
-						friendlyPlayers.get(playerId).setPosition(x, y);
-						
-
+						}
 					}
+					
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					System.out.println("coucou");
+					
 				}
 
 			}
@@ -169,13 +178,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 				
 				try {
 					for (int i = 0; i < objects.length(); i++) {
-						String id = objects[i].getString("id");
-						System.out.println(id);
+						String id = objects.getJSONObject(i).getString("id");
 						Perso coopPlayer = new Perso(friendPlayer);
 						Vector2 position = new Vector2();
 						position.x = ((Double) objects.getJSONObject(i).getDouble("x")).floatValue();
 						position.y = ((Double) objects.getJSONObject(i).getDouble("y")).floatValue();
-						System.out.println(position);
 						coopPlayer.setPosition(position.x, position.y);
 
 						friendlyPlayers.put(id, coopPlayer);
@@ -232,6 +239,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		}
 	
 		for (HashMap.Entry<String, Perso> entry : friendlyPlayers.entrySet()) {
+			//System.out.println(entry.getValue().getX());
 			entry.getValue().draw(sb);
 			//System.out.println(entry.getValue().getX());
 		}
