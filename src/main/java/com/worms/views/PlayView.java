@@ -10,7 +10,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -28,7 +27,7 @@ public class PlayView implements Screen {
 	private Player player;
 	private GameWorms g;
 	
-	Texture friendPlayer;
+	private Texture friendPlayer;
 	
 	
 	/**
@@ -42,7 +41,6 @@ public class PlayView implements Screen {
 	float timer = 0;
 	
 	
-	
 	public PlayView(GameWorms g) {
 		this.g = g;
 	}
@@ -54,6 +52,8 @@ public class PlayView implements Screen {
 		
 		camera.position.set(player.getX() + player.getWidth(), player.getY() + player.getHeight(), 0);
 		camera.update();
+		
+		updateServer(Gdx.graphics.getDeltaTime());
 		
 		renderer.setView(camera);
 		
@@ -89,12 +89,10 @@ public class PlayView implements Screen {
 		
 		
 		
-		updateServer(Gdx.graphics.getDeltaTime());
+		
 		for (HashMap.Entry<String, Player> entry : friendlyPlayers.entrySet()) {
 			renderer.getBatch().begin();
-			//System.out.println(entry.getValue().getX());
 			entry.getValue().draw(renderer.getBatch());
-			//System.out.println(entry.getValue().getX());
 			renderer.getBatch().end();
 		}
 	}
@@ -124,20 +122,12 @@ public class PlayView implements Screen {
 		
 	@Override
 	public void show() {
-		map = new TmxMapLoader().load("carte.tmx");
-		
-		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
-		
-		
-
+		map = new TmxMapLoader().load("carte.tmx");	
 		renderer = new OrthogonalTiledMapRenderer(map);
-		
 		camera = new OrthographicCamera();
-		
 		player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) map.getLayers().get("background"), (TiledMapTileLayer) map.getLayers().get("foreground"));
-
-		
 		friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
+		
 		/**
 		 *  On le place a 2 tuiles du debut (2 * player.getCollisionLayer().getTileWidth())
 		 *  On le place 
@@ -156,7 +146,6 @@ public class PlayView implements Screen {
 			client = new Client(friendPlayer, friendlyPlayers);
 			client.configSocketEvents();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -168,17 +157,11 @@ public class PlayView implements Screen {
 	
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
 	}
-
-
 
 	@Override
 	public void dispose() {

@@ -9,55 +9,25 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
-import com.worms.game.GameWorms;
 
 public class Player extends Sprite implements InputProcessor {
-	Vector2 previousPosition;
-	
 	/** The movement velocity */
 	private Vector2 velocity = new Vector2();
+	private float speed = 400, gravity = 800;
 
-	private float speed = 300 * 2, gravity = 600 * 1.0f;
-
+	// Layers of the map
 	private TiledMapTileLayer background;
 	private TiledMapTileLayer foreground;
-	private GameWorms g;
+	
 	private boolean canJump;
 	
-//	public Player(Texture texture){
-//		super(texture);
-//		previousPosition = new Vector2(getX(), getY());
-//	}
 	
 	public Player(Texture texture, TiledMapTileLayer background, TiledMapTileLayer foreground) {
 		super(texture);
 		this.background = background;
 		this.foreground = foreground;
-		previousPosition = new Vector2(getX(), getY());
-	}
+	}	
 	
-	public boolean hasMoved(){
-		if(previousPosition.x !=getX() || previousPosition.y != getY()){
-			previousPosition.x =getX();
-			previousPosition.y = getY();
-			return true;
-		}
-		return false;
-	}
-	
-	
-	public void setPosition(double x, double y) {
-		setX((float) x);
-		setY((float) y);
-		
-	}
-	
-	@Override
-	public void draw(Batch batch) {
-		update(Gdx.graphics.getDeltaTime());
-		super.draw(batch);
-	}
-
 	public void update(float delta) {
 		float oldX = getX(), oldY = getY();
 		boolean collisionRight = false, collisionLeft = false, collisionTop = false, collisionBottom = false;
@@ -118,13 +88,6 @@ public class Player extends Sprite implements InputProcessor {
 			setY(oldY);
 			velocity.y = 0;
 		}
-		
-		/**
-		 * Fin du niveau
-		 */
-//		if(finish) {
-//			g.setScreen(new MainMenuScreen(g));
-//		}
 	}
 
 	private boolean isCell(TiledMapTileLayer layer, float x, float y, String property) {
@@ -170,6 +133,12 @@ public class Player extends Sprite implements InputProcessor {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public void draw(Batch batch) {
+		update(Gdx.graphics.getDeltaTime());
+		super.draw(batch);
 	}
 
 	public Vector2 getVelocity() {
@@ -236,41 +205,33 @@ public class Player extends Sprite implements InputProcessor {
 		return true;
 	}
 
-
-
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
