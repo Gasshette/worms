@@ -1,14 +1,15 @@
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-
-
-import core.Game;
+import com.worms.game.GameWorms;
 
 public class Main {
 
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Game(), config);
+		config.width = 1024;
+		config.height = 768;
+		
+		new LwjglApplication(new GameWorms(), config);
 	}
 
 }

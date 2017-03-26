@@ -1,4 +1,4 @@
-package network;
+package com.worms.network;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -9,9 +9,12 @@ import org.json.JSONObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.worms.entities.Player;
 
-import Personnage.Perso;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter.Listener;
@@ -19,10 +22,11 @@ import io.socket.emitter.Emitter.Listener;
 public class Client {
 	private Socket socket;
 	private Texture texture;
-	private HashMap<String, Perso> friendlyPlayers;
+	private HashMap<String, Player> friendlyPlayers;
 	private Texture friendPlayer;
+	private TiledMap map = new TmxMapLoader().load("carte.tmx");
 
-	public Client(Texture friendPlayer, HashMap<String, Perso> friendlyPlayers) throws Exception {
+	public Client(Texture friendPlayer, HashMap<String, Player> friendlyPlayers) throws Exception {
 		connectSocket();
 
 		this.friendPlayer = friendPlayer;
@@ -31,7 +35,7 @@ public class Client {
 	}
 
 	private void connectSocket() throws Exception {
-		socket = IO.socket("http://localhost:8080");
+		socket = IO.socket("http://92.222.82.5:8080");
 		socket.connect();
 	}
 
@@ -63,7 +67,7 @@ public class Client {
 				try {
 					String id = data.getString("id");
 					System.out.println("nouveau joueur : " + id);
-					friendlyPlayers.put(id, new Perso(friendPlayer));
+					friendlyPlayers.put(id, new Player(friendPlayer, (TiledMapTileLayer) map.getLayers().get("background"), (TiledMapTileLayer) map.getLayers().get("foreground")));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -92,14 +96,11 @@ public class Client {
 
 					for (int i = 0; i < datas.length(); i++) {
 						String playerId = datas.getJSONObject(i).getString("id");
-						System.out.println(playerId);
 						double x = datas.getJSONObject(i).getDouble("x");
 						double y = datas.getJSONObject(i).getDouble("y");
-						System.out.println(playerId + " " + x + " " + y);
 						if (friendlyPlayers.get(playerId) != null) {
-							Perso a = friendlyPlayers.get(playerId);
+							Player a = friendlyPlayers.get(playerId);
 							a.setPosition(x, y);
-							System.out.println(a.getX());
 							friendlyPlayers.put(playerId, a);
 							// friendlyPlayers.get(playerId).setPosition(x, y);
 
@@ -121,7 +122,7 @@ public class Client {
 				try {
 					for (int i = 0; i < objects.length(); i++) {
 						String id = objects.getJSONObject(i).getString("id");
-						Perso coopPlayer = new Perso(friendPlayer);
+						Player coopPlayer = new Player(friendPlayer, (TiledMapTileLayer) map.getLayers().get("background"), (TiledMapTileLayer) map.getLayers().get("foreground"));
 						Vector2 position = new Vector2();
 						position.x = ((Double) objects.getJSONObject(i).getDouble("x")).floatValue();
 						position.y = ((Double) objects.getJSONObject(i).getDouble("y")).floatValue();
