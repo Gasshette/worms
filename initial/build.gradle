@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+//Indicate that the build should resolve its dependencies from the Maven Central repository
+repositories {
+    mavenCentral()
+}
+
+dependencies{
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.9.Final'
+}
