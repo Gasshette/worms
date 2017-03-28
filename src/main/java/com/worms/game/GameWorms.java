@@ -3,7 +3,7 @@ package com.worms.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.worms.views.PlayView;
+import com.worms.views.MainMenuView;
 
 public class GameWorms extends Game {
 
@@ -14,7 +14,7 @@ public class GameWorms extends Game {
 	public void create() {
 		this.sb = new SpriteBatch();
 		this.font = new BitmapFont();
-		this.setScreen(new PlayView(this));
+		this.setScreen(new MainMenuView(this));
 	}
 
 	@Override
@@ -43,5 +43,9 @@ public class GameWorms extends Game {
 	@Override
 	public void resume() {
 		super.resume();
+	}
+
+	public SpriteBatch getSb() {
+		return this.sb;
 	}
 }

@@ -19,17 +19,13 @@ import com.worms.game.GameWorms;
 import com.worms.network.Client;
 
 public class PlayView implements Screen {
-	
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
-	
 	private Player player;
-	private GameWorms g;
-	
+	private final GameWorms game;
 	private Texture friendPlayer;
-	
-	
+
 	/**
 	 * 
 	 * 
@@ -39,122 +35,91 @@ public class PlayView implements Screen {
 	private HashMap<String, Player> friendlyPlayers;
 	private final float UPDATE_TIME = 1 / 60f;
 	float timer = 0;
-	
-	
-	public PlayView(GameWorms g) {
-		this.g = g;
+
+	public PlayView(GameWorms game) {
+		this.game = game;
 	}
-	
+
+	@Override
+	public void show() {
+		this.map = new TmxMapLoader().load("carte.tmx");
+		this.renderer = new OrthogonalTiledMapRenderer(this.map);
+		this.camera = new OrthographicCamera();
+		
+		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
+		this.player.setPosition(2 * 50, 19 * 50);
+		
+		this.friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
+		this.friendlyPlayers = new HashMap<String, Player>();
+
+		try {
+			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers);
+			this.client.configSocketEvents();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		Gdx.input.setInputProcessor(this.player);
+	}
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		camera.position.set(player.getX() + player.getWidth(), player.getY() + player.getHeight(), 0);
-		camera.update();
-		
-		updateServer(Gdx.graphics.getDeltaTime());
-		
-		renderer.setView(camera);
-		
+
 		/**
-		 * On start le rendu final
+		 * Gestion de la camera
 		 */
-		renderer.getBatch().begin();
+		this.camera.position.set(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight(), 0);
+		this.camera.update();
+		this.renderer.setView(this.camera);
+
 		/**
-		 * On mets par ordre de couches
+		 * Gestion du rendu
 		 */
-		renderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get("background"));
-		renderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get("foreground"));
-		player.draw(renderer.getBatch());
-		
+		this.renderer.getBatch().begin();
+		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("background"));
+		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("foreground"));
+		this.player.draw(this.renderer.getBatch());
+		this.renderer.getBatch().end();
+
+		this.updateServer(Gdx.graphics.getDeltaTime());
+
 		/**
-		 * On end le rendu final
+		 * Affichage des autres joueurs
 		 */
-		renderer.getBatch().end();
-		
-		
-		/**
-		 * Sorties de map
-		 */
-		float t = ((TiledMapTileLayer) map.getLayers().get(1)).getWidth() * ((TiledMapTileLayer) map.getLayers().get(1)).getTileWidth();
-		
-		
-		/**
-		 * Gere les sorties de map (Gauche, droite, bas)
-		 */
-		if(player.getX() < 0 || player.getY() < 0 || player.getX() > (t - player.getWidth())) {
-			//g.setScreen(new MainMenuScreen(g));
-		}
-		
-		
-		
-		
-		for (HashMap.Entry<String, Player> entry : friendlyPlayers.entrySet()) {
-			renderer.getBatch().begin();
-			entry.getValue().draw(renderer.getBatch());
-			renderer.getBatch().end();
+		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
+			this.renderer.getBatch().begin();
+			entry.getValue().draw(this.renderer.getBatch());
+			this.renderer.getBatch().end();
 		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		camera.viewportWidth = width;
-		camera.viewportHeight = height;
+		this.camera.viewportWidth = width;
+		this.camera.viewportHeight = height;
 	}
-	
+
 	public void updateServer(float dt) {
-		timer += dt;
-		if (timer >= UPDATE_TIME && player != null ) {
+		this.timer += dt;
+		if (this.timer >= this.UPDATE_TIME && this.player != null) {
 			JSONObject data = new JSONObject();
 			try {
-				//data.put("id", this.socket.id());
-				data.put("x", player.getX());
-				data.put("y", player.getY());
-				client.emit("moved", data);
-			
+				data.put("x", this.player.getX());
+				data.put("y", this.player.getY());
+				this.client.emit("moved", data);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-	}
-		
-	@Override
-	public void show() {
-		map = new TmxMapLoader().load("carte.tmx");	
-		renderer = new OrthogonalTiledMapRenderer(map);
-		camera = new OrthographicCamera();
-		player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) map.getLayers().get("background"), (TiledMapTileLayer) map.getLayers().get("foreground"));
-		friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
-		
-		/**
-		 *  On le place a 2 tuiles du debut (2 * player.getCollisionLayer().getTileWidth())
-		 *  On le place 
-		 *  	- Nombre de tuiles en hauteur (player.getCollisionLayer().getHeight()) 
-		 *  	- Moins la position choisie sur la map (19)
-		 *  	- Fois la taille d'une tuille
-		 */
-		
-		player.setPosition(2 * 50, 19 * 50);
-		
-		Gdx.input.setInputProcessor(player);
-		
-		
-		friendlyPlayers = new HashMap<String, Player>();
-		try {
-			client = new Client(friendPlayer, friendlyPlayers);
-			client.configSocketEvents();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void hide() {
-		dispose();
+		this.dispose();
 	}
-	
+
 	@Override
 	public void pause() {
 	}
@@ -165,10 +130,10 @@ public class PlayView implements Screen {
 
 	@Override
 	public void dispose() {
-		map.dispose();
-		renderer.dispose();
-		player.getTexture().dispose();
-		client.close();
+		this.map.dispose();
+		this.renderer.dispose();
+		this.player.getTexture().dispose();
+		this.client.close();
 	}
 
 }

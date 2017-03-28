@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,95 +16,91 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.worms.game.GameWorms;
 
-public class MainMenuScreen implements Screen {
-	Skin skin;
-	Stage stage;
+public class MainMenuView implements Screen {
+	private final GameWorms game;
+	private Skin skin;
+	private Stage stage;
+	private BitmapFont bfont;
+	private Pixmap pixmap;
 
-	final GameWorms g;
+	public MainMenuView(GameWorms game) {
+		this.game = game;
+		this.stage = new Stage();
+		this.skin = new Skin();
+		this.bfont = new BitmapFont();
 
-	public MainMenuScreen(final GameWorms g) {
-		this.g = g;
-		create();
+		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);
+		this.pixmap.setColor(Color.RED);
+		this.pixmap.fill();
+
+		this.skin.add("white", new Texture(this.pixmap));
+		this.skin.add("default", this.bfont);
+
+		Gdx.input.setInputProcessor(this.stage);
+
+		this.create();
 	}
 
 	public void create() {
-
-		/*
-		 * Creates a new SpriteBatch
+		/**
+		 * Configuration du style d'un bouton
 		 */
-		SpriteBatch b = g.getSb();
-
-		/*
-		 * Creates a new stage, an object used to display graphic elements such
-		 * as buttons and fields
-		 */
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
-
-		/*
-		 * A skin can be loaded via JSON or defined programmatically, Specify a
-		 * specific set of buttons or colors Use default skins or
-		 */
-		skin = new Skin();
-
-		// Generate a 1x1 white texture and store it in the skin named "white".
-		Pixmap pixmap = new Pixmap(100, 100, Format.RGBA8888);
-		pixmap.setColor(Color.RED);
-		pixmap.fill();
-
-		skin.add("white", new Texture(pixmap));
-
-		// Store the default libgdx font under the name "default".
-		BitmapFont bfont = new BitmapFont();
-		skin.add("default", bfont);
-
-		// Configure a TextButtonStyle and name it "default". Skin resources are
-		// stored by type, so this doesn't overwrite the font.
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		textButtonStyle.font = skin.getFont("default");
-		skin.add("red", textButtonStyle);
+		textButtonStyle.up = this.skin.newDrawable("white", Color.DARK_GRAY);
+		textButtonStyle.down = this.skin.newDrawable("white", Color.DARK_GRAY);
+		textButtonStyle.checked = this.skin.newDrawable("white", Color.BLUE);
+		textButtonStyle.over = this.skin.newDrawable("white", Color.LIGHT_GRAY);
+		textButtonStyle.font = this.skin.getFont("default");
+		this.skin.add("red", textButtonStyle);
 
+		/**
+		 * Creation du bouton play
+		 */
 		final TextButton playButton = new TextButton("PLAY", textButtonStyle);
 		playButton.setPosition(this.stage.getWidth() / 2 - playButton.getWidth() / 2, 350);
-		stage.addActor(playButton);
+		this.stage.addActor(playButton);
 		playButton.addListener(new ChangeListener() {
+			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				g.setScreen(new PlayView(g));
-
+				MainMenuView.this.game.setScreen(new PlayView(MainMenuView.this.game));
 			}
 		});
-		
+
+		/**
+		 * Creation du bouton connexion
+		 */
 		final TextButton connectButton = new TextButton("CONNECT", textButtonStyle);
 		connectButton.setPosition(this.stage.getWidth() / 2 - playButton.getWidth() / 2, 225);
-		stage.addActor(connectButton);
+		this.stage.addActor(connectButton);
 		connectButton.addListener(new ChangeListener() {
+			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				g.setScreen(new ConnectionScreen(g));
-
+				MainMenuView.this.game.setScreen(new LoginView(MainMenuView.this.game));
 			}
 		});
 
+		/**
+		 * Creation du bouton quitter
+		 */
 		final TextButton quitButton = new TextButton("QUIT", textButtonStyle);
 		quitButton.setPosition(this.stage.getWidth() / 2 - quitButton.getWidth() / 2, 100);
 		quitButton.setHeight(35);
-		stage.addActor(quitButton);
+		this.stage.addActor(quitButton);
 		quitButton.addListener(new ChangeListener() {
+			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				Gdx.app.exit();
 			}
 		});
-
 	}
 
+	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.draw();
+
+		this.stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		this.stage.draw();
 	}
 
 	@Override
@@ -113,28 +108,24 @@ public class MainMenuScreen implements Screen {
 	}
 
 	@Override
-	public void dispose() {
-		stage.dispose();
-		skin.dispose();
-	}
-
-	@Override
 	public void show() {
-
 	}
 
 	@Override
 	public void hide() {
-
 	}
 
 	@Override
 	public void pause() {
-
 	}
 
 	@Override
 	public void resume() {
+	}
 
+	@Override
+	public void dispose() {
+		this.stage.dispose();
+		this.skin.dispose();
 	}
 }
