@@ -32,8 +32,8 @@ public class ConnectionScreen implements Screen {
 	}
 
 	public void create() {
-		SpriteBatch b= g.getSb();
-		b = new SpriteBatch();
+		SpriteBatch b = g.getSb();
+		
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 
@@ -41,7 +41,11 @@ public class ConnectionScreen implements Screen {
 		// fine. Using a skin is optional but strongly
 		// recommended solely for the convenience of getting a texture, region,
 		// etc as a drawable, tinted drawable, etc.
-		TextureAtlas atlas = new TextureAtlas("ui/kenney-atlas/skin/ui-orange.atlas");
+
+		//TODO 
+		//TextureAtlas atlas = new TextureAtlas("kenney-atlas/skin/ui-orange.atlas");
+		
+		
 		skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(100, 100, Format.RGBA8888);
@@ -61,36 +65,34 @@ public class ConnectionScreen implements Screen {
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-
 		textButtonStyle.font = skin.getFont("default");
-
 		skin.add("default", textButtonStyle);
 
 		TextFieldStyle textFieldStyle = new TextFieldStyle(bfont, Color.BLUE, null, null, null);
 		
+		//URL textfield
+		final TextField url = new TextField("",textFieldStyle);
+		url.setWidth(300);
+		url.setPosition(this.stage.getWidth() / 2 - url.getWidth(), 400);
+		stage.addActor(url);
+
 		// Create a button with the "default" TextButtonStyle. A 3rd parameter
 		// can be used to specify a name other than "default".
 		
+		//Connect button
 		final TextButton connectButton = new TextButton("CONNECT", textButtonStyle);
-		final TextButton backButton = new TextButton("BACK", textButtonStyle);
-		final TextField url = new TextField("",textFieldStyle);
-		
-		url.setWidth(300);
-		url.setPosition(this.stage.getWidth() / 2 - url.getWidth(), 400);
 		connectButton.setPosition(this.stage.getWidth() / 2 - connectButton.getWidth() / 2, 100);
-		backButton.setPosition(50, 50);
-		backButton.setHeight(35);
-		
-		stage.addActor(url);
 		stage.addActor(connectButton);
-		stage.addActor(backButton);
-		
 		connectButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 			}
 		});
 		
-
+		//Back button
+		final TextButton backButton = new TextButton("BACK", textButtonStyle);
+		backButton.setPosition(50, 50);
+		backButton.setHeight(35);
+		stage.addActor(backButton);
 		backButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 			g.setScreen(new MainMenuScreen(g));

@@ -29,16 +29,25 @@ public class MainMenuScreen implements Screen {
 	}
 
 	public void create() {
-		SpriteBatch b= g.getSb();
-		b = new SpriteBatch();
+
+		/*
+		 * Creates a new SpriteBatch
+		 */
+		SpriteBatch b = g.getSb();
+
+		/*
+		 * Creates a new stage, an object used to display graphic elements such
+		 * as buttons and fields
+		 */
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 
-		// A skin can be loaded via JSON or defined programmatically, either is
-		// fine. Using a skin is optional but strongly
-		// recommended solely for the convenience of getting a texture, region,
-		// etc as a drawable, tinted drawable, etc.
+		/*
+		 * A skin can be loaded via JSON or defined programmatically, Specify a
+		 * specific set of buttons or colors Use default skins or
+		 */
 		skin = new Skin();
+
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(100, 100, Format.RGBA8888);
 		pixmap.setColor(Color.RED);
@@ -55,28 +64,14 @@ public class MainMenuScreen implements Screen {
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		// textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-
 		textButtonStyle.font = skin.getFont("default");
+		skin.add("red", textButtonStyle);
 
-		skin.add("default", textButtonStyle);
-
-		// Create a button with the "default" TextButtonStyle. A 3rd parameter
-		// can be used to specify a name other than "default".
 		final TextButton playButton = new TextButton("PLAY", textButtonStyle);
-		final TextButton connectButton = new TextButton("CONNECT", textButtonStyle);
-		final TextButton quitButton = new TextButton("QUIT", textButtonStyle);
-
 		playButton.setPosition(this.stage.getWidth() / 2 - playButton.getWidth() / 2, 350);
-		connectButton.setPosition(this.stage.getWidth() / 2 - playButton.getWidth() / 2, 225);
-		quitButton.setPosition(this.stage.getWidth() / 2 - quitButton.getWidth() / 2, 100);
-		quitButton.setHeight(35);
-
 		stage.addActor(playButton);
-		stage.addActor(connectButton);
-		stage.addActor(quitButton);
-
 		playButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				g.setScreen(new PlayView(g));
@@ -84,13 +79,20 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 		
+		final TextButton connectButton = new TextButton("CONNECT", textButtonStyle);
+		connectButton.setPosition(this.stage.getWidth() / 2 - playButton.getWidth() / 2, 225);
+		stage.addActor(connectButton);
 		connectButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				g.setScreen(new ConnectionScreen(g));
 
 			}
 		});
-		
+
+		final TextButton quitButton = new TextButton("QUIT", textButtonStyle);
+		quitButton.setPosition(this.stage.getWidth() / 2 - quitButton.getWidth() / 2, 100);
+		quitButton.setHeight(35);
+		stage.addActor(quitButton);
 		quitButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				Gdx.app.exit();
