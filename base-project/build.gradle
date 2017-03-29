@@ -1,0 +1,44 @@
+apply plugin: 'java'
+
+//Indicate that the build should resolve its dependencies from the Maven Central repository
+repositories {
+    mavenCentral()
+}
+
+dependencies{
+
+	//=====HIBERNATE
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.9.Final'
+	
+	//=====SPRING
+	// https://mvnrepository.com/artifact/org.springframework/spring-context
+	compile group: 'org.springframework', name: 'spring-context', version: '5.0.0.M5'
+
+	// https://mvnrepository.com/artifact/org.springframework/spring-tx
+	compile group: 'org.springframework', name: 'spring-tx', version: '5.0.0.M5'
+	
+	// https://mvnrepository.com/artifact/org.springframework/spring-orm
+	compile group: 'org.springframework', name: 'spring-orm', version: '5.0.0.M5'
+	
+
+	//=====SLF4J
+	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+	
+	
+	//=====LOGBACK
+	// https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.2'
+	
+	
+	//=====COMMONS-DBCP2
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
+	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+
+	
+	//=====MYSQL-CONNECTOR-JAVA
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+	
+}
