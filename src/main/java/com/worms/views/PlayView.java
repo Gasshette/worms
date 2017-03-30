@@ -46,9 +46,6 @@ public class PlayView implements Screen {
 		this.renderer = new OrthogonalTiledMapRenderer(this.map);
 		this.camera = new OrthographicCamera();
 		
-		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
-		this.player.setPosition(2 * 50, 19 * 50);
-		
 		this.friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
 		this.friendlyPlayers = new HashMap<String, Player>();
 
@@ -58,7 +55,10 @@ public class PlayView implements Screen {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
+		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
+		this.player.setPosition(2 * 50, 19 * 50);
+		
 		Gdx.input.setInputProcessor(this.player);
 	}
 
@@ -84,7 +84,7 @@ public class PlayView implements Screen {
 		this.renderer.getBatch().end();
 
 		this.updateServer(Gdx.graphics.getDeltaTime());
-
+		
 		/**
 		 * Affichage des autres joueurs
 		 */

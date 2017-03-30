@@ -31,7 +31,7 @@ public class Client {
 	}
 
 	private void connectSocket() throws Exception {
-		this.socket = IO.socket("http://10.3.104.58:8080");
+		this.socket = IO.socket("http://92.222.82.5:8080");
 		this.socket.connect();
 	}
 

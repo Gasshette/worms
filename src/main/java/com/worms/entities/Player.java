@@ -1,8 +1,8 @@
 package com.worms.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Player extends Sprite implements InputProcessor {
 	/** The movement velocity */
 	private Vector2 velocity = new Vector2();
-	private float speed = 400, gravity = 800;
+	private float speed = 500, gravity = 400;
 
 	// Layers of the map
 	private TiledMapTileLayer background;
@@ -21,25 +21,25 @@ public class Player extends Sprite implements InputProcessor {
 	
 	private boolean canJump;
 	
-	
 	public Player(Texture texture, TiledMapTileLayer background, TiledMapTileLayer foreground) {
 		super(texture);
 		this.background = background;
 		this.foreground = foreground;
-	}	
+	}
 	
 	public void update(float delta) {
-		float oldX = getX(), oldY = getY();
+		float oldX = this.getX(), oldY = this.getY();
 		boolean collisionRight = false, collisionLeft = false, collisionTop = false, collisionBottom = false;
 		boolean finish = false;
-
+		
 		// Gravite
-		velocity.y -= gravity * delta;
+		this.velocity.y -= this.gravity * delta;
 
-		if (velocity.y > speed)
-			velocity.y = speed;
-		else if (velocity.y < -speed)
-			velocity.y = -speed;
+		if (this.velocity.y > this.speed) {
+			this.velocity.y = this.speed;
+		} else if (this.velocity.y < -this.speed) {
+			this.velocity.y = -this.speed;
+		}
 
 		/**
 		 * GESTION DES MOUVEMENTS 
@@ -48,56 +48,58 @@ public class Player extends Sprite implements InputProcessor {
 		 * Recuperation du type de collision + traitement
 		 */
 		// X
-		setX(getX() + velocity.x * delta);
+		this.setX(this.getX() + this.velocity.x * delta);
 
-		if (velocity.x < 0) { // LEFT
-			collisionLeft = collidesLeft(this.background, "blocked");
-			finish = collidesLeft(this.foreground, "finish");
+		if (this.velocity.x < 0) { // LEFT
+			collisionLeft = this.collidesLeft(this.background, "blocked") || this.collidesLeft(this.foreground, "blocked");
 		}
-		else if (velocity.x > 0) { // RIGHT
-			collisionRight = collidesRight(this.background, "blocked");
-			if(!finish) {
-				finish = collidesRight(this.foreground, "finish");
-			}
+		else if (this.velocity.x > 0) { // RIGHT
+			collisionRight = this.collidesRight(this.background, "blocked") || this.collidesRight(this.foreground, "blocked");
 		}
 		
 
 		if (collisionRight || collisionLeft) {
-			setX(oldX);
-			velocity.x = 0;
+			this.setX(oldX);
+			this.velocity.x = 0;
 		}
 		
 		// Y
-		setY(getY() + velocity.y * delta);
+		this.setY(this.getY() + this.velocity.y * delta);
 		
-		if (velocity.y < 0) { // DOWN
-			collisionBottom = collidesBottom(this.background, "blocked");
-			canJump = collisionBottom;
-			if(!finish) {
-				finish = collidesBottom(this.foreground, "finish");
-			}
+		if (this.velocity.y < 0) { // DOWN
+			collisionBottom = this.collidesBottom(this.background, "blocked") || this.collidesBottom(this.foreground, "blocked");
+			this.canJump = collisionBottom;
 		}
-		else if (velocity.y > 0) { // UP
-			collisionTop = collidesTop(this.background, "blocked");
-			if(!finish) {
-				finish = collidesTop(this.foreground, "finish");
-			}
+		else if (this.velocity.y > 0) { // UP
+			collisionTop = this.collidesTop(this.background, "blocked") || this.collidesTop(this.foreground, "blocked");
 		}
 
 		if (collisionTop || collisionBottom) {
-			setY(oldY);
-			velocity.y = 0;
+			this.setY(oldY);
+			this.velocity.y = 0;
 		}
+		
+		Cell currentCell = this.getCell(this.foreground);
+		if(currentCell != null && currentCell.getTile() != null) {
+			if(currentCell.getTile().getProperties().containsKey("collectible")) {
+				currentCell.setTile(null);
+			}
+		}
+		
 	}
 
 	private boolean isCell(TiledMapTileLayer layer, float x, float y, String property) {
 		Cell cell = layer.getCell((int) (x / layer.getTileWidth()), (int) (y / layer.getTileHeight()));
 		return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(property);
 	}
+	
+	private Cell getCell(TiledMapTileLayer layer) {
+		return layer.getCell((int) (this.getX() / layer.getTileWidth()), (int) (this.getY() / this.background.getTileHeight()));
+	}
 
 	public boolean collidesRight(TiledMapTileLayer layer, String property) {
-		for (float step = 0; step < getHeight(); step += layer.getTileHeight() / 2) {
-			if (isCell(layer, getX() + getWidth(), getY() + step, property)) {
+		for (float step = 0; step < this.getHeight(); step += layer.getTileHeight() / 2) {
+			if (this.isCell(layer, this.getX() + this.getWidth(), this.getY() + step, property)) {
 				return true;
 			}
 		}
@@ -106,8 +108,8 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public boolean collidesLeft(TiledMapTileLayer layer, String property) {
-		for (float step = 0; step < getHeight(); step += layer.getTileHeight() / 2) {
-			if (isCell(layer, getX(), getY() + step, property)) {
+		for (float step = 0; step < this.getHeight(); step += layer.getTileHeight() / 2) {
+			if (this.isCell(layer, this.getX(), this.getY() + step, property)) {
 				return true;
 			}
 		}
@@ -116,8 +118,8 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public boolean collidesTop(TiledMapTileLayer layer, String property) {
-		for (float step = 0; step < getWidth(); step += layer.getTileWidth() / 2) {
-			if (isCell(layer, getX() + step, getY() + getHeight(), property)) {
+		for (float step = 0; step < this.getWidth(); step += layer.getTileWidth() / 2) {
+			if (this.isCell(layer, this.getX() + step, this.getY() + this.getHeight(), property)) {
 				return true;
 			}
 		}
@@ -126,8 +128,8 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public boolean collidesBottom(TiledMapTileLayer layer, String property) {
-		for (float step = 0; step < getWidth(); step += layer.getTileWidth() / 2) {
-			if (isCell(layer, getX() + step, getY(), property)) {
+		for (float step = 0; step < this.getWidth(); step += layer.getTileWidth() / 2) {
+			if (this.isCell(layer, this.getX() + step, this.getY(), property)) {
 				return true;
 			}
 		}
@@ -137,12 +139,12 @@ public class Player extends Sprite implements InputProcessor {
 	
 	@Override
 	public void draw(Batch batch) {
-		update(Gdx.graphics.getDeltaTime());
+		this.update(Gdx.graphics.getDeltaTime());
 		super.draw(batch);
 	}
 
 	public Vector2 getVelocity() {
-		return velocity;
+		return this.velocity;
 	}
 
 	public void setVelocity(Vector2 velocity) {
@@ -150,7 +152,7 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public float getSpeed() {
-		return speed;
+		return this.speed;
 	}
 
 	public void setSpeed(float speed) {
@@ -158,7 +160,7 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public float getGravity() {
-		return gravity;
+		return this.gravity;
 	}
 
 	public void setGravity(float gravity) {
@@ -166,7 +168,7 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public TiledMapTileLayer getCollisionLayer() {
-		return background;
+		return this.background;
 	}
 
 	public void setCollisionLayer(TiledMapTileLayer background) {
@@ -177,16 +179,16 @@ public class Player extends Sprite implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
 		case Keys.Z:
-			if (canJump) {
-				this.velocity.y = speed;
-				canJump = false;
+			if (this.canJump) {
+				this.velocity.y = this.speed;
+				this.canJump = false;
 			}
 			break;
 		case Keys.Q:
-			this.velocity.x = -speed;
+			this.velocity.x = -this.speed;
 			break;
 		case Keys.D:
-			this.velocity.x = speed;
+			this.velocity.x = this.speed;
 			break;
 		}
 
