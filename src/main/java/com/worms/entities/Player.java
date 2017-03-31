@@ -18,21 +18,23 @@ public class Player extends Sprite implements InputProcessor {
 	// Layers of the map
 	private TiledMapTileLayer background;
 	private TiledMapTileLayer foreground;
-	
+
 	private boolean canJump;
 	private boolean shoot = false;
-	
+	private final int timerDecalage = 15;
+	private float pv = 100f;
+
 	public Player(Texture texture, TiledMapTileLayer background, TiledMapTileLayer foreground) {
 		super(texture);
 		this.background = background;
 		this.foreground = foreground;
 	}
-	
+
 	public void update(float delta) {
 		float oldX = this.getX(), oldY = this.getY();
 		boolean collisionRight = false, collisionLeft = false, collisionTop = false, collisionBottom = false;
-		boolean finish = false;
-		
+		boolean enemy = false;
+
 		// Gravite
 		this.velocity.y -= this.gravity * delta;
 
@@ -42,47 +44,58 @@ public class Player extends Sprite implements InputProcessor {
 			this.velocity.y = -this.speed;
 		}
 
-		/**
-		 * GESTION DES MOUVEMENTS 
-		 * Modification de la position 
-		 * Check si collision
-		 * Recuperation du type de collision + traitement
-		 */
-		// X
+		// Movment code
 		this.setX(this.getX() + this.velocity.x * delta);
 
 		if (this.velocity.x < 0) { // LEFT
 			collisionLeft = this.collidesLeft(this.background, "blocked") || this.collidesLeft(this.foreground, "blocked");
-		}
-		else if (this.velocity.x > 0) { // RIGHT
+			enemy = this.collidesLeft(this.foreground, "enemy");
+		} else if (this.velocity.x > 0) { // RIGHT
 			collisionRight = this.collidesRight(this.background, "blocked") || this.collidesRight(this.foreground, "blocked");
+			
+			if(!enemy) {
+				enemy = this.collidesRight(this.foreground, "enemy");
+			}
 		}
-		
 
 		if (collisionRight || collisionLeft) {
 			this.setX(oldX);
 			this.velocity.x = 0;
 		}
-		
-		// Y
+
 		this.setY(this.getY() + this.velocity.y * delta);
-		
+
 		if (this.velocity.y < 0) { // DOWN
 			collisionBottom = this.collidesBottom(this.background, "blocked") || this.collidesBottom(this.foreground, "blocked");
 			this.canJump = collisionBottom;
-		}
-		else if (this.velocity.y > 0) { // UP
+			
+			if(!enemy) {
+				enemy = this.collidesBottom(this.foreground, "enemy");
+			}
+		} else if (this.velocity.y > 0) { // UP
 			collisionTop = this.collidesTop(this.background, "blocked") || this.collidesTop(this.foreground, "blocked");
+			
+			if(!enemy) {
+				enemy = this.collidesTop(this.foreground, "enemy");
+			}
 		}
 
 		if (collisionTop || collisionBottom) {
 			this.setY(oldY);
 			this.velocity.y = 0;
 		}
+
+		// PV code
+		if(enemy) {
+			System.out.println("Perte de pv");
+			this.pv -= 0.2f;
+			System.out.println("Point de vie !! PV : " + this.pv);
+		}
 		
+		// Loot code
 		Cell currentCell = this.getCell(this.foreground);
-		if(currentCell != null && currentCell.getTile() != null) {
-			if(currentCell.getTile().getProperties().containsKey("collectible")) {
+		if (currentCell != null && currentCell.getTile() != null) {
+			if (currentCell.getTile().getProperties().containsKey("collectible")) {
 				currentCell.setTile(null);
 			}
 		}
@@ -92,7 +105,7 @@ public class Player extends Sprite implements InputProcessor {
 		Cell cell = layer.getCell((int) (x / layer.getTileWidth()), (int) (y / layer.getTileHeight()));
 		return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(property);
 	}
-	
+
 	private Cell getCell(TiledMapTileLayer layer) {
 		return layer.getCell((int) (this.getX() / layer.getTileWidth()), (int) (this.getY() / this.background.getTileHeight()));
 	}
@@ -103,7 +116,7 @@ public class Player extends Sprite implements InputProcessor {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -113,7 +126,7 @@ public class Player extends Sprite implements InputProcessor {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -123,7 +136,7 @@ public class Player extends Sprite implements InputProcessor {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -133,10 +146,10 @@ public class Player extends Sprite implements InputProcessor {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	@Override
 	public void draw(Batch batch) {
 		this.update(Gdx.graphics.getDeltaTime());
@@ -249,5 +262,9 @@ public class Player extends Sprite implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+
+	public int getTimerDecalage() {
+		return this.timerDecalage;
 	}
 }

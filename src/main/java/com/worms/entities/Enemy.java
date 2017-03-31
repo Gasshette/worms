@@ -4,15 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Bullet extends Sprite {
+public class Enemy extends Sprite {
 
-	private int speed = 1000;
+	private int speed = 100;
 	private float x, y;
 	private boolean remove = false;
 	private Texture texture;
 	private Collision collision;
 
-	public Bullet(Texture texture, float x, float y) {
+	public Enemy(Texture texture, float x, float y) {
 		super(texture);
 
 		this.texture = texture;
@@ -23,15 +23,14 @@ public class Bullet extends Sprite {
 	}
 
 	public void update(float deltaTime) {
-		this.x += this.speed * deltaTime;
+		this.x -= this.speed * deltaTime;
 
 //		if (this.x > Gdx.graphics.getWidth()) {
 //			this.remove = true;
-//		}
-		
+//		}	
 		this.collision.move(this.x, this.y);
 	}
-
+	
 	public Collision getCollision() {
 		return this.collision;
 	}
@@ -39,7 +38,7 @@ public class Bullet extends Sprite {
 	public void setCollision(Collision collision) {
 		this.collision = collision;
 	}
-
+	
 	public void render(Batch batch) {
 		batch.draw(this.texture, this.x, this.y);
 	}
@@ -47,4 +46,5 @@ public class Bullet extends Sprite {
 	public boolean getRemove() {
 		return this.remove;
 	}
+	
 }
