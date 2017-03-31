@@ -13,13 +13,14 @@ import com.badlogic.gdx.math.Vector2;
 public class Player extends Sprite implements InputProcessor {
 	/** The movement velocity */
 	private Vector2 velocity = new Vector2();
-	private float speed = 500, gravity = 400;
+	private float speed = 400, gravity = 400;
 
 	// Layers of the map
 	private TiledMapTileLayer background;
 	private TiledMapTileLayer foreground;
 	
 	private boolean canJump;
+	private boolean shoot = false;
 	
 	public Player(Texture texture, TiledMapTileLayer background, TiledMapTileLayer foreground) {
 		super(texture);
@@ -85,7 +86,6 @@ public class Player extends Sprite implements InputProcessor {
 				currentCell.setTile(null);
 			}
 		}
-		
 	}
 
 	private boolean isCell(TiledMapTileLayer layer, float x, float y, String property) {
@@ -190,6 +190,9 @@ public class Player extends Sprite implements InputProcessor {
 		case Keys.D:
 			this.velocity.x = this.speed;
 			break;
+		case Keys.ENTER:
+			this.shoot = true;
+			break;
 		}
 
 		return true;
@@ -202,9 +205,20 @@ public class Player extends Sprite implements InputProcessor {
 		case Keys.D:
 			this.velocity.x = 0;
 			break;
+		case Keys.ENTER:
+			this.shoot = false;
+			break;
 		}
 
 		return true;
+	}
+
+	public boolean isShoot() {
+		return this.shoot;
+	}
+
+	public void setShoot(boolean shoot) {
+		this.shoot = shoot;
 	}
 
 	@Override
