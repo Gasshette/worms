@@ -1,5 +1,9 @@
 package com.worms.views;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 import java.util.HashMap;
 
 import org.json.JSONException;
@@ -14,6 +18,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+<<<<<<< HEAD
+=======
+import com.worms.entities.Bullet;
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 import com.worms.entities.Player;
 import com.worms.game.GameWorms;
 import com.worms.network.Client;
@@ -25,7 +33,18 @@ public class PlayView implements Screen {
 	private Player player;
 	private final GameWorms game;
 	private Texture friendPlayer;
+<<<<<<< HEAD
 
+=======
+	
+	/**
+	 * Shoot
+	 */
+	private ArrayList<Bullet> bullets;
+	private ArrayList<Bullet> bulletsToRemove;
+	private int decalage = 15; // A mettre dans personnage
+	private final int timerDecalage = 15; // A mettre dans personnage
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 	/**
 	 * 
 	 * 
@@ -45,9 +64,19 @@ public class PlayView implements Screen {
 		this.map = new TmxMapLoader().load("carte.tmx");
 		this.renderer = new OrthogonalTiledMapRenderer(this.map);
 		this.camera = new OrthographicCamera();
+<<<<<<< HEAD
 		this.friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
 		this.friendlyPlayers = new HashMap<String, Player>();
 
+=======
+
+		this.friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
+		this.friendlyPlayers = new HashMap<String, Player>();
+
+		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
+		this.player.setPosition(2 * 70, 19 * 70);
+
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 		try {
 			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers);
 			this.client.configSocketEvents();
@@ -55,14 +84,25 @@ public class PlayView implements Screen {
 			e.printStackTrace();
 		}
 		
+<<<<<<< HEAD
 		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
 		this.player.setPosition(2 * 50, 19 * 50);
+=======
+		this.bullets = new ArrayList<Bullet>();
+		this.bulletsToRemove = new ArrayList<Bullet>();
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 		
 		Gdx.input.setInputProcessor(this.player);
 	}
 
 	@Override
 	public void render(float delta) {
+<<<<<<< HEAD
+=======
+		
+
+		
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -80,10 +120,41 @@ public class PlayView implements Screen {
 		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("background"));
 		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("foreground"));
 		this.player.draw(this.renderer.getBatch());
+<<<<<<< HEAD
 		this.renderer.getBatch().end();
 
 		this.updateServer(Gdx.graphics.getDeltaTime());
 		
+=======
+		
+		
+		
+		if(this.player.isShoot() && this.decalage == this.timerDecalage) {
+			this.bullets.add(new Bullet(new Texture(Gdx.files.internal("Request pack/Tiles/laserGreenBurst.png")), this.player.getX(), this.player.getY()));
+		}
+		
+		this.decalage--;
+		this.decalage = (this.decalage == 0) ? this.timerDecalage : this.decalage;
+		
+		for (Bullet bullet : this.bullets) {
+			bullet.update(Gdx.graphics.getDeltaTime());
+			
+			if(bullet.getRemove()) {
+				this.bulletsToRemove.add(bullet);
+			}
+		}
+		this.bullets.removeAll(this.bulletsToRemove);
+
+		
+		
+		for (Bullet bullet : this.bullets) {
+			bullet.render(this.renderer.getBatch());
+		}
+		this.renderer.getBatch().end();
+
+		this.updateServer(Gdx.graphics.getDeltaTime());
+
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 		/**
 		 * Affichage des autres joueurs
 		 */

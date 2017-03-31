@@ -62,7 +62,11 @@ public class MainMenuView implements Screen {
 		playButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+<<<<<<< HEAD
 				MainMenuView.this.game.setScreen(new MechantView(MainMenuView.this.game));
+=======
+				MainMenuView.this.game.setScreen(new PlayView(MainMenuView.this.game));
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 			}
 		});
 

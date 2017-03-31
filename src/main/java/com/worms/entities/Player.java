@@ -13,13 +13,21 @@ import com.badlogic.gdx.math.Vector2;
 public class Player extends Sprite implements InputProcessor {
 	/** The movement velocity */
 	private Vector2 velocity = new Vector2();
+<<<<<<< HEAD
 	private float speed = 500, gravity = 400;
+=======
+	private float speed = 400, gravity = 400;
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 
 	// Layers of the map
 	private TiledMapTileLayer background;
 	private TiledMapTileLayer foreground;
 	
 	private boolean canJump;
+<<<<<<< HEAD
+=======
+	private boolean shoot = false;
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 	
 	public Player(Texture texture, TiledMapTileLayer background, TiledMapTileLayer foreground) {
 		super(texture);
@@ -85,7 +93,10 @@ public class Player extends Sprite implements InputProcessor {
 				currentCell.setTile(null);
 			}
 		}
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 	}
 
 	private boolean isCell(TiledMapTileLayer layer, float x, float y, String property) {
@@ -190,6 +201,12 @@ public class Player extends Sprite implements InputProcessor {
 		case Keys.D:
 			this.velocity.x = this.speed;
 			break;
+<<<<<<< HEAD
+=======
+		case Keys.ENTER:
+			this.shoot = true;
+			break;
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 		}
 
 		return true;
@@ -202,11 +219,28 @@ public class Player extends Sprite implements InputProcessor {
 		case Keys.D:
 			this.velocity.x = 0;
 			break;
+<<<<<<< HEAD
+=======
+		case Keys.ENTER:
+			this.shoot = false;
+			break;
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 		}
 
 		return true;
 	}
 
+<<<<<<< HEAD
+=======
+	public boolean isShoot() {
+		return this.shoot;
+	}
+
+	public void setShoot(boolean shoot) {
+		this.shoot = shoot;
+	}
+
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 	@Override
 	public boolean keyTyped(char character) {
 		return false;
@@ -236,6 +270,9 @@ public class Player extends Sprite implements InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
+<<<<<<< HEAD
 	
 	
+=======
+>>>>>>> 31c95da1709e317d069fe0b2073d947c1831f4c9
 }
