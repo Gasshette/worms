@@ -37,12 +37,26 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
     
- 			compile "io.socket:socket.io-client:0.8.3"
-         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-                compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+	compile "io.socket:socket.io-client:0.8.3"
+	compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+	compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+	compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+	compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+	compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        
+    //=====HIBERNATE
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.9.Final'
+	
+	//=====COMMONS-DBCP2
+	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+
+	
+	//=====MYSQL-CONNECTOR-JAVA
+	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.38'
+
+	
+	//JAVAX EJB
+	compile group: 'javax.ejb', name: 'ejb-api', version: '3.0'
       
 }
 
