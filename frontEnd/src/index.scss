@@ -1,0 +1,14 @@
+@import 'app/components/header/header.component.scss';
+@import 'app/components/menu/menu.component.scss';
+
+.random-border-bot-color{
+    border : 2px solid #fff;
+
+    &:hover{
+        $red: random(256)-1;
+        $green: random(256)-1;
+        $blue: random(256)-1;
+        $color : rgb($red, $green, $blue);
+        border-bottom : 2px solid $color;
+    }
+}
