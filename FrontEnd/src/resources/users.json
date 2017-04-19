@@ -1,0 +1,38 @@
+[
+  {
+    "login": "Lucile",
+    "password": 123456
+  },
+  {
+    "login": "Hopper",
+    "password": 123456
+  },
+  {
+    "login": "Valenzuela",
+    "password": 123456
+  },
+  {
+    "login": "Allen",
+    "password": 123456
+  },
+  {
+    "login": "Walters",
+    "password": 123456
+  },
+  {
+    "login": "Irene",
+    "password": 123456
+  },
+  {
+    "login": "Melisa",
+    "password": 123456
+  },
+  {
+    "login": "Montoya",
+    "password": 123456
+  },
+  {
+    "login": "Schroeder",
+    "password": 123456
+  }
+]

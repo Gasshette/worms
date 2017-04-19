@@ -1,29 +1,35 @@
 {
     "use strict";
     class SignInController {
-        constructor($http) {
+        constructor($http, $compile) {
             this._http = $http;
             this.login = '';
             this.password = '';
             this.auth = {};
+            this.formInscription;
         }
 
         authentication(){
             let that = this;
-            that.auth = {
-               'login' : that.login || '',
-                'password' : that.password || ''
-            };
-            
-            let jsonAuth = angular.toJson(that.auth);
-            
-            that._http.post('/reception', jsonAuth)
+            this.auth = this._http.get("resources/users.json")
             .then(function(response){
-                console.log("success", response.data);
-            })
-            .then(function(){
+                if(response){
+                    that.auth = response.data;
+                    that.auth.forEach(function(el) {
+                        if(el.login == that.login && el.password == that.password){
+                            console.log(el);
+                        }
+                    }, this);
+                }
+                that.login = "";
+                that.password = "";
+                that.formInscription.$setPristine();
+            }),
+            function(){
                 console.log("Error");
-            });
+            };
+
+
 
             // console.log(jsonAuth);
             // console.log(angular.fromJson(this.auth));
