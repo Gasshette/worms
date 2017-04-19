@@ -1,15 +1,16 @@
 <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header"></div>
-            <a class="navbar-brand random-border-bot-color" ui-sref="accueil"><span class="glyphicon glyphicon-home"></span></a>
+            <a class="navbar-brand" ui-sref="accueil"  ng-style="mc.style"><span class="glyphicon glyphicon-home"></span></a>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a ui-sref="films" ui-sref-active="active" class="random-border-bot-color">Search your movies</a></li>
+                <ul class="nav navbar-nav"  ng-mouseover="mc.changeColor()" ng-mouseleave="mc.resetColor()">
+                    <li>
+                        <a ui-sref="films" ui-sref-active="active" ng-style="mc.style">Search your movies</a>
+                    </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a ui-sref="signIn" ui-sref-active="active" class="random-border-bot-color">Sign-in !</a></li>
-                    <li><a ui-sref="connection" ui-sref-active="active" class="random-border-bot-color">Sign-up !</a></li>
-                    
+                <ul class="nav navbar-nav navbar-right" >
+                    <li><a ui-sref="signIn" ui-sref-active="active" ng-style="mc.style">Sign-in !</a></li>
+                    <li><a ui-sref="connection" ui-sref-active="active" ng-style="mc.style">Sign-up !</a></li>
                 </ul>
             </div>
         </div>
