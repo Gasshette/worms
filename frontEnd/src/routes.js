@@ -5,7 +5,7 @@ angular
 /** @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/error/404');
 
 
   let films = {
@@ -38,11 +38,11 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     component: 'errorComponent'
   };
 
-  // let error404 = {
-  //   name: 'error.error404',
-  //   url: '/404',
-  //   component: 'error404Component'
-  // };
+  let reception = {
+    name: 'reception',
+    url: '/reception',
+    component: 'receptionComponent'
+  };
 
   $stateProvider.state(accueil);
   $stateProvider.state(films);
@@ -50,14 +50,6 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider.state(connection);
   $stateProvider.state(error);
   // $stateProvider.state(error404);
+  $stateProvider.state(reception);
 
-  // $stateProvider
-  //   .state('accueil', {
-  //     url: '/',
-  //     component: 'app'
-  //   })
-  //   .state('films', {
-  //     url: '/films',
-  //     component: 'filmSearchComponent'
-  //   });
 }
