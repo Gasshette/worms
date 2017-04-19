@@ -1,0 +1,352 @@
+[
+  {
+    "id": 0,
+    "nickname": "Blevins",
+    "password": 123456,
+    "gold": 801,
+    "level": 42
+  },
+  {
+    "id": 1,
+    "nickname": "Elsa",
+    "password": 123456,
+    "gold": 2196,
+    "level": 4
+  },
+  {
+    "id": 2,
+    "nickname": "Manning",
+    "password": 123456,
+    "gold": 1232,
+    "level": 1
+  },
+  {
+    "id": 3,
+    "nickname": "Patterson",
+    "password": 123456,
+    "gold": 2587,
+    "level": 12
+  },
+  {
+    "id": 4,
+    "nickname": "Olson",
+    "password": 123456,
+    "gold": 367,
+    "level": 3
+  },
+  {
+    "id": 5,
+    "nickname": "Loraine",
+    "password": 123456,
+    "gold": 2478,
+    "level": 35
+  },
+  {
+    "id": 6,
+    "nickname": "Allison",
+    "password": 123456,
+    "gold": 2540,
+    "level": 30
+  },
+  {
+    "id": 7,
+    "nickname": "Marks",
+    "password": 123456,
+    "gold": 2414,
+    "level": 25
+  },
+  {
+    "id": 8,
+    "nickname": "Sheppard",
+    "password": 123456,
+    "gold": 1816,
+    "level": 35
+  },
+  {
+    "id": 9,
+    "nickname": "Townsend",
+    "password": 123456,
+    "gold": 197,
+    "level": 48
+  },
+  {
+    "id": 10,
+    "nickname": "Carson",
+    "password": 123456,
+    "gold": 1535,
+    "level": 8
+  },
+  {
+    "id": 11,
+    "nickname": "Latoya",
+    "password": 123456,
+    "gold": 876,
+    "level": 24
+  },
+  {
+    "id": 12,
+    "nickname": "Porter",
+    "password": 123456,
+    "gold": 2467,
+    "level": 11
+  },
+  {
+    "id": 13,
+    "nickname": "Kayla",
+    "password": 123456,
+    "gold": 2798,
+    "level": 6
+  },
+  {
+    "id": 14,
+    "nickname": "English",
+    "password": 123456,
+    "gold": 755,
+    "level": 34
+  },
+  {
+    "id": 15,
+    "nickname": "Shelia",
+    "password": 123456,
+    "gold": 460,
+    "level": 20
+  },
+  {
+    "id": 16,
+    "nickname": "Kimberly",
+    "password": 123456,
+    "gold": 499,
+    "level": 28
+  },
+  {
+    "id": 17,
+    "nickname": "Mathews",
+    "password": 123456,
+    "gold": 2763,
+    "level": 23
+  },
+  {
+    "id": 18,
+    "nickname": "Nielsen",
+    "password": 123456,
+    "gold": 2453,
+    "level": 38
+  },
+  {
+    "id": 19,
+    "nickname": "Miriam",
+    "password": 123456,
+    "gold": 1992,
+    "level": 9
+  },
+  {
+    "id": 20,
+    "nickname": "George",
+    "password": 123456,
+    "gold": 1345,
+    "level": 30
+  },
+  {
+    "id": 21,
+    "nickname": "Liz",
+    "password": 123456,
+    "gold": 1324,
+    "level": 25
+  },
+  {
+    "id": 22,
+    "nickname": "Nicole",
+    "password": 123456,
+    "gold": 446,
+    "level": 14
+  },
+  {
+    "id": 23,
+    "nickname": "Wells",
+    "password": 123456,
+    "gold": 2408,
+    "level": 45
+  },
+  {
+    "id": 24,
+    "nickname": "Gertrude",
+    "password": 123456,
+    "gold": 1057,
+    "level": 45
+  },
+  {
+    "id": 25,
+    "nickname": "Steele",
+    "password": 123456,
+    "gold": 1594,
+    "level": 39
+  },
+  {
+    "id": 26,
+    "nickname": "Walters",
+    "password": 123456,
+    "gold": 2633,
+    "level": 36
+  },
+  {
+    "id": 27,
+    "nickname": "Bell",
+    "password": 123456,
+    "gold": 2521,
+    "level": 44
+  },
+  {
+    "id": 28,
+    "nickname": "Candy",
+    "password": 123456,
+    "gold": 1635,
+    "level": 5
+  },
+  {
+    "id": 29,
+    "nickname": "Nannie",
+    "password": 123456,
+    "gold": 2801,
+    "level": 1
+  },
+  {
+    "id": 30,
+    "nickname": "Mia",
+    "password": 123456,
+    "gold": 2816,
+    "level": 36
+  },
+  {
+    "id": 31,
+    "nickname": "Sharon",
+    "password": 123456,
+    "gold": 2126,
+    "level": 33
+  },
+  {
+    "id": 32,
+    "nickname": "Latisha",
+    "password": 123456,
+    "gold": 1259,
+    "level": 2
+  },
+  {
+    "id": 33,
+    "nickname": "Sylvia",
+    "password": 123456,
+    "gold": 2889,
+    "level": 16
+  },
+  {
+    "id": 34,
+    "nickname": "Emilia",
+    "password": 123456,
+    "gold": 1772,
+    "level": 17
+  },
+  {
+    "id": 35,
+    "nickname": "Celeste",
+    "password": 123456,
+    "gold": 1421,
+    "level": 20
+  },
+  {
+    "id": 36,
+    "nickname": "Bauer",
+    "password": 123456,
+    "gold": 841,
+    "level": 11
+  },
+  {
+    "id": 37,
+    "nickname": "Fitzpatrick",
+    "password": 123456,
+    "gold": 1203,
+    "level": 47
+  },
+  {
+    "id": 38,
+    "nickname": "Rachael",
+    "password": 123456,
+    "gold": 1630,
+    "level": 8
+  },
+  {
+    "id": 39,
+    "nickname": "Crystal",
+    "password": 123456,
+    "gold": 1684,
+    "level": 21
+  },
+  {
+    "id": 40,
+    "nickname": "Beverly",
+    "password": 123456,
+    "gold": 2853,
+    "level": 36
+  },
+  {
+    "id": 41,
+    "nickname": "Cross",
+    "password": 123456,
+    "gold": 2505,
+    "level": 12
+  },
+  {
+    "id": 42,
+    "nickname": "Irma",
+    "password": 123456,
+    "gold": 1293,
+    "level": 18
+  },
+  {
+    "id": 43,
+    "nickname": "Brenda",
+    "password": 123456,
+    "gold": 2653,
+    "level": 26
+  },
+  {
+    "id": 44,
+    "nickname": "Susan",
+    "password": 123456,
+    "gold": 1087,
+    "level": 24
+  },
+  {
+    "id": 45,
+    "nickname": "Torres",
+    "password": 123456,
+    "gold": 2031,
+    "level": 28
+  },
+  {
+    "id": 46,
+    "nickname": "Durham",
+    "password": 123456,
+    "gold": 2106,
+    "level": 16
+  },
+  {
+    "id": 47,
+    "nickname": "Guerrero",
+    "password": 123456,
+    "gold": 533,
+    "level": 44
+  },
+  {
+    "id": 48,
+    "nickname": "Kerr",
+    "password": 123456,
+    "gold": 1299,
+    "level": 36
+  },
+  {
+    "id": 49,
+    "nickname": "Consuelo",
+    "password": 123456,
+    "gold": 138,
+    "level": 49
+  }
+]

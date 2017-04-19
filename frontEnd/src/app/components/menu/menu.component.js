@@ -8,12 +8,12 @@
             };
         }
 
-        changeColor() {
-            this.style.borderBottom = "2px solid"  + '#' + Math.floor(Math.random() * 16777215).toString(16);
+        changeColor(element){
+            $(element.target).css("borderBottom", "2px solid "  + '#' + Math.floor(Math.random() * 16777215).toString(16));
         }
 
-        resetColor(){
-            this.style.borderBottom = "2px solid #fff";
+        resetColor(element){
+            $(element.target).css("borderBottom", "2px solid #fff");
         }
     }
 
