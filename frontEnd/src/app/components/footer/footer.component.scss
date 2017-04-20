@@ -1,3 +1,7 @@
+.footer{
+    margin-top : 20px;
+}
+
 .footer-container{
     text-align: center;
     font-weight: bold;
@@ -10,4 +14,16 @@
 }
 .wide-content{
     background-image: url("../resources/images/liquidWaterTop.png");
+    -webkit-animation: backgroundScroll 20s linear infinite;
+    animation: backgroundScroll 20s linear infinite;
+}
+
+@-webkit-keyframes backgroundScroll{
+    from {background-position: 0 0;}
+    to {background-position: -400px 0;}
+}
+
+@keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: -400px 0;}
 }

@@ -1,6 +1,7 @@
 <h2>Score table : compare youself with others !</h2>
 
 <table class="table table-stripped" ng-repeat="u in ScCtrl.listUsers">
+    <caption><h3>{{u.nickname}}</h3></caption>
         <tr>
             <td rowspan="4"><img src="../resources/images/player.png"></td>
             <td colspan="2">Level : {{u.level}}</td>
