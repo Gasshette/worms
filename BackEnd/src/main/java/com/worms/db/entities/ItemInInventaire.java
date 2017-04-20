@@ -61,12 +61,12 @@ public class ItemInInventaire implements java.io.Serializable {
 		return this.item;
 	}
 	
-	//@JsonIgnore
+	@JsonIgnore
 	public void setItem(Item item) {
 		this.item = item;
 	}
 	
-	//@JsonIgnore
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_user", nullable = false, insertable = false, updatable = false)
 	public User getUser() {
