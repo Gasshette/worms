@@ -1,0 +1,22 @@
+<div>
+    <h2>profile : {{PrCtrl.user.nickname}}</h2>
+
+    <table class="table table-stripped">
+        <tr>
+            <td rowspan="4"><img src="../resources/images/player.png"></td>
+            <td colspan="2">Level : {{PrCtrl.user.level}}</td>
+        </tr>
+        <tr>
+            <td><img src="../resources/images/coin.png"></td>
+            <td>{{PrCtrl.user.gold}} gold</td>
+        </tr>
+        <tr>
+            <td><img src="../resources/images/gem_red.png"></td>
+            <td>{{(PrCtrl.user.gem > 1) ? PrCtrl.user.gem + ' gems' : PrCtrl.user.gem + ' gem' }}</td>
+        </tr>
+        <tr>
+            <td><img src="../resources/images/keyGreen.png"></td>
+            <td>{{(PrCtrl.user.key > 1) ? PrCtrl.user.key + ' keys' : PrCtrl.user.key + ' key' }}</td>
+        </tr>
+    </table>
+</div>

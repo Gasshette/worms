@@ -1,7 +1,16 @@
 @import 'app/components/header/header.component.scss';
 @import 'app/components/menu/menu.component.scss';
+@import 'app/components/footer/footer.component.scss';
 
+html{
+    overflow-y: scroll;
+}
 
-.body-container{
+body{
     min-height: 400px;
+    padding-bottom : 100px;
+}
+
+h2{
+    margin-bottom: 50px;
 }

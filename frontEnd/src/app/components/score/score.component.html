@@ -1,0 +1,20 @@
+<h2>Score table : compare youself with others !</h2>
+
+<table class="table table-stripped" ng-repeat="u in ScCtrl.listUsers">
+        <tr>
+            <td rowspan="4"><img src="../resources/images/player.png"></td>
+            <td colspan="2">Level : {{u.level}}</td>
+        </tr>
+        <tr>
+            <td><img src="../resources/images/coin.png"></td>
+            <td>{{u.gold}} gold</td>
+        </tr>
+        <tr>
+            <td><img src="../resources/images/gem_red.png"></td>
+            <td>{{(u.gem > 1) ? u.gem + ' gems' : u.gem + ' gem' }}</td>
+        </tr>
+        <tr>
+            <td><img src="../resources/images/keyGreen.png"></td>
+            <td>{{(u.key > 1) ? u.key + ' keys' : u.key + ' key' }}</td>
+        </tr>
+</table>
