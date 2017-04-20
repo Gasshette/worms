@@ -54,6 +54,12 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     component: 'scoreComponent'
   };
 
+  let download = {
+    name: 'download',
+    url: '/download',
+    component: 'downloadComponent'
+  };
+
   $stateProvider.state(accueil);
   $stateProvider.state(films);
   $stateProvider.state(signIn);
@@ -62,4 +68,5 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider.state(reception);
   $stateProvider.state(profile);
   $stateProvider.state(score);
+  $stateProvider.state(download);
 }

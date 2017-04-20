@@ -1,12 +1,14 @@
 {
     "use strict";
-    class FooterController{
+    class FooterController {
+        constructor() {
+        }
 
     }
 
     angular.module("app")
-    .component("footerComponent", {
-        controller : FooterController,
-        templateUrl : "app/components/footer/footer.component.html"
-    });
+        .component("footerComponent", {
+            controller: FooterController,
+            templateUrl: "app/components/footer/footer.component.html"
+        });
 }
