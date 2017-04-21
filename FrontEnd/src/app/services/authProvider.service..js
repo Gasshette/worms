@@ -2,29 +2,42 @@
     class AuthProvider {
         constructor($http) {
             this._http = $http;
-            this.auth;
+            this.authedUser;
+            this.allUsers = [];
+
+            this.getAllUsers();
+
         }
 
-        authentication(){
-            // console.log("dans authentication");
-            let that = this;
-            this.auth = this._http.get("resources/users.json")
+        getAllUsers() {
+            let that= this;
+            this._http.get("/resources/users.json")
             .then(function(response){
-                if(response){
-                    response.data.forEach(function(el) {
-                        if(el.login == that.login && el.password == that.password){
-                            that.auth = el;
-                        }
-                    }, this);
-                }
-            },
-            function(){
-                console.log("Error");
+                response.data.forEach(function(el) {
+                    that.allUsers.push(el);
+                }, this);
+            }, function(){
+                console.log("An error occured while trying to get all users.");
             });
         }
-    }
 
-    angular
-        .module("app")
-        .service('authProvider', AuthProvider);
+        registerUser(user){
+            let flag = false;
+            if(typeof user.login != "undefined" && typeof user.password != "undefined"){
+                this.allUsers.forEach(function(el) {
+                    if(el.nickname == user.login){
+                        flag = true;
+                    }
+                }, this);
+
+                if(!flag){
+                    this.allUsers.push(user);
+                }
+            }
+        }
+}
+
+angular
+    .module("app")
+    .service('authProvider', AuthProvider);
 }
