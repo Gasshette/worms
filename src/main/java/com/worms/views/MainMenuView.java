@@ -17,7 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.worms.game.GameWorms;
 
 public class MainMenuView implements Screen {
+	
 	private final GameWorms game;
+	
 	private Skin skin;
 	private Stage stage;
 	private BitmapFont bfont;
@@ -27,10 +29,10 @@ public class MainMenuView implements Screen {
 		this.game = game;
 		this.stage = new Stage();
 		this.skin = new Skin();
-		this.bfont = new BitmapFont();
+		this.bfont = game.getFont();
 
 		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);
-		this.pixmap.setColor(Color.RED);
+		this.pixmap.setColor(Color.WHITE);
 		this.pixmap.fill();
 
 		this.skin.add("white", new Texture(this.pixmap));
@@ -62,7 +64,7 @@ public class MainMenuView implements Screen {
 		playButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				MainMenuView.this.game.setScreen(new PlayView(MainMenuView.this.game));
+				MainMenuView.this.game.setScreen(new LobbyView(MainMenuView.this.game));
 			}
 		});
 

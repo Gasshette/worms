@@ -28,7 +28,7 @@ public class PlayView implements Screen {
 	private Player player;
 	private final GameWorms game;
 	private Texture friendPlayer;
-	
+
 	/**
 	 * Shoot
 	 */
@@ -42,12 +42,13 @@ public class PlayView implements Screen {
 	 * VARIABLE MULTI
 	 */
 	private Client client = null;
-	private HashMap<String, Player> friendlyPlayers;
+	private HashMap<String, Player> mates;
 	private final float UPDATE_TIME = 1 / 60f;
 	float timer = 0;
 
-	public PlayView(GameWorms game) {
+	public PlayView(GameWorms game, Client client) {
 		this.game = game;
+		this.client = client;
 	}
 
 	@Override
@@ -57,24 +58,23 @@ public class PlayView implements Screen {
 		this.camera = new OrthographicCamera();
 
 		this.friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
-		this.friendlyPlayers = new HashMap<String, Player>();
+		this.mates = new HashMap<String, Player>();
 
-
-		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
+		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")),
+				(TiledMapTileLayer) this.map.getLayers().get("background"),
+				(TiledMapTileLayer) this.map.getLayers().get("foreground"));
 		this.player.setPosition(2 * 70, 19 * 70);
 
 		try {
-			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers);
+			this.client = new Client(this.map, this.friendPlayer, this.mates);
 			this.client.configSocketEvents();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 
 		this.bullets = new ArrayList<Bullet>();
 		this.bulletsToRemove = new ArrayList<Bullet>();
 
-		
 		Gdx.input.setInputProcessor(this.player);
 	}
 
@@ -86,7 +86,8 @@ public class PlayView implements Screen {
 		/**
 		 * Gestion de la camera
 		 */
-		this.camera.position.set(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight(), 0);
+		this.camera.position.set(this.player.getX() + this.player.getWidth(),
+				this.player.getY() + this.player.getHeight(), 0);
 		this.camera.update();
 		this.renderer.setView(this.camera);
 
@@ -97,28 +98,27 @@ public class PlayView implements Screen {
 		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("background"));
 		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("foreground"));
 		this.player.draw(this.renderer.getBatch());
-		
-		//this.renderer.getBatch().end();
-		//this.updateServer(Gdx.graphics.getDeltaTime());
-		
-		if(this.player.isShoot() && this.decalage == this.timerDecalage) {
-			this.bullets.add(new Bullet(new Texture(Gdx.files.internal("Request pack/Tiles/laserGreenBurst.png")), this.player.getX(), this.player.getY()));
+
+		// this.renderer.getBatch().end();
+		// this.updateServer(Gdx.graphics.getDeltaTime());
+
+		if (this.player.isShoot() && this.decalage == this.timerDecalage) {
+			this.bullets.add(new Bullet(new Texture(Gdx.files.internal("Request pack/Tiles/laserGreenBurst.png")),
+					this.player.getX(), this.player.getY()));
 		}
-		
+
 		this.decalage--;
 		this.decalage = (this.decalage == 0) ? this.timerDecalage : this.decalage;
-		
+
 		for (Bullet bullet : this.bullets) {
 			bullet.update(Gdx.graphics.getDeltaTime());
-			
-			if(bullet.getRemove()) {
+
+			if (bullet.getRemove()) {
 				this.bulletsToRemove.add(bullet);
 			}
 		}
 		this.bullets.removeAll(this.bulletsToRemove);
 
-		
-		
 		for (Bullet bullet : this.bullets) {
 			bullet.render(this.renderer.getBatch());
 		}
@@ -129,7 +129,7 @@ public class PlayView implements Screen {
 		/**
 		 * Affichage des autres joueurs
 		 */
-		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
+		for (HashMap.Entry<String, Player> entry : this.mates.entrySet()) {
 			this.renderer.getBatch().begin();
 			entry.getValue().draw(this.renderer.getBatch());
 			this.renderer.getBatch().end();

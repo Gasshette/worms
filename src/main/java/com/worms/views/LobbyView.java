@@ -1,5 +1,7 @@
 package com.worms.views;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -11,19 +13,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.worms.game.GameWorms;
+import com.worms.network.Client;
 
 public class LobbyView implements Screen {
 
-	@SuppressWarnings("unused")
 	private final GameWorms game;
 
 	private Skin skin;
@@ -32,42 +33,45 @@ public class LobbyView implements Screen {
 	private Pixmap pixmap;
 
 	private TextButtonStyle textButtonStyle;
-	private ImageButtonStyle imageButtonStyle;
-	private ImageButton typeA;
-	private ImageButton typeB;
-	private ImageButton typeC;
-	private ButtonGroup<ImageButton> radio;
 
 	private TextButton backButton;
 	private TextButton readyButton;
 
-	public LobbyView(GameWorms game) {
-		this.game = game;
-		this.stage = new Stage();
-		this.skin = new Skin();
-		this.bfont = game.getFont();
-
-		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);
-		this.pixmap.setColor(Color.WHITE);
-		this.pixmap.fill();
-
-		this.skin.add("pixmap", new Texture(this.pixmap));
-		this.skin.add("default", this.bfont);
-
-		Gdx.input.setInputProcessor(this.stage);
-
-		this.create();
-	}
-
-	public void create() {
-
-		this.imageButtonStyle = new ImageButtonStyle();
-		this.imageButtonStyle.up = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
-		this.imageButtonStyle.down = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
-		this.imageButtonStyle.checked = this.skin.newDrawable("pixmap", Color.BLUE);
-		this.imageButtonStyle.over = this.skin.newDrawable("pixmap", Color.LIGHT_GRAY);
-		this.skin.add("default", this.imageButtonStyle);
-
+	private Texture alien1Tex;                                              
+	private Texture alien2Tex;                                              
+	private Texture alien3Tex;                                              
+	private Texture leftArrowTex;                                           
+	private ImageButton leftArrow;                                          
+	private Texture rightArrowTex;                                          
+	private ImageButton rightArrow;                                         
+	private static int choice = 0;                                          
+	                                                                        
+	private Client client = null;                                           
+                                                                            
+	private static HashMap<Integer, TextureRegionDrawable> charSelect;      
+                                                                            
+	private static Image selection;                                         
+                                                                            
+	public LobbyView(GameWorms game) {                                      
+		this.game = game;                                                   
+		this.stage = new Stage();                                           
+		this.skin = new Skin();                                             
+		this.bfont = game.getFont();                                        
+                                                                            
+		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);                
+		this.pixmap.setColor(Color.WHITE);                                  
+		this.pixmap.fill();                                                 
+                                                                            
+		this.skin.add("pixmap", new Texture(this.pixmap));                  
+		this.skin.add("default", this.bfont);                               
+                                                                            
+		Gdx.input.setInputProcessor(this.stage);                            
+                                                                            
+		this.create();                                                      
+	}                                                                       
+                                                                            
+	public void create() {                                                  
+                                                                            
 		this.textButtonStyle = new TextButtonStyle();
 		this.textButtonStyle.up = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
 		this.textButtonStyle.down = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
@@ -76,46 +80,57 @@ public class LobbyView implements Screen {
 		this.textButtonStyle.font = this.skin.getFont("default");
 		this.skin.add("default", this.textButtonStyle);
 
-		Texture textureCharSelect;
-		TextureRegionDrawable myTexRegionDrawable;
-		/*
-		 * character 1
-		 */
-		textureCharSelect = new Texture(Gdx.files.internal("Base pack/Player/p1_hurt.png"));
-		myTexRegionDrawable = new TextureRegionDrawable(new TextureRegion(textureCharSelect));
-		this.typeA = new ImageButton(myTexRegionDrawable);
-		this.typeA.setStyle(imageButtonStyle);
-		this.typeA.setPosition(200, 200);
-		this.stage.addActor(typeA);
+		alien1Tex = new Texture(Gdx.files.internal("Base pack/Player/p1_hurt.png"));
+		alien2Tex = new Texture(Gdx.files.internal("Base pack/Player/p2_stand.png"));
+		alien3Tex = new Texture(Gdx.files.internal("Base pack/Player/p3_jump.png"));
+		leftArrowTex = new Texture(Gdx.files.internal("Base pack/HUD/left-off.png"));
+		rightArrowTex = new Texture(Gdx.files.internal("Base pack/HUD/right-off.png"));
+		TextureRegionDrawable alien1Draw = new TextureRegionDrawable(new TextureRegion(alien1Tex));
+		TextureRegionDrawable alien2Draw = new TextureRegionDrawable(new TextureRegion(alien2Tex));
+		TextureRegionDrawable alien3Draw = new TextureRegionDrawable(new TextureRegion(alien3Tex));
+		TextureRegionDrawable leftArrowDraw = new TextureRegionDrawable(new TextureRegion(leftArrowTex));
+		TextureRegionDrawable rightArrowDraw = new TextureRegionDrawable(new TextureRegion(rightArrowTex));
+
+		selection = new Image(alien1Draw);
+		selection.setPosition(this.stage.getWidth() / 2 - selection.getWidth() / 2, 600);
+
+		this.leftArrow = new ImageButton(leftArrowDraw);
+		this.leftArrow.setPosition(selection.getX() - this.leftArrow.getWidth(), 600);
+		this.rightArrow = new ImageButton(rightArrowDraw);
+		this.rightArrow.setPosition(selection.getX() + this.rightArrow.getWidth(), 600);
+
+		charSelect = new HashMap<>();
+		charSelect.put(0, alien1Draw);
+		charSelect.put(1, alien2Draw);
+		charSelect.put(2, alien3Draw);
+
+		System.out.println(charSelect);
+		this.stage.addActor(selection);
+		this.stage.addActor(leftArrow);
+		this.stage.addActor(rightArrow);
 
 		/*
-		 * character 2
+		 * left arrow
 		 */
-		textureCharSelect = new Texture(Gdx.files.internal("Base pack/Player/p2_duck.png"));
-		myTexRegionDrawable = new TextureRegionDrawable(new TextureRegion(textureCharSelect));
-		this.typeB = new ImageButton(myTexRegionDrawable);
-		this.typeB.setStyle(imageButtonStyle);
-		this.typeB.setPosition(300, 200);
-		this.stage.addActor(typeB);
+
+		this.leftArrow.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				System.out.println("perso " + choice);
+				LobbyView.switchChar(true);
+			}
+		});
 
 		/*
-		 * character 3
+		 * right arrow
 		 */
-		textureCharSelect = new Texture(Gdx.files.internal("Base pack/Player/p3_jump.png"));
-		myTexRegionDrawable = new TextureRegionDrawable(new TextureRegion(textureCharSelect));
-		this.typeC = new ImageButton(myTexRegionDrawable);
-		this.typeC.setStyle(imageButtonStyle);
-		this.typeC.setPosition(400, 200);
-		this.stage.addActor(typeC);
-
-		/*
-		 * Configuration du style d'un bouton
-		 */
-		this.radio = new ButtonGroup<>();
-		radio.add(typeA);
-		radio.add(typeB);
-		radio.add(typeC);
-
+		this.rightArrow.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				System.out.println("perso " + choice);
+				LobbyView.switchChar(false);
+			}
+		});
 		/*
 		 * Creation du bouton READY
 		 */
@@ -141,7 +156,7 @@ public class LobbyView implements Screen {
 		this.backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.exit();
+				LobbyView.this.game.setScreen(new LoginView(LobbyView.this.game));
 			}
 		});
 	}
@@ -153,6 +168,23 @@ public class LobbyView implements Screen {
 
 		this.stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		this.stage.draw();
+	}
+
+	public static void switchChar(boolean left) {
+		if (!left) {
+			if (charSelect.size() > choice + 1) {
+				choice++;
+			} else {
+				choice = 0;
+			}
+		} else {
+			choice--;
+			if (choice < 0) {
+				choice = 2;
+			}
+		}
+		selection.setDrawable(charSelect.get(choice));
+
 	}
 
 	@Override
