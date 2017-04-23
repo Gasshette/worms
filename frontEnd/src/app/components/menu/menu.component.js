@@ -2,19 +2,25 @@
     "use strict";
     class MenuController {
 
-        constructor() {
-            this.style = {
-                borderBottom: '#fff'
-            };
+        constructor(authProvider, $interval) {
+            this._interval = $interval;
+            this._authProvider = authProvider;
+            this.authedUser = this._authProvider.authedUser;
+            this.promisedColor;
+            this.colors = ["orange", "orangered", "yellow", "yellowgreen",  "chocolate", "cornflowerblue", "darkgray", "darkorange", "dodgerblue", "gold", "limegreen", "peru", "plum", "royalblue", "whitesmoke", "wheat"];
         }
 
         changeColor(element) {
             if (element.target.tagName == 'A') {
-                $(element.target).css("borderBottom", "2px solid " + '#' + Math.floor(Math.random() * 16777215).toString(16));
+                let that = this;
+                that.promisedColor = that._interval(function(){
+                    $(element.target).css("borderBottom", "2px solid " + that.colors[Math.floor(Math.random() * that.colors.length)]);
+                }, 200);
             }
         }
 
         resetColor(element) {
+            this._interval.cancel(this.promisedColor);
             $(element.target).css("borderBottom", "2px solid #fff");
         }
     }

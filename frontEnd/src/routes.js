@@ -60,13 +60,19 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     component: 'downloadComponent'
   };
 
-  $stateProvider.state(accueil);
-  $stateProvider.state(films);
-  $stateProvider.state(signIn);
-  $stateProvider.state(connection);
-  $stateProvider.state(error);
-  $stateProvider.state(reception);
-  $stateProvider.state(profile);
-  $stateProvider.state(score);
-  $stateProvider.state(download);
+  // if (typeof authProvider.authedUser == "undefined") {
+  //   $locationProvider.url("/connection");
+  // }
+  // else {
+    $stateProvider.state(accueil);
+    $stateProvider.state(films);
+    $stateProvider.state(signIn);
+    $stateProvider.state(connection);
+    $stateProvider.state(error);
+    $stateProvider.state(reception);
+    $stateProvider.state(profile);
+    $stateProvider.state(score);
+    $stateProvider.state(download);
+  // }
+
 }

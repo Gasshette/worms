@@ -1,6 +1,9 @@
+@import 'app/main.scss';
 @import 'app/components/header/header.component.scss';
 @import 'app/components/menu/menu.component.scss';
 @import 'app/components/footer/footer.component.scss';
+@import 'app/components/download/download.component.scss';
+
 
 html{
     overflow-y: scroll;
@@ -16,4 +19,25 @@ body{
 
 h2{
     margin-bottom: 50px;
+}
+
+#progressbar{
+    background-color: black;
+    border-radius: 15px; /* (height of inner div) / 2 + padding */
+    text-align : center;
+    padding: 3px;
+    height: 26px;
+}
+
+#progressbar .progress {
+    padding-bottom: 6px;
+}
+
+#progressbar > div {
+    color : white;
+    font-weight:bold;
+    width : 0%;
+   background-color: orange;
+   
+   border-radius: 15px;
 }
