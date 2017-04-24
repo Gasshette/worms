@@ -1,25 +1,70 @@
-<h2>Score table</h2>
+<div class="temp-score">
 
-<table class="table table-stripped" ng-repeat="u in ScCtrl.listUsers | orderBy : '-level'">
-    <caption>
-        <h3>{{u.nickname}} <br>  N° {{$index+1}}</h3>
-    </caption>
-    
-    <tr>
-        <td rowspan="4"><img src="../resources/images/player.png"></td>
-        <td colspan="2">Level : {{u.level}}<br>
-            <progress-bar-score percent="{{u.exp}}"></progress-bar-score>
-        </td>
-    </tr>
-    <tr>
+    <div class="switch-component">
+        <div class="render">
+            <label class="switch">
+                <input type="checkbox" ng-click="ScCtrl.switchView()">
+                <div class="slider round"></div>
+            </label>
+        </div>
+        <div class="render">
+            {{ScCtrl.currentView}}
+        </div>
+    </div>
 
-    </tr>
-    <tr>
-        <td><img src="../resources/images/coin.png"></td>
-        <td>{{u.gold}} gold</td>
-    </tr>
-    <tr>
-        <td><img src="../resources/images/gemBlue.png"></td>
-        <td>{{(u.gem > 1) ? u.gem + ' gems' : u.gem + ' gem' }}</td>
-    </tr>
-</table>
+    <div class="normal">
+        <h2>Ladder</h2>
+
+        <table class="table table-stripped" ng-repeat="u in ScCtrl.listUsers | orderBy : '-level'">
+            <caption>
+                <h4>{{u.nickname}} - N° {{$index+1}}</h4>
+            </caption>
+
+            <tr>
+                <td rowspan="4"><img src="../resources/images/player.png"></td>
+                <td colspan="2">Level : {{u.level}}<br>
+                    <progress-bar-score percent="{{u.exp}}"></progress-bar-score>
+                </td>
+            </tr>
+            <tr>
+
+            </tr>
+            <tr>
+                <td><img src="../resources/images/coin.png"></td>
+                <td>{{u.gold}} gold</td>
+            </tr>
+            <tr>
+                <td><img src="../resources/images/gemBlue.png"></td>
+                <td>{{(u.gem > 1) ? u.gem + ' gems' : u.gem + ' gem' }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="compact">
+        <h2>ladder : compact</h2>
+
+        <table class="table table-stripped">
+            <header>
+                <tr>
+                    <td>Rank</td>
+                    <td>Nickname</td>
+                    <td>Level</td>
+                    <td>Progression</td>
+                    <td><img src="../resources/images/coin.png"></td>
+                    <td><img src="../resources/images/gemBlue.png"></td>
+                </tr>
+            </header>
+            <tr ng-repeat="u in ScCtrl.listUsers | orderBy : '-level'">
+                <td>{{$index+1}}</td>
+                <td>{{u.nickname}}</td>
+                <td>{{u.level}}</td>
+                <td>
+                    <progress-bar-score percent="{{u.exp}}"></progress-bar-score>
+                </td>
+                <td>{{u.gold}} gold</td>
+                <td>{{(u.gem > 1) ? u.gem + ' gems' : u.gem + ' gem' }}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>

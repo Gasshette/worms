@@ -22,37 +22,37 @@ import com.worms.db.entities.User;
 @RestController
 public class UserRestService {
 
-//	@Autowired
-//	private IUserEntityRepository userRepository;
-//
-//	@RequestMapping(value = "/greeting", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
-//			Model model) {
-//		model.addAttribute("name", name);
-//		// return "classpath:src/main/resources/templates/greeting";
-//		return "greeting";
-//	}
-//
-//	@RequestMapping(value = "/users", method = RequestMethod.GET)
-//	public List<User> listAll() {
-//		System.out.println("coucou je suis la methode listAll()");
-//		return userRepository.findAll();
-//	}
-//
-//	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-//	public User getOne(@PathVariable("id") Integer id) {
-//		return userRepository.findOne(id);
-//	}
-//
-//	@RequestMapping(value = "/users/create", method = RequestMethod.PUT)
-//	public User create(@RequestBody User user) {
-//		return userRepository.save(user);
-//	}
-//
-//	@RequestMapping(value = "/users/delete", method = RequestMethod.DELETE)
-//	public void delete(@RequestBody User user) {
-//		userRepository.delete(user);
-//	}
+	@Autowired
+	private IUserEntityRepository userRepository;
+
+	@RequestMapping(value = "/greeting", method = RequestMethod.GET)
+	@ResponseBody
+	public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
+			Model model) {
+		model.addAttribute("name", name);
+		// return "classpath:src/main/resources/templates/greeting";
+		return "greeting";
+	}
+
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public List<User> listAll() {
+		System.out.println("coucou je suis la methode listAll()");
+		return userRepository.findAll();
+	}
+
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+	public User getOne(@PathVariable("id") Integer id) {
+		return userRepository.findOne(id);
+	}
+
+	@RequestMapping(value = "/users/create", method = RequestMethod.PUT)
+	public User create(@RequestBody User user) {
+		return userRepository.save(user);
+	}
+
+	@RequestMapping(value = "/users/delete", method = RequestMethod.DELETE)
+	public void delete(@RequestBody User user) {
+		userRepository.delete(user);
+	}
 
 }

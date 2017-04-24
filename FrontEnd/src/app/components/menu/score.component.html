@@ -1,0 +1,30 @@
+<h2>Score table</h2>
+
+<label class="switch">
+  <input type="checkbox">
+  <div class="slider round"></div>
+</label>
+
+<table class="table table-stripped" ng-repeat="u in ScCtrl.listUsers | orderBy : '-level'">
+    <caption>
+        <h3>{{u.nickname}} <br>  N° {{$index+1}}</h3>
+    </caption>
+
+    <tr>
+        <td rowspan="4"><img src="../resources/images/player.png"></td>
+        <td colspan="2">Level : {{u.level}}<br>
+            <progress-bar-score percent="{{u.exp}}"></progress-bar-score>
+        </td>
+    </tr>
+    <tr>
+
+    </tr>
+    <tr>
+        <td><img src="../resources/images/coin.png"></td>
+        <td>{{u.gold}} gold</td>
+    </tr>
+    <tr>
+        <td><img src="../resources/images/gemBlue.png"></td>
+        <td>{{(u.gem > 1) ? u.gem + ' gems' : u.gem + ' gem' }}</td>
+    </tr>
+</table>

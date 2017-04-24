@@ -3,7 +3,7 @@
 @import 'app/components/menu/menu.component.scss';
 @import 'app/components/footer/footer.component.scss';
 @import 'app/components/download/download.component.scss';
-
+@import 'app/components/score/score.component.scss';
 
 html{
     overflow-y: scroll;
@@ -38,6 +38,6 @@ h2{
     font-weight:bold;
     width : 0%;
    background-color: orange;
-   
+
    border-radius: 15px;
 }
