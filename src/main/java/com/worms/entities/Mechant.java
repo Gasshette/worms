@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.worms.hud.HudMechant;
 
+
+
+
 public class Mechant extends Sprite implements InputProcessor {
 
 	private float speed = 10;
@@ -115,7 +118,6 @@ public class Mechant extends Sprite implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-
 		this.isMovedRight = false;
 		this.isMovedLeft = false;
 

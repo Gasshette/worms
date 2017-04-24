@@ -19,23 +19,34 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.worms.game.GameWorms;
 
 public class LoginView implements Screen {
+
 	private final GameWorms game;
+
 	private Skin skin;
 	private Stage stage;
 	private BitmapFont bfont;
 	private Pixmap pixmap;
 
+	private TextButtonStyle textButtonStyle;
+	private TextFieldStyle textFieldStyle;
+
+	private TextField login;
+	private TextField pwd;
+	private TextButton exitButton;
+	private TextButton connectButton;
+	private TextButton playButton;
+
 	public LoginView(GameWorms game) {
 		this.game = game;
 		this.stage = new Stage();
 		this.skin = new Skin();
-		this.bfont = new BitmapFont();
+		this.bfont = game.getFont();
 
 		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);
-		this.pixmap.setColor(Color.RED);
+		this.pixmap.setColor(Color.WHITE);
 		this.pixmap.fill();
 
-		this.skin.add("white", new Texture(this.pixmap));
+		this.skin.add("pixmap", new Texture(this.pixmap));
 		this.skin.add("default", this.bfont);
 
 		Gdx.input.setInputProcessor(this.stage);
@@ -44,62 +55,87 @@ public class LoginView implements Screen {
 	}
 
 	public void create() {
-		/**
+		/*
 		 * Configuration du style d'un bouton
 		 */
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = this.skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = this.skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = this.skin.newDrawable("white", Color.BLUE);
-		textButtonStyle.over = this.skin.newDrawable("white", Color.LIGHT_GRAY);
-		textButtonStyle.font = this.skin.getFont("default");
-		this.skin.add("default", textButtonStyle);
+		this.textButtonStyle = new TextButtonStyle();
+		this.textButtonStyle.up = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
+		this.textButtonStyle.down = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
+		this.textButtonStyle.checked = this.skin.newDrawable("pixmap", Color.BLUE);
+		this.textButtonStyle.over = this.skin.newDrawable("pixmap", Color.LIGHT_GRAY);
+		this.textButtonStyle.font = this.skin.getFont("default");
+		this.skin.add("default", this.textButtonStyle);
 
-		/**
+		/*
 		 * Configuration du style d'une zone de texte
 		 */
-		TextFieldStyle textFieldStyle = new TextFieldStyle(this.bfont, Color.BLUE, null, null, null);
+		this.textFieldStyle = new TextFieldStyle(this.bfont, Color.BLACK, null, null, null);
+		this.textFieldStyle.focusedBackground = this.skin.newDrawable("pixmap", Color.WHITE);
+		this.textFieldStyle.messageFontColor = Color.BLACK;
+		this.textFieldStyle.background = this.skin.newDrawable("pixmap", Color.WHITE);
 
-		// URL textfield
-		final TextField url = new TextField("TEXTE NIMPORTE QUOI", textFieldStyle);
-		url.setWidth(300);
-		url.setPosition(this.stage.getWidth() / 2 - url.getWidth(), 400);
-		this.stage.addActor(url);
+		// LOGIN textfield
+		this.login = new TextField("", textFieldStyle);
+		this.login.setWidth(400);
+		this.login.setPosition(this.stage.getWidth() / 2 - login.getWidth() / 2, 400);
+		this.login.setMessageText("Username");
+		this.stage.addActor(login);
 
-		/**
+		// PWD textfield
+		this.pwd = new TextField("", textFieldStyle);
+		this.pwd.setWidth(400);
+		this.pwd.setPosition(this.stage.getWidth() / 2 - login.getWidth() / 2, 250);
+		this.pwd.setMessageText("Password");
+		this.stage.addActor(pwd);
+
+		/*
 		 * Creation du bouton de connexion
 		 */
-		final TextButton connectButton = new TextButton("CONNECT", textButtonStyle);
-		connectButton.setPosition(this.stage.getWidth() / 2 - connectButton.getWidth() / 2, 100);
+		this.connectButton = new TextButton("CONNECT", textButtonStyle);
+		this.connectButton.setPosition(this.stage.getWidth() / 2 - connectButton.getWidth() / 2, 100);
 		this.stage.addActor(connectButton);
 
-		connectButton.addListener(new ChangeListener() {
+		this.connectButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				LoginView.this.game.setScreen(new MainMenuView(game));
 			}
 		});
-
-		/**
-		 * Creation du bouton de retour
+		
+		/*
+		 * temp btn to play game
 		 */
-		final TextButton backButton = new TextButton("BACK", textButtonStyle);
-		backButton.setPosition(50, 50);
-		backButton.setHeight(35);
-		this.stage.addActor(backButton);
+		this.playButton = new TextButton("SOLO", textButtonStyle);
+		this.playButton.setPosition(this.stage.getWidth() - playButton.getWidth() - 50, 50);
+		this.stage.addActor(playButton);
 
-		backButton.addListener(new ChangeListener() {
+		this.playButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				LoginView.this.game.setScreen(new MainMenuView(LoginView.this.game));
+				LoginView.this.game.setScreen(new LobbyView(LoginView.this.game));
+			}
+		});
+		/*
+		 * Creation du bouton de retour
+		 */
+		this.exitButton = new TextButton("BACK", textButtonStyle);
+		this.exitButton.setPosition(50, 50);
+		this.exitButton.setHeight(35);
+		this.stage.addActor(exitButton);
+
+		this.exitButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				Gdx.app.exit();
 			}
 		});
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
 		this.stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		this.stage.draw();
 	}

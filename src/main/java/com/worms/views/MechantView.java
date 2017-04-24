@@ -151,6 +151,30 @@ public class MechantView implements Screen {
 
 		// Display HUD
 		this.hud.stage.draw();
+		/**
+		 * Gestion de la camera
+		 */
+		this.camera.position.set(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight(), 0);
+		this.camera.update();
+		this.renderer.setView(this.camera);
+
+		/**
+		 * Gestion du rendu
+		 */
+		this.renderer.getBatch().begin();
+		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("background"));
+		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("foreground"));
+		this.player.draw(this.renderer.getBatch());
+		this.renderer.getBatch().end();
+
+		/**
+		 * Affichage des autres joueurs
+		 */
+		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
+			this.renderer.getBatch().begin();
+			entry.getValue().draw(this.renderer.getBatch());
+			this.renderer.getBatch().end();
+		}
 	}
 
 	@Override

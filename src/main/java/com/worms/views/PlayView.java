@@ -21,6 +21,7 @@ import com.worms.entities.Player;
 import com.worms.game.GameWorms;
 import com.worms.network.Client;
 
+
 public class PlayView implements Screen {
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
@@ -40,13 +41,14 @@ public class PlayView implements Screen {
 
 	// Multi
 	private Client client = null;
-	private HashMap<String, Player> friendlyPlayers;
+	private HashMap<String, Player> mates;
 	private final float UPDATE_TIME = 1 / 60f;
 	private float timer = 0;
 	private HashMap<Integer, Texture> hashmapEnemies;
 
-	public PlayView(GameWorms game) {
+	public PlayView(GameWorms game, Client client) {
 		this.game = game;
+		this.client = client;
 	}
 
 	@Override
@@ -56,9 +58,11 @@ public class PlayView implements Screen {
 		this.camera = new OrthographicCamera();
 
 		this.friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
-		this.friendlyPlayers = new HashMap<String, Player>();
+		this.mates = new HashMap<String, Player>();
 
-		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
+		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")),
+				(TiledMapTileLayer) this.map.getLayers().get("background"),
+				(TiledMapTileLayer) this.map.getLayers().get("foreground"));
 		this.player.setPosition(2 * 70, 19 * 70);
 
 		this.enemies = new HashMap<Integer, Enemy>();
