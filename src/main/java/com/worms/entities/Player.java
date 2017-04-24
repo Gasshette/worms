@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Player extends Sprite implements InputProcessor {
 	/** The movement velocity */
 	private Vector2 velocity = new Vector2();
-	private float speed = 400, gravity = 400;
+	private float speed = 500, gravity = 800;
 
 	// Layers of the map
 	private TiledMapTileLayer background;
@@ -205,7 +205,6 @@ public class Player extends Sprite implements InputProcessor {
 			break;
 		case Keys.ENTER:
 			this.shoot = true;
-			break;
 		}
 
 		return true;

@@ -2,7 +2,6 @@ package com.worms.views;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,18 +35,15 @@ public class PlayView implements Screen {
 	private int decalage = 15;
 
 	// Ennemies
-	private float spawn;
-	private float spawnTimerMin = 0.3f;
-	private float spawnTimerMax = 0.6f;
-	private Random random;
-	private ArrayList<Enemy> enemies;
-	private ArrayList<Enemy> enemiesToRemove;
+	private HashMap<Integer, Enemy> enemies;
+	private ArrayList<Integer> enemiesToRemove;
 
 	// Multi
 	private Client client = null;
 	private HashMap<String, Player> friendlyPlayers;
 	private final float UPDATE_TIME = 1 / 60f;
-	float timer = 0;
+	private float timer = 0;
+	private HashMap<Integer, Texture> hashmapEnemies;
 
 	public PlayView(GameWorms game) {
 		this.game = game;
@@ -65,8 +61,14 @@ public class PlayView implements Screen {
 		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
 		this.player.setPosition(2 * 70, 19 * 70);
 
+		this.enemies = new HashMap<Integer, Enemy>();
+		this.hashmapEnemies = new HashMap<Integer, Texture>();
+		this.hashmapEnemies.put(1, new Texture(Gdx.files.internal("Base pack/Enemies/flyFly1.png")));
+		this.hashmapEnemies.put(2, new Texture(Gdx.files.internal("Base pack/Enemies/slimeWalk1.png")));
+		this.hashmapEnemies.put(3, new Texture(Gdx.files.internal("Extra animations and enemies/Enemy sprites/spider.png")));
+
 		try {
-			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers);
+			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers, this.enemies, this.hashmapEnemies);
 			this.client.configSocketEvents();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,12 +76,7 @@ public class PlayView implements Screen {
 
 		this.bullets = new ArrayList<Bullet>();
 		this.bulletsToRemove = new ArrayList<Bullet>();
-
-		this.enemies = new ArrayList<Enemy>();
-		this.enemiesToRemove = new ArrayList<Enemy>();
-
-		this.random = new Random();
-		this.resetSpawnB();
+		this.enemiesToRemove = new ArrayList<Integer>();
 
 		Gdx.input.setInputProcessor(this.player);
 	}
@@ -108,31 +105,6 @@ public class PlayView implements Screen {
 		this.decalage--;
 		this.decalage = (this.decalage == 0) ? this.player.getTimerDecalage() : this.decalage;
 
-		// Ennemies
-		this.spawn -= Gdx.graphics.getDeltaTime();
-		if (this.spawn < 0) {
-			Enemy newEnemy;
-			int spawnY = (int) (Math.floor(Math.random() * (Gdx.graphics.getHeight() * 2 - 500)) + 500);
-			int spawnX = (int) (this.player.getX() + Gdx.graphics.getWidth());
-			this.resetSpawnB();
-
-			while (spawnY < 500 || spawnY > Gdx.graphics.getHeight() * 2) {
-				spawnY = (int) (Math.floor(Math.random() * (Gdx.graphics.getHeight() * 2 - 500)) + 500);
-			}
-
-			newEnemy = new Enemy(new Texture(Gdx.files.internal("Base pack/Enemies/flyFly1.png")), spawnX, spawnY);
-			this.enemies.add(newEnemy);
-		}
-
-		// Affichage des ennemies
-		for (Enemy enemy : this.enemies) {
-			enemy.update(Gdx.graphics.getDeltaTime());
-
-			if (enemy.getRemove()) {
-				this.enemiesToRemove.add(enemy);
-			}
-		}
-
 		// Affichage des bullets
 		for (Bullet bullet : this.bullets) {
 			bullet.update(Gdx.graphics.getDeltaTime());
@@ -144,34 +116,44 @@ public class PlayView implements Screen {
 
 		// Gestion de la collision bullet / ennemy
 		for (Bullet bullet : this.bullets) {
-			for (Enemy enemy : this.enemies) {
-				if (bullet.getCollision().collidesWith(enemy.getCollision())) {
+			for (HashMap.Entry<Integer, Enemy> entry : this.enemies.entrySet()) {
+				if (bullet.getCollision().collidesWith(entry.getValue().getCollision())) {
 					this.bulletsToRemove.add(bullet);
-					this.enemiesToRemove.add(enemy);
+					this.enemiesToRemove.add(entry.getKey());
+					System.out.println("collision");
+					break;
 				}
 			}
 		}
 
-		this.enemies.removeAll(this.enemiesToRemove);
+		// On supprime la balle et l'ennemi et on envoi au client
+		this.enemies.keySet().removeAll(this.enemiesToRemove);
 		this.bullets.removeAll(this.bulletsToRemove);
+
+		if (this.enemiesToRemove.size() > 0) {
+			this.client.emit("killEnemies", this.enemiesToRemove);
+			this.enemiesToRemove = new ArrayList<Integer>();
+		}
 
 		for (Bullet bullet : this.bullets) {
 			bullet.render(this.renderer.getBatch());
 		}
 
-		for (Enemy enemy : this.enemies) {
-			enemy.render(this.renderer.getBatch());
+		// Display enemies
+		this.majEnemiesPosition(Gdx.graphics.getDeltaTime());
+		for (HashMap.Entry<Integer, Enemy> entry : this.enemies.entrySet()) {
+			//entry.getValue().update(Gdx.graphics.getDeltaTime());
+			entry.getValue().draw(this.renderer.getBatch());
+		}
+		
+		// Display players
+		this.majPlayersPosition(Gdx.graphics.getDeltaTime());
+		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
+			entry.getValue().draw(this.renderer.getBatch());
 		}
 
 		this.renderer.getBatch().end();
 
-		// Multi
-		this.updateServer(Gdx.graphics.getDeltaTime());
-		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
-			this.renderer.getBatch().begin();
-			entry.getValue().draw(this.renderer.getBatch());
-			this.renderer.getBatch().end();
-		}
 	}
 
 	@Override
@@ -179,23 +161,40 @@ public class PlayView implements Screen {
 		this.camera.viewportWidth = width;
 		this.camera.viewportHeight = height;
 	}
-
-	public void updateServer(float dt) {
+	
+	public void majEnemiesPosition(float dt) {
+		for (HashMap.Entry<Integer, Enemy> entry : this.enemies.entrySet()) {
+			System.out.println(entry.getValue().getX());
+			System.out.println(entry.getValue().getY());
+			System.out.println(entry.getKey());
+		}
+//		this.timer += dt;
+//		if (this.timer >= this.UPDATE_TIME && this.player != null) {
+//			JSONObject data = new JSONObject();
+//			try {
+//				data.put("x", this.player.getX());
+//				data.put("y", this.player.getY());
+//
+//				this.client.emit("movePlayers", data);
+//			} catch (JSONException e) {
+//				e.printStackTrace();
+//			}
+//		}
+	}
+	
+	public void majPlayersPosition(float dt) {
 		this.timer += dt;
 		if (this.timer >= this.UPDATE_TIME && this.player != null) {
 			JSONObject data = new JSONObject();
 			try {
 				data.put("x", this.player.getX());
 				data.put("y", this.player.getY());
-				this.client.emit("moved", data);
+
+				this.client.emit("movePlayers", data);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public void resetSpawnB() {
-		this.spawn = this.random.nextFloat() * (this.spawnTimerMax - this.spawnTimerMin) + this.spawnTimerMin;
 	}
 
 	@Override

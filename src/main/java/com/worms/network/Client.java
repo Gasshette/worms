@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.worms.entities.Enemy;
 import com.worms.entities.Player;
 
 import io.socket.client.IO;
@@ -19,19 +20,23 @@ import io.socket.emitter.Emitter.Listener;
 public class Client {
 	private Socket socket;
 	private HashMap<String, Player> friendlyPlayers;
+	private HashMap<Integer, Enemy> enemies;
+	private HashMap<Integer, Texture> hashmapEnemies;
 	private Texture friendPlayer;
 	private TiledMap map;
 
-	public Client(TiledMap map, Texture friendPlayer, HashMap<String, Player> friendlyPlayers) throws Exception {
+	public Client(TiledMap map, Texture friendPlayer, HashMap<String, Player> friendlyPlayers, HashMap<Integer, Enemy> enemies, HashMap<Integer, Texture> hashmapEnemies) throws Exception {
 		this.connectSocket();
 
 		this.map = map;
 		this.friendPlayer = friendPlayer;
 		this.friendlyPlayers = friendlyPlayers;
+		this.enemies = enemies;
+		this.hashmapEnemies = hashmapEnemies;
 	}
 
 	private void connectSocket() throws Exception {
-		this.socket = IO.socket("http://92.222.82.5:8080");
+		this.socket = IO.socket("http://localhost:8080");
 		this.socket.connect();
 	}
 
@@ -72,7 +77,7 @@ public class Client {
 				}
 			}
 
-		}).on("moved", new Listener() {
+		}).on("movePlayers", new Listener() {
 
 			@Override
 			public void call(Object... args) {
@@ -118,6 +123,83 @@ public class Client {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+			}
+
+		}).on("newEnemy", new Listener() {
+
+			@Override
+			public void call(Object... args) {
+				JSONObject data = (JSONObject) args[0];
+
+				Texture texture = null;
+				try {
+					int id = data.getInt("id");
+					double x = data.getDouble("x");
+					double y = data.getDouble("y");
+					int idTexture = data.getInt("texture");
+
+					for (HashMap.Entry<Integer, Texture> entry : Client.this.hashmapEnemies.entrySet()) {
+						if (entry.getKey() == idTexture) {
+							texture = entry.getValue();
+						}
+					}
+
+					Enemy enemy = new Enemy(texture, (float) x, (float) y);
+					Client.this.enemies.put(id, enemy);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}).on("getEnemies", new Listener() {
+
+			@Override
+			public void call(Object... args) {
+				JSONArray objects = (JSONArray) args[0];
+
+				try {
+					for (int i = 0; i < objects.length(); i++) {
+						int texture = objects.getJSONObject(i).getInt("texture");
+
+						double x = objects.getJSONObject(i).getDouble("x");
+						double y = objects.getJSONObject(i).getDouble("y");
+
+						int id = objects.getJSONObject(i).getInt("id");
+
+						System.out.println("Texture : " + texture);
+						System.out.println("X : " + x);
+						System.out.println("Y : " + y);
+						System.out.println("id : " + id);
+						System.out.println("------");
+
+						if (Client.this.enemies.get(id) != null) {
+							Enemy enemy = Client.this.enemies.get(id);
+							enemy.setX((float) x);
+							enemy.setY((float) y);
+
+							Client.this.enemies.put(id, enemy);
+						}
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				// try {
+				// for (int i = 0; i < objects.length(); i++) {
+				// String playerId = objects.getJSONObject(i).getString("id");
+				// double x = objects.getJSONObject(i).getDouble("x");
+				// double y = objects.getJSONObject(i).getDouble("y");
+				//
+				// if (Client.this.friendlyPlayers.get(playerId) != null) {
+				// Player player = Client.this.friendlyPlayers.get(playerId);
+				// player.setX((float) x);
+				// player.setY((float) y);
+				//
+				// Client.this.friendlyPlayers.put(playerId, player);
+				// }
+				// }
+				// } catch (JSONException e) {
+				// e.printStackTrace();
+				// }
 			}
 
 		});

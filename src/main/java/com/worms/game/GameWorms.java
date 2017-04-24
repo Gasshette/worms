@@ -9,11 +9,13 @@ public class GameWorms extends Game {
 
 	private SpriteBatch sb;
 	private BitmapFont font;
+	private String map;
 
 	@Override
 	public void create() {
 		this.sb = new SpriteBatch();
 		this.font = new BitmapFont();
+		this.map = "carte.tmx";
 		this.setScreen(new MainMenuView(this));
 	}
 
@@ -23,6 +25,14 @@ public class GameWorms extends Game {
 
 		this.sb.dispose();
 		this.font.dispose();
+	}
+
+	public String getMap() {
+		return this.map;
+	}
+
+	public void setMap(String map) {
+		this.map = map;
 	}
 
 	@Override

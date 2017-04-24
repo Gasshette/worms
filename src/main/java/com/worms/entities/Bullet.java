@@ -19,7 +19,7 @@ public class Bullet extends Sprite {
 		this.x = x;
 		this.y = y;
 		
-		this.collision = new Collision(this.x, this.y, 72, 36);
+		this.collision = new Collision(this.x, this.y, texture.getWidth(), texture.getHeight());
 	}
 
 	public void update(float deltaTime) {
