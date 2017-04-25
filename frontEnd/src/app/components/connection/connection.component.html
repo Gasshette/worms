@@ -1,7 +1,7 @@
 <div>
     <h2>Connection to the website</h2>
-    <div ng-switch on="conCtrl.getTypeOf(conCtrl.authedUser)">
-        <div ng-switch-when="undefined">
+    <div ng-switch on="conCtrl.authedUser">
+        <div ng-switch-when="null">
             <form class="form-inline form-vertical" name="formConnection" ng-submit="conCtrl.authenticate()">
                 <div class="form-group">
 

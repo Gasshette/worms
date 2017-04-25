@@ -7,16 +7,7 @@
             this._http = $http;
             this.login = '';
             this.password = '';
-            this.authedUser;
-            this.init();
-        }
-
-        init() {
-            this.authedUser = this._authProvider.authedUser;
-        }
-
-        getTypeOf(element) {
-            return typeof element;
+            this.authedUser = this._authProvider.authedUser; 
         }
 
         authenticate() {

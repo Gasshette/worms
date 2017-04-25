@@ -1,9 +1,8 @@
 {
     "use strict";
     class ScoreController {
-        constructor($http, authProvider, scoreTemplateProvider) {
+        constructor($http, authProvider) {
             this._authProvider = authProvider;
-            this._scoreTemplateProvider = scoreTemplateProvider;
             this._http = $http;
             this.listUsers = {};
             this.currentView = "Normal view";
@@ -18,24 +17,20 @@
         }
 
         switchView() {
-            // this.currentView = (this.currentView == "Normal view") ? "Compact view" : "Normal view";
-            console.log(this.currentView);
-            // this._scoreTemplateProvider.getTemplate(this.currentView);
-
-            if(this.currentView == "Normal view"){
+            if (this.currentView == "Normal view") {
                 this.currentView = "Compact view";
                 this.compactView.css("display", "block");
                 this.normalView.css("display", "none");
             }
-            else if(this.currentView == "Compact view"){
+            else if (this.currentView == "Compact view") {
                 this.currentView = "Normal view";
                 this.normalView.css("display", "block");
                 this.compactView.css("display", "none");
             }
-            else{
+            else {
                 console.log("fail to load view. please check the value of ScCtrl.currentView variable");
             }
-    }
+        }
 
         getUsers() {
             this.listUsers = this._authProvider.allUsers;
@@ -50,8 +45,8 @@
             controller: ScoreController,
             controllerAs: 'ScCtrl',
             templateUrl: "app/components/score/score.component.html"
-    })
-        .directive("progressBarScore", function (authProvider, scoreTemplateProvider) {
+        })
+        .directive("progressBarScore", function (authProvider) {
             return {
                 link: function (scope, element, attrs) {
                     let progbar = angular.element(document.querySelector(".progress"));

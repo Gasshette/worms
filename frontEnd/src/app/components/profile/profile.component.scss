@@ -1,0 +1,31 @@
+.profile-component{
+    .table{
+        margin-bottom : 70px;
+        font-weight: bold;
+        
+        caption {
+            padding-left: 15px;
+            padding-bottom: 0px;
+            padding-top: 0px;
+            background-color: rgb(130,190,46);
+            border-radius: 10px 10px 0px 0px;
+            -moz-border-radius: 10px 10px 0px 0px;
+            -webkit-border-radius: 10px 10px 0px 0px;
+            border: 0px solid #000000;
+
+            h4 {
+                color: #fff;
+                margin-top: 10px;
+            }
+        }
+
+        tr{
+            text-align : center;
+
+            td{
+                vertical-align: middle;
+            }
+        }
+    }
+}
+

@@ -5,23 +5,14 @@
             this._http = $http;
             this._authProvider = authProvider;
             this._location = $location;
-            this.authedUser;
-            this.login;
-            this.password;
+            this.authedUser = this._authProvider.authedUser;
+            this.login = null;
+            this.password = null;
             this.gold = 0;
             this.gem = 0;
             this.level = 1;
             this.exp = 0;
 
-            this.init();
-        }
-
-        init() {
-            this.authedUser = this._authProvider.authedUser;
-        }
-
-        getTypeOf(element) {
-            return typeof element;
         }
 
         signIn() {

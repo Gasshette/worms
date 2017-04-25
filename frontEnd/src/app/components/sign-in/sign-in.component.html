@@ -1,8 +1,8 @@
 <div>
     <h2>Sign in and create your account</h2>
-    <div ng-switch on="SICtrl.getTypeOf(SICtrl.authedUser)">
+    <div ng-switch on="SICtrl.authedUser">
 
-        <div ng-switch-when="undefined">
+        <div ng-switch-when="null">
             <form name="formInscription" class="form-inline" ng-submit="SICtrl.signIn()">
                 <div class="form-group">
 

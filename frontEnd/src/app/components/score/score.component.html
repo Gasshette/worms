@@ -1,5 +1,7 @@
 <div class="temp-score">
 
+    <h2>Ladder</h2>
+
     <div class="switch-component">
         <div class="render">
             <label class="switch">
@@ -13,8 +15,6 @@
     </div>
 
     <div class="normal">
-        <h2>Ladder</h2>
-
         <table class="table table-stripped" ng-repeat="u in ScCtrl.listUsers | orderBy : '-level'">
             <caption>
                 <h4>{{u.nickname}} - N° {{$index+1}}</h4>
@@ -41,8 +41,6 @@
     </div>
 
     <div class="compact">
-        <h2>ladder : compact</h2>
-
         <table class="table table-stripped">
             <header>
                 <tr>

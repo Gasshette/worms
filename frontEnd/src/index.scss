@@ -4,6 +4,7 @@
 @import 'app/components/footer/footer.component.scss';
 @import 'app/components/download/download.component.scss';
 @import 'app/components/score/score.component.scss';
+@import 'app/components/profile/profile.component.scss';
 
 html{
     overflow-y: scroll;
@@ -18,7 +19,7 @@ body{
 }
 
 h2{
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 #progressbar{
@@ -41,3 +42,4 @@ h2{
 
    border-radius: 15px;
 }
+
