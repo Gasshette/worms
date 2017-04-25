@@ -17,8 +17,6 @@ public class Mechant extends Sprite implements InputProcessor {
 	private boolean isMovedRight = false;
 	private boolean isMovedLeft = false;
 	private int movableSpace = 100;
-
-	
 	private int enemyToAdd;
 	private boolean isAddEnemy = false;
 	private HudMechant hud;

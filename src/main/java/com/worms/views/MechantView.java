@@ -18,6 +18,7 @@ import com.worms.entities.Enemy;
 import com.worms.entities.Mechant;
 import com.worms.entities.Player;
 import com.worms.game.GameWorms;
+import com.worms.hud.HudHero;
 import com.worms.hud.HudMechant;
 import com.worms.network.Client;
 
@@ -64,7 +65,7 @@ public class MechantView implements Screen {
 
 		this.mechant = new Mechant();
 		this.mechant.setPosition(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		this.mechant.setHud(this.hud);
+		
 
 		try {
 			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers, this.enemies, this.hashmapEnemies);
@@ -72,7 +73,7 @@ public class MechantView implements Screen {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		this.mechant.setHud(this.hud);
 		Gdx.input.setInputProcessor(this.mechant);
 	}
 
@@ -101,6 +102,10 @@ public class MechantView implements Screen {
 			// Get the player the X position of the 1st player
 			float maxPositionPlayer = 0;
 			for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
+				/*if(entry.getValue().getHud() == null) {
+					entry.getValue().setHud(new HudHero(this.game.getSb()));
+				}*/
+				
 				if (entry.getValue().getX() > maxPositionPlayer) {
 					maxPositionPlayer = entry.getValue().getX();
 				}
@@ -150,11 +155,11 @@ public class MechantView implements Screen {
 		this.renderer.getBatch().end();
 
 		// Display HUD
-		this.hud.stage.draw();
+		
 		/**
 		 * Gestion de la camera
 		 */
-		this.camera.position.set(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight(), 0);
+		this.camera.position.set(this.mechant.getX() + this.mechant.getWidth(), this.mechant.getY() + this.mechant.getHeight(), 0);
 		this.camera.update();
 		this.renderer.setView(this.camera);
 
@@ -164,7 +169,7 @@ public class MechantView implements Screen {
 		this.renderer.getBatch().begin();
 		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("background"));
 		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("foreground"));
-		this.player.draw(this.renderer.getBatch());
+		this.mechant.draw(this.renderer.getBatch());
 		this.renderer.getBatch().end();
 
 		/**
@@ -175,6 +180,7 @@ public class MechantView implements Screen {
 			entry.getValue().draw(this.renderer.getBatch());
 			this.renderer.getBatch().end();
 		}
+		this.hud.stage.draw();
 	}
 
 	@Override
@@ -201,6 +207,7 @@ public class MechantView implements Screen {
 		this.map.dispose();
 		this.renderer.dispose();
 		this.mechant.getTexture().dispose();
+		this.hud.dispose();
 		this.client.close();
 	}
 

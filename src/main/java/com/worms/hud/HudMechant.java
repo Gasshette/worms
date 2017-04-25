@@ -103,5 +103,4 @@ public class HudMechant implements Disposable {
 		}
 		return false;
 	}
-
 }
