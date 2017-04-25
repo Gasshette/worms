@@ -1,12 +1,12 @@
 'use strict';
 
-var cov_21w0ak3436 = function () {
-  var path = 'C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\main.spec.js',
-      hash = '2d37aaba8660848273c1816151416f1473cca65f',
+var cov_2dt0wvqpru = function () {
+  var path = 'C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\main.spec.js',
+      hash = '791c1e5eb30da9b959f267a464eb6a95dc0f3d51',
       global = new Function('return this')(),
       gcv = '__coverage__',
       coverageData = {
-    path: 'C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\main.spec.js',
+    path: 'C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\main.spec.js',
     statementMap: {
       '0': {
         start: {
@@ -499,72 +499,72 @@ var cov_21w0ak3436 = function () {
   return coverage[path] = coverageData;
 }();
 
-++cov_21w0ak3436.s[0];
+++cov_2dt0wvqpru.s[0];
 describe('main component', function () {
-  ++cov_21w0ak3436.f[0];
-  ++cov_21w0ak3436.s[1];
+  ++cov_2dt0wvqpru.f[0];
+  ++cov_2dt0wvqpru.s[1];
 
   beforeEach(module('app', function ($provide) {
-    ++cov_21w0ak3436.f[1];
-    ++cov_21w0ak3436.s[2];
+    ++cov_2dt0wvqpru.f[1];
+    ++cov_2dt0wvqpru.s[2];
 
     $provide.factory('fountainHeaderDirective', function () {
-      ++cov_21w0ak3436.f[2];
-      ++cov_21w0ak3436.s[3];
+      ++cov_2dt0wvqpru.f[2];
+      ++cov_2dt0wvqpru.s[3];
 
       return {};
     });
   }));
-  ++cov_21w0ak3436.s[4];
+  ++cov_2dt0wvqpru.s[4];
   beforeEach(module('app', function ($provide) {
-    ++cov_21w0ak3436.f[3];
-    ++cov_21w0ak3436.s[5];
+    ++cov_2dt0wvqpru.f[3];
+    ++cov_2dt0wvqpru.s[5];
 
     $provide.factory('fountainTitleDirective', function () {
-      ++cov_21w0ak3436.f[4];
-      ++cov_21w0ak3436.s[6];
+      ++cov_2dt0wvqpru.f[4];
+      ++cov_2dt0wvqpru.s[6];
 
       return {};
     });
   }));
-  ++cov_21w0ak3436.s[7];
+  ++cov_2dt0wvqpru.s[7];
   beforeEach(module('app', function ($provide) {
-    ++cov_21w0ak3436.f[5];
-    ++cov_21w0ak3436.s[8];
+    ++cov_2dt0wvqpru.f[5];
+    ++cov_2dt0wvqpru.s[8];
 
     $provide.factory('fountainTechsDirective', function () {
-      ++cov_21w0ak3436.f[6];
-      ++cov_21w0ak3436.s[9];
+      ++cov_2dt0wvqpru.f[6];
+      ++cov_2dt0wvqpru.s[9];
 
       return {};
     });
   }));
-  ++cov_21w0ak3436.s[10];
+  ++cov_2dt0wvqpru.s[10];
   beforeEach(module('app', function ($provide) {
-    ++cov_21w0ak3436.f[7];
-    ++cov_21w0ak3436.s[11];
+    ++cov_2dt0wvqpru.f[7];
+    ++cov_2dt0wvqpru.s[11];
 
     $provide.factory('fountainFooterDirective', function () {
-      ++cov_21w0ak3436.f[8];
-      ++cov_21w0ak3436.s[12];
+      ++cov_2dt0wvqpru.f[8];
+      ++cov_2dt0wvqpru.s[12];
 
       return {};
     });
   }));
-  ++cov_21w0ak3436.s[13];
+  ++cov_2dt0wvqpru.s[13];
   it('should render the header, title, techs and footer', angular.mock.inject(function ($rootScope, $compile) {
-    ++cov_21w0ak3436.f[9];
+    ++cov_2dt0wvqpru.f[9];
 
-    var element = (++cov_21w0ak3436.s[14], $compile('<app>Loading...</app>')($rootScope));
-    ++cov_21w0ak3436.s[15];
+    var element = (++cov_2dt0wvqpru.s[14], $compile('<app>Loading...</app>')($rootScope));
+    ++cov_2dt0wvqpru.s[15];
     $rootScope.$digest();
-    ++cov_21w0ak3436.s[16];
+    ++cov_2dt0wvqpru.s[16];
     expect(element.find('fountain-header').length).toEqual(1);
-    ++cov_21w0ak3436.s[17];
+    ++cov_2dt0wvqpru.s[17];
     expect(element.find('fountain-title').length).toEqual(1);
-    ++cov_21w0ak3436.s[18];
+    ++cov_2dt0wvqpru.s[18];
     expect(element.find('fountain-techs').length).toEqual(1);
-    ++cov_21w0ak3436.s[19];
+    ++cov_2dt0wvqpru.s[19];
     expect(element.find('fountain-footer').length).toEqual(1);
   }));
 });

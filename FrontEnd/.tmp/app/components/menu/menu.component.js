@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_t7atc5vh7 = function () {
-    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\menu\\menu.component.js",
-        hash = "1e542394d91e03211bc7600c931d227b52392dd4",
+var cov_3sjce20g5 = function () {
+    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\menu\\menu.component.js",
+        hash = "8362aec384989bdfc760449d632ade63d188b1c5",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\menu\\menu.component.js",
+        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\menu\\menu.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -678,7 +678,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_t7atc5vh7.s[0];
+    ++cov_3sjce20g5.s[0];
 
     "use strict";
 
@@ -686,62 +686,62 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function MenuController(authProvider, $interval, $location, $scope) {
             _classCallCheck(this, MenuController);
 
-            ++cov_t7atc5vh7.f[0];
+            ++cov_3sjce20g5.f[0];
 
-            var that = (++cov_t7atc5vh7.s[1], this);
-            ++cov_t7atc5vh7.s[2];
+            var that = (++cov_3sjce20g5.s[1], this);
+            ++cov_3sjce20g5.s[2];
             this._scope = $scope;
-            ++cov_t7atc5vh7.s[3];
+            ++cov_3sjce20g5.s[3];
             this._interval = $interval;
-            ++cov_t7atc5vh7.s[4];
+            ++cov_3sjce20g5.s[4];
             this._authProvider = authProvider;
-            ++cov_t7atc5vh7.s[5];
+            ++cov_3sjce20g5.s[5];
             this._location = $location;
-            ++cov_t7atc5vh7.s[6];
+            ++cov_3sjce20g5.s[6];
             this.logged = null;
-            ++cov_t7atc5vh7.s[7];
+            ++cov_3sjce20g5.s[7];
             this.colors = ["orange", "orangered", "yellow", "yellowgreen", "chocolate", "cornflowerblue", "darkgray", "darkorange", "dodgerblue", "gold", "limegreen", "peru", "plum", "royalblue", "whitesmoke", "wheat"];
-            ++cov_t7atc5vh7.s[8];
+            ++cov_3sjce20g5.s[8];
             this.targetColor = null;
 
             //create only one promise for the entire page.
-            ++cov_t7atc5vh7.s[9];
+            ++cov_3sjce20g5.s[9];
             this.promisedColor = this._interval(function (e) {
-                ++cov_t7atc5vh7.f[1];
+                ++cov_3sjce20g5.f[1];
 
-                var color = (++cov_t7atc5vh7.s[10], that.colors[Math.floor(Math.random() * that.colors.length)]);
-                ++cov_t7atc5vh7.s[11];
+                var color = (++cov_3sjce20g5.s[10], that.colors[Math.floor(Math.random() * that.colors.length)]);
+                ++cov_3sjce20g5.s[11];
                 if (that.targetColor) {
-                    ++cov_t7atc5vh7.b[0][0];
-                    ++cov_t7atc5vh7.s[12];
+                    ++cov_3sjce20g5.b[0][0];
+                    ++cov_3sjce20g5.s[12];
 
                     that.targetColor.css("borderBottom", "2px solid " + color);
-                    ++cov_t7atc5vh7.s[13];
+                    ++cov_3sjce20g5.s[13];
                     if (that.targetColor.find(".glyphicon-home")) {
-                        ++cov_t7atc5vh7.b[1][0];
-                        ++cov_t7atc5vh7.s[14];
+                        ++cov_3sjce20g5.b[1][0];
+                        ++cov_3sjce20g5.s[14];
 
                         that.targetColor.find(".glyphicon-home").css("color", color);
                     } else {
-                        ++cov_t7atc5vh7.b[1][1];
+                        ++cov_3sjce20g5.b[1][1];
                     }
                 } else {
-                    ++cov_t7atc5vh7.b[0][1];
+                    ++cov_3sjce20g5.b[0][1];
                 }
             }, 500);
 
             //check if you're logged in or not
             //This is kinda disgusting, need to change it for a $apply() or $digest() if possible. But if i remember well, angular 2 does not use $digest anymore
-            ++cov_t7atc5vh7.s[15];
+            ++cov_3sjce20g5.s[15];
             this._interval(function () {
-                ++cov_t7atc5vh7.f[2];
-                ++cov_t7atc5vh7.s[16];
+                ++cov_3sjce20g5.f[2];
+                ++cov_3sjce20g5.s[16];
 
                 that._scope.$watch(that._authProvider.authedUser, function () {
-                    ++cov_t7atc5vh7.f[3];
-                    ++cov_t7atc5vh7.s[17];
+                    ++cov_3sjce20g5.f[3];
+                    ++cov_3sjce20g5.s[17];
 
-                    that.logged = that._authProvider.authedUser === null ? (++cov_t7atc5vh7.b[2][0], false) : (++cov_t7atc5vh7.b[2][1], true);
+                    that.logged = that._authProvider.authedUser === null ? (++cov_3sjce20g5.b[2][0], false) : (++cov_3sjce20g5.b[2][1], true);
                 });
             }, 300);
         }
@@ -749,45 +749,45 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _createClass(MenuController, [{
             key: "changeColor",
             value: function changeColor(event) {
-                ++cov_t7atc5vh7.f[4];
-                ++cov_t7atc5vh7.s[18];
+                ++cov_3sjce20g5.f[4];
+                ++cov_3sjce20g5.s[18];
 
                 if (event.target.tagName == 'A') {
-                    ++cov_t7atc5vh7.b[3][0];
-                    ++cov_t7atc5vh7.s[19];
+                    ++cov_3sjce20g5.b[3][0];
+                    ++cov_3sjce20g5.s[19];
 
                     this.targetColor = $(event.target);
                 } else {
-                    ++cov_t7atc5vh7.b[3][1];
+                    ++cov_3sjce20g5.b[3][1];
                 }
             }
         }, {
             key: "resetColor",
             value: function resetColor() {
-                ++cov_t7atc5vh7.f[5];
-                ++cov_t7atc5vh7.s[20];
+                ++cov_3sjce20g5.f[5];
+                ++cov_3sjce20g5.s[20];
 
                 if (this.targetColor) {
-                    ++cov_t7atc5vh7.b[4][0];
-                    ++cov_t7atc5vh7.s[21];
+                    ++cov_3sjce20g5.b[4][0];
+                    ++cov_3sjce20g5.s[21];
 
                     this.targetColor.css("borderBottom", "2px solid #fff");
-                    ++cov_t7atc5vh7.s[22];
+                    ++cov_3sjce20g5.s[22];
                     this.targetColor.find(".glyphicon-home").css("color", "#777");
-                    ++cov_t7atc5vh7.s[23];
+                    ++cov_3sjce20g5.s[23];
                     this.targetColor = null;
                 } else {
-                    ++cov_t7atc5vh7.b[4][1];
+                    ++cov_3sjce20g5.b[4][1];
                 }
             }
         }, {
             key: "disconnect",
             value: function disconnect() {
-                ++cov_t7atc5vh7.f[6];
-                ++cov_t7atc5vh7.s[24];
+                ++cov_3sjce20g5.f[6];
+                ++cov_3sjce20g5.s[24];
 
                 this._authProvider.authedUser = null;
-                ++cov_t7atc5vh7.s[25];
+                ++cov_3sjce20g5.s[25];
                 this._location.url("/");
             }
         }]);
@@ -795,7 +795,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return MenuController;
     }();
 
-    ++cov_t7atc5vh7.s[26];
+    ++cov_3sjce20g5.s[26];
 
 
     angular.module("app").component("menuComponent", {

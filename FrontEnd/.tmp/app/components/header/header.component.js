@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_29xwp6x0s2 = function () {
-    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\header\\header.component.js",
-        hash = "e27d8f35b09a6a3119c032acff20410572524175",
+var cov_apxjzpeeq = function () {
+    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\header\\header.component.js",
+        hash = "23813d692554640027fb159c0d5a05a6b1505c20",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\header\\header.component.js",
+        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\header\\header.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -45,7 +45,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _classCallCheck(this, HeaderController);
     };
 
-    ++cov_29xwp6x0s2.s[0];
+    ++cov_apxjzpeeq.s[0];
 
 
     angular.module("app").component("headerComponent", {

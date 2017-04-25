@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_23ms1tdra2 = function () {
-    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\sign-in\\sign-in.component.js",
-        hash = "098193ccab43fbfbdefa9e1a2f824ed489fbb43e",
+var cov_1a7w955ujh = function () {
+    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\sign-in\\sign-in.component.js",
+        hash = "e35c889bebcf70a630c5d9156d1e301ad7396a24",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\sign-in\\sign-in.component.js",
+        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\sign-in\\sign-in.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -466,7 +466,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_23ms1tdra2.s[0];
+    ++cov_1a7w955ujh.s[0];
 
     "use strict";
 
@@ -474,56 +474,56 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function SignInController($http, authProvider, $location) {
             _classCallCheck(this, SignInController);
 
-            ++cov_23ms1tdra2.f[0];
-            ++cov_23ms1tdra2.s[1];
+            ++cov_1a7w955ujh.f[0];
+            ++cov_1a7w955ujh.s[1];
 
             this._http = $http;
-            ++cov_23ms1tdra2.s[2];
+            ++cov_1a7w955ujh.s[2];
             this._authProvider = authProvider;
-            ++cov_23ms1tdra2.s[3];
+            ++cov_1a7w955ujh.s[3];
             this._location = $location;
-            ++cov_23ms1tdra2.s[4];
+            ++cov_1a7w955ujh.s[4];
             this.authedUser = this._authProvider.authedUser;
-            ++cov_23ms1tdra2.s[5];
+            ++cov_1a7w955ujh.s[5];
             this.login = null;
-            ++cov_23ms1tdra2.s[6];
+            ++cov_1a7w955ujh.s[6];
             this.password = null;
-            ++cov_23ms1tdra2.s[7];
+            ++cov_1a7w955ujh.s[7];
             this.gold = 0;
-            ++cov_23ms1tdra2.s[8];
+            ++cov_1a7w955ujh.s[8];
             this.gem = 0;
-            ++cov_23ms1tdra2.s[9];
+            ++cov_1a7w955ujh.s[9];
             this.level = 1;
-            ++cov_23ms1tdra2.s[10];
+            ++cov_1a7w955ujh.s[10];
             this.exp = 0;
         }
 
         _createClass(SignInController, [{
             key: "signIn",
             value: function signIn() {
-                ++cov_23ms1tdra2.f[1];
+                ++cov_1a7w955ujh.f[1];
 
-                var flag = (++cov_23ms1tdra2.s[11], false);
-                ++cov_23ms1tdra2.s[12];
+                var flag = (++cov_1a7w955ujh.s[11], false);
+                ++cov_1a7w955ujh.s[12];
                 this._authProvider.allUsers.forEach(function (element) {
-                    ++cov_23ms1tdra2.f[2];
-                    ++cov_23ms1tdra2.s[13];
+                    ++cov_1a7w955ujh.f[2];
+                    ++cov_1a7w955ujh.s[13];
 
                     if (element.nickname == this.login) {
-                        ++cov_23ms1tdra2.b[0][0];
-                        ++cov_23ms1tdra2.s[14];
+                        ++cov_1a7w955ujh.b[0][0];
+                        ++cov_1a7w955ujh.s[14];
 
                         flag = true;
                     } else {
-                        ++cov_23ms1tdra2.b[0][1];
+                        ++cov_1a7w955ujh.b[0][1];
                     }
                 }, this);
 
-                ++cov_23ms1tdra2.s[15];
+                ++cov_1a7w955ujh.s[15];
                 if (!flag) {
-                    ++cov_23ms1tdra2.b[1][0];
+                    ++cov_1a7w955ujh.b[1][0];
 
-                    var user = (++cov_23ms1tdra2.s[16], {
+                    var user = (++cov_1a7w955ujh.s[16], {
                         id: this._authProvider.allUsers.length,
                         nickname: this.login,
                         password: this.password,
@@ -532,23 +532,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         level: this.level,
                         exp: this.exp
                     });
-                    var validation = (++cov_23ms1tdra2.s[17], this._authProvider.registerUser(user));
-                    ++cov_23ms1tdra2.s[18];
+                    var validation = (++cov_1a7w955ujh.s[17], this._authProvider.registerUser(user));
+                    ++cov_1a7w955ujh.s[18];
                     if (validation) {
-                        ++cov_23ms1tdra2.b[2][0];
-                        ++cov_23ms1tdra2.s[19];
+                        ++cov_1a7w955ujh.b[2][0];
+                        ++cov_1a7w955ujh.s[19];
 
                         this._location.url("/");
                     } else {
-                        ++cov_23ms1tdra2.b[2][1];
+                        ++cov_1a7w955ujh.b[2][1];
                     }
                 } else {
-                    ++cov_23ms1tdra2.b[1][1];
+                    ++cov_1a7w955ujh.b[1][1];
                 }
 
-                ++cov_23ms1tdra2.s[20];
+                ++cov_1a7w955ujh.s[20];
                 this.login = '';
-                ++cov_23ms1tdra2.s[21];
+                ++cov_1a7w955ujh.s[21];
                 this.password = '';
             }
         }]);
@@ -556,7 +556,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return SignInController;
     }();
 
-    ++cov_23ms1tdra2.s[22];
+    ++cov_1a7w955ujh.s[22];
 
 
     angular.module("app").component("signInComponent", {

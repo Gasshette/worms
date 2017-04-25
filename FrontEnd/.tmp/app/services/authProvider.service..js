@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_2r38ymc2cz = function () {
-    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\services\\authProvider.service..js",
-        hash = "286ed3bdd9eb40a97adfc434a54b773b67084465",
+var cov_20831hsn9 = function () {
+    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\services\\authProvider.service..js",
+        hash = "a1d3e88cb805a1f381567809698702e76c3c7282",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\services\\authProvider.service..js",
+        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\services\\authProvider.service..js",
         statementMap: {
             "0": {
                 start: {
@@ -629,39 +629,39 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function AuthProvider($http) {
             _classCallCheck(this, AuthProvider);
 
-            ++cov_2r38ymc2cz.f[0];
-            ++cov_2r38ymc2cz.s[0];
+            ++cov_20831hsn9.f[0];
+            ++cov_20831hsn9.s[0];
 
             this._http = $http;
-            ++cov_2r38ymc2cz.s[1];
+            ++cov_20831hsn9.s[1];
             this.authedUser = null;
-            ++cov_2r38ymc2cz.s[2];
+            ++cov_20831hsn9.s[2];
             this.allUsers = [];
 
-            ++cov_2r38ymc2cz.s[3];
+            ++cov_20831hsn9.s[3];
             this.getAllUsers();
         }
 
         _createClass(AuthProvider, [{
             key: "getAllUsers",
             value: function getAllUsers() {
-                ++cov_2r38ymc2cz.f[1];
+                ++cov_20831hsn9.f[1];
 
-                var that = (++cov_2r38ymc2cz.s[4], this);
-                ++cov_2r38ymc2cz.s[5];
+                var that = (++cov_20831hsn9.s[4], this);
+                ++cov_20831hsn9.s[5];
                 this._http.get("/resources/users.json").then(function (response) {
-                    ++cov_2r38ymc2cz.f[2];
-                    ++cov_2r38ymc2cz.s[6];
+                    ++cov_20831hsn9.f[2];
+                    ++cov_20831hsn9.s[6];
 
                     response.data.forEach(function (el) {
-                        ++cov_2r38ymc2cz.f[3];
-                        ++cov_2r38ymc2cz.s[7];
+                        ++cov_20831hsn9.f[3];
+                        ++cov_20831hsn9.s[7];
 
                         that.allUsers.push(el);
                     }, this);
                 }, function () {
-                    ++cov_2r38ymc2cz.f[4];
-                    ++cov_2r38ymc2cz.s[8];
+                    ++cov_20831hsn9.f[4];
+                    ++cov_20831hsn9.s[8];
 
                     console.log("An error occured while trying to get all users.");
                 });
@@ -669,61 +669,61 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "registerUser",
             value: function registerUser(user) {
-                ++cov_2r38ymc2cz.f[5];
+                ++cov_20831hsn9.f[5];
 
-                var flag = (++cov_2r38ymc2cz.s[9], false);
-                var userOK = (++cov_2r38ymc2cz.s[10], true);
+                var flag = (++cov_20831hsn9.s[9], false);
+                var userOK = (++cov_20831hsn9.s[10], true);
 
-                ++cov_2r38ymc2cz.s[11];
+                ++cov_20831hsn9.s[11];
                 angular.forEach(user, function (key, value) {
-                    ++cov_2r38ymc2cz.f[6];
-                    ++cov_2r38ymc2cz.s[12];
+                    ++cov_20831hsn9.f[6];
+                    ++cov_20831hsn9.s[12];
 
                     if (typeof value == 'undefined') {
-                        ++cov_2r38ymc2cz.b[0][0];
-                        ++cov_2r38ymc2cz.s[13];
+                        ++cov_20831hsn9.b[0][0];
+                        ++cov_20831hsn9.s[13];
 
                         userOK = false;
                     } else {
-                        ++cov_2r38ymc2cz.b[0][1];
+                        ++cov_20831hsn9.b[0][1];
                     }
                 }, this);
 
-                ++cov_2r38ymc2cz.s[14];
+                ++cov_20831hsn9.s[14];
                 if (userOK) {
-                    ++cov_2r38ymc2cz.b[1][0];
-                    ++cov_2r38ymc2cz.s[15];
+                    ++cov_20831hsn9.b[1][0];
+                    ++cov_20831hsn9.s[15];
 
                     this.allUsers.forEach(function (el) {
-                        ++cov_2r38ymc2cz.f[7];
-                        ++cov_2r38ymc2cz.s[16];
+                        ++cov_20831hsn9.f[7];
+                        ++cov_20831hsn9.s[16];
 
                         if (el.nickname == user.login) {
-                            ++cov_2r38ymc2cz.b[2][0];
-                            ++cov_2r38ymc2cz.s[17];
+                            ++cov_20831hsn9.b[2][0];
+                            ++cov_20831hsn9.s[17];
 
                             flag = true;
                         } else {
-                            ++cov_2r38ymc2cz.b[2][1];
+                            ++cov_20831hsn9.b[2][1];
                         }
                     }, this);
 
-                    ++cov_2r38ymc2cz.s[18];
+                    ++cov_20831hsn9.s[18];
                     if (!flag) {
-                        ++cov_2r38ymc2cz.b[3][0];
-                        ++cov_2r38ymc2cz.s[19];
+                        ++cov_20831hsn9.b[3][0];
+                        ++cov_20831hsn9.s[19];
 
                         this.allUsers.push(user);
                         //Connect the user who just registered
-                        ++cov_2r38ymc2cz.s[20];
+                        ++cov_20831hsn9.s[20];
                         this.authedUser = user;
-                        ++cov_2r38ymc2cz.s[21];
+                        ++cov_20831hsn9.s[21];
                         return true;
                     } else {
-                        ++cov_2r38ymc2cz.b[3][1];
+                        ++cov_20831hsn9.b[3][1];
                     }
                 } else {
-                    ++cov_2r38ymc2cz.b[1][1];
+                    ++cov_20831hsn9.b[1][1];
                 }
             }
         }]);
@@ -731,7 +731,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return AuthProvider;
     }();
 
-    ++cov_2r38ymc2cz.s[22];
+    ++cov_20831hsn9.s[22];
 
 
     angular.module("app").service('authProvider', AuthProvider);

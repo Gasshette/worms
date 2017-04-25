@@ -16,9 +16,8 @@
         margin-bottom : 70px;
         font-weight: bold;
         border : 2px solid rgb(130,190,46);
-        border-radius : 20px 20px 20px 20px;
 
-        caption {
+        caption{
             padding-left: 15px;
             padding-bottom: 0px;
             padding-top: 0px;
@@ -26,7 +25,6 @@
             border-radius: 10px 10px 0px 0px;
             -moz-border-radius: 10px 10px 0px 0px;
             -webkit-border-radius: 10px 10px 0px 0px;
-            border: 0px solid #000000;
 
             h4 {
                 color: #fff;
@@ -51,13 +49,24 @@
 
                 td{
                     vertical-align: middle;
-                    padding : 20px;                
+                    padding : 20px;
                 }
             }
         }
     }
 
-    
+    //compact view
+    .compact{
+        .table{
+            caption{
+                border-radius: 10px 10px 0px 0px;
+                -moz-border-radius: 10px 10px 0px 0px;
+                -webkit-border-radius: 10px 10px 0px 0px;
+            }
+        }
+    }
+
+
 
     .switch-component{
         margin-bottom : 30px;

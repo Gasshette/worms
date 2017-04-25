@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_2adq0nvhuj = function () {
-    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\error\\error.component.js",
-        hash = "ec5c7375abf237e97d1b74111349d7da6cbfae25",
+var cov_1ku31a65xl = function () {
+    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\error\\error.component.js",
+        hash = "bed287dd032e18fd744a126d089064dda479dcb8",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\error\\error.component.js",
+        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\error\\error.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -201,43 +201,43 @@ var cov_2adq0nvhuj = function () {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_2adq0nvhuj.s[0];
+    ++cov_1ku31a65xl.s[0];
 
     "use strict";
 
     var ErrorController = function ErrorController($stateParams) {
         _classCallCheck(this, ErrorController);
 
-        ++cov_2adq0nvhuj.f[0];
-        ++cov_2adq0nvhuj.s[1];
+        ++cov_1ku31a65xl.f[0];
+        ++cov_1ku31a65xl.s[1];
 
 
         switch ($stateParams.id) {
             case 304:
-                ++cov_2adq0nvhuj.b[0][0];
-                ++cov_2adq0nvhuj.s[2];
+                ++cov_1ku31a65xl.b[0][0];
+                ++cov_1ku31a65xl.s[2];
 
                 this.id = $stateParams.id;
-                ++cov_2adq0nvhuj.s[3];
+                ++cov_1ku31a65xl.s[3];
                 break;
             case 504:
-                ++cov_2adq0nvhuj.b[0][1];
-                ++cov_2adq0nvhuj.s[4];
+                ++cov_1ku31a65xl.b[0][1];
+                ++cov_1ku31a65xl.s[4];
 
                 this.id = $stateParams.id;
-                ++cov_2adq0nvhuj.s[5];
+                ++cov_1ku31a65xl.s[5];
                 break;
             default:
-                ++cov_2adq0nvhuj.b[0][2];
-                ++cov_2adq0nvhuj.s[6];
+                ++cov_1ku31a65xl.b[0][2];
+                ++cov_1ku31a65xl.s[6];
 
                 this.id = 404;
-                ++cov_2adq0nvhuj.s[7];
+                ++cov_1ku31a65xl.s[7];
                 break;
         }
     };
 
-    ++cov_2adq0nvhuj.s[8];
+    ++cov_1ku31a65xl.s[8];
 
 
     angular.module("app").component("errorComponent", {

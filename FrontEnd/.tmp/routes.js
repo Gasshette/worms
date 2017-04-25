@@ -1,12 +1,12 @@
 'use strict';
 
-var cov_1vz1u2kn7r = function () {
-  var path = 'C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\routes.js',
-      hash = '182ce43d20da92d4b6ce9637b85c5269c2390dac',
+var cov_14tknphp3u = function () {
+  var path = 'C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\routes.js',
+      hash = '55207478a21228cb1682960dfcf4765f3082b470',
       global = new Function('return this')(),
       gcv = '__coverage__',
       coverageData = {
-    path: 'C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\routes.js',
+    path: 'C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\routes.js',
     statementMap: {
       '0': {
         start: {
@@ -285,66 +285,66 @@ var cov_1vz1u2kn7r = function () {
   return coverage[path] = coverageData;
 }();
 
-++cov_1vz1u2kn7r.s[0];
+++cov_14tknphp3u.s[0];
 angular.module('app').config(routesConfig);
 
 function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
-  ++cov_1vz1u2kn7r.f[0];
-  ++cov_1vz1u2kn7r.s[1];
+  ++cov_14tknphp3u.f[0];
+  ++cov_14tknphp3u.s[1];
 
   $locationProvider.html5Mode(true).hashPrefix('!');
-  ++cov_1vz1u2kn7r.s[2];
+  ++cov_14tknphp3u.s[2];
   $urlRouterProvider.otherwise('/error/404');
 
-  var films = (++cov_1vz1u2kn7r.s[3], {
+  var films = (++cov_14tknphp3u.s[3], {
     name: 'films',
     url: '/films',
     component: 'filmSearchComponent'
   });
 
-  var accueil = (++cov_1vz1u2kn7r.s[4], {
+  var accueil = (++cov_14tknphp3u.s[4], {
     name: 'accueil',
     url: '/',
     component: 'app'
   });
 
-  var signIn = (++cov_1vz1u2kn7r.s[5], {
+  var signIn = (++cov_14tknphp3u.s[5], {
     name: 'signIn',
     url: '/sign-in',
     component: 'signInComponent'
   });
 
-  var connection = (++cov_1vz1u2kn7r.s[6], {
+  var connection = (++cov_14tknphp3u.s[6], {
     name: 'connection',
     url: '/connection',
     component: 'connectionComponent'
   });
 
-  var error = (++cov_1vz1u2kn7r.s[7], {
+  var error = (++cov_14tknphp3u.s[7], {
     name: 'error',
     url: '/error/:id',
     component: 'errorComponent'
   });
 
-  var reception = (++cov_1vz1u2kn7r.s[8], {
+  var reception = (++cov_14tknphp3u.s[8], {
     name: 'reception',
     url: '/reception',
     component: 'receptionComponent'
   });
 
-  var profile = (++cov_1vz1u2kn7r.s[9], {
+  var profile = (++cov_14tknphp3u.s[9], {
     name: 'profile',
     url: '/profile',
     component: 'profileComponent'
   });
 
-  var score = (++cov_1vz1u2kn7r.s[10], {
+  var score = (++cov_14tknphp3u.s[10], {
     name: 'score',
     url: '/score',
     component: 'scoreComponent'
   });
 
-  var download = (++cov_1vz1u2kn7r.s[11], {
+  var download = (++cov_14tknphp3u.s[11], {
     name: 'download',
     url: '/download',
     component: 'downloadComponent'
@@ -354,23 +354,23 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   //   $locationProvider.url("/connection");
   // }
   // else {
-  ++cov_1vz1u2kn7r.s[12];
+  ++cov_14tknphp3u.s[12];
   $stateProvider.state(accueil);
-  ++cov_1vz1u2kn7r.s[13];
+  ++cov_14tknphp3u.s[13];
   $stateProvider.state(films);
-  ++cov_1vz1u2kn7r.s[14];
+  ++cov_14tknphp3u.s[14];
   $stateProvider.state(signIn);
-  ++cov_1vz1u2kn7r.s[15];
+  ++cov_14tknphp3u.s[15];
   $stateProvider.state(connection);
-  ++cov_1vz1u2kn7r.s[16];
+  ++cov_14tknphp3u.s[16];
   $stateProvider.state(error);
-  ++cov_1vz1u2kn7r.s[17];
+  ++cov_14tknphp3u.s[17];
   $stateProvider.state(reception);
-  ++cov_1vz1u2kn7r.s[18];
+  ++cov_14tknphp3u.s[18];
   $stateProvider.state(profile);
-  ++cov_1vz1u2kn7r.s[19];
+  ++cov_14tknphp3u.s[19];
   $stateProvider.state(score);
-  ++cov_1vz1u2kn7r.s[20];
+  ++cov_14tknphp3u.s[20];
   $stateProvider.state(download);
   // }
 }

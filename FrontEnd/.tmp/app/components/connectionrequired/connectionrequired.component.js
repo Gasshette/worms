@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_2c54enuc9o = function () {
-    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\connectionrequired\\connectionrequired.component.js",
-        hash = "40557ed443bf6f8b45ca2c5ba79393c6dd7ea71e",
+var cov_11a9omjh42 = function () {
+    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\connectionrequired\\connectionrequired.component.js",
+        hash = "ffefc46cb28d43d62f49d1ba29be9e937ea4931b",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\frontEnd\\src\\app\\components\\connectionrequired\\connectionrequired.component.js",
+        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\connectionrequired\\connectionrequired.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -79,17 +79,17 @@ var cov_2c54enuc9o = function () {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_2c54enuc9o.s[0];
+    ++cov_11a9omjh42.s[0];
 
     "use strict";
 
     var ConnectionRequiredController = function ConnectionRequiredController() {
         _classCallCheck(this, ConnectionRequiredController);
 
-        ++cov_2c54enuc9o.f[0];
+        ++cov_11a9omjh42.f[0];
     };
 
-    ++cov_2c54enuc9o.s[1];
+    ++cov_11a9omjh42.s[1];
 
 
     angular.module("app").component("connectionRequiredComponent", {

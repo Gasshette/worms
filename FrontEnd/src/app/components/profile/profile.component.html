@@ -8,8 +8,7 @@
 
 
         <div ng-switch-default>
-
-            <table class="table table-stripped">
+            <!--<table class="table table-stripped">
                 <caption>
                     <h4>{{PrCtrl.authedUser.nickname}}</h4>
                 </caption>
@@ -27,8 +26,31 @@
                     <td><img src="../resources/images/gemBlue.png"></td>
                     <td>{{(PrCtrl.authedUser.gem > 1) ? PrCtrl.authedUser.gem + ' gems' : PrCtrl.authedUser.gem + ' gem' }}</td>
                 </tr>
+            </table>-->
+
+            <table class="table table-stripped">
+                <caption>
+                    <h4>{{PrCtrl.authedUser.nickname}}</h4>
+                </caption>
+
+                <tr>
+                    <td rowspan="4"><img src="../resources/images/player.png"></td>
+                    <td colspan="2">Level : {{PrCtrl.authedUser.level}}<br>
+                        <progress-bar percent="$index"></progress-bar>
+                    </td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td><img src="../resources/images/coin.png"></td>
+                    <td>{{PrCtrl.authedUser.gold}} gold</td>
+                </tr>
+                <tr>
+                    <td><img src="../resources/images/gemBlue.png"></td>
+                    <td>{{(PrCtrl.authedUser.gem > 1) ? PrCtrl.authedUser.gem + ' gems' : PrCtrl.authedUser.gem + ' gem' }}</td>
+                </tr>
             </table>
         </div>
     </div>
-
 </div>
