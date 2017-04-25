@@ -70,20 +70,18 @@ public class PlayView implements Screen {
 		this.hashmapEnemies.put(1, new Texture(Gdx.files.internal("Base pack/Enemies/flyFly1.png")));
 		this.hashmapEnemies.put(2, new Texture(Gdx.files.internal("Base pack/Enemies/slimeWalk1.png")));
 		this.hashmapEnemies.put(3, new Texture(Gdx.files.internal("Extra animations and enemies/Enemy sprites/spider.png")));
-		
+
 		this.bullets = new HashMap<Integer, Bullet>();
 		this.hashmapBullets.put(1, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
 		this.hashmapBullets.put(2, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
 		this.hashmapBullets.put(3, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
-		
+
 		try {
 			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers, this.enemies, this.hashmapEnemies, this.bullets, this.hashmapBullets);
 			this.client.configSocketEvents();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		
 
 		Gdx.input.setInputProcessor(this.player);
 	}
@@ -96,8 +94,7 @@ public class PlayView implements Screen {
 
 		// Camera
 
-		this.camera.position.set(this.player.getX() + this.player.getWidth(),
-				this.player.getY() + this.player.getHeight(), 0);
+		this.camera.position.set(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight(), 0);
 		this.camera.update();
 		this.renderer.setView(this.camera);
 
@@ -132,7 +129,7 @@ public class PlayView implements Screen {
 				}
 			}
 		}
-		
+
 		// BEGIN DELETE BLOC
 		// enemy
 		if (this.enemyRemove > 0) {
@@ -146,7 +143,7 @@ public class PlayView implements Screen {
 			this.bulletRemove = 0;
 		}
 		// END DELETE BLOC
-		
+
 		// BEGIN DISPLAY BLOC
 		// players
 		this.majPlayersPosition(Gdx.graphics.getDeltaTime());
@@ -167,6 +164,11 @@ public class PlayView implements Screen {
 
 		this.renderer.getBatch().end();
 		this.hud.stage.draw();
+		this.hud.update(this.UPDATE_TIME);
+		
+		if (this.player.isLife() == false) {
+			this.game.setScreen(new GameOverView(this.game, this.player));
+		}
 	}
 
 	@Override

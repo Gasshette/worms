@@ -22,38 +22,31 @@ public class HudHero implements Disposable {
 	private Viewport viewport;
 
 	// Mario score/time Tracking Variables
-	private Integer worldTimer;
-	private boolean timeUp; // true when the world timer reaches 0
+
 	private float timeCount = 0;
-	private static Integer score;
 	private int nbPiece;
 	private int nbGermeBlue = 0;
 
 	// Scene2D widgets
 	private Label levelLabel;
-
 	private Image joueur = new Image(new Texture("Base pack/HUD/hud_p1.png"));
 	private Image piece = new Image(new Texture("Base pack/HUD/hud_coins.png"));
 	private Image gemBlue = new Image(new Texture("Base pack/HUD/hud_gem_blue.png"));
 	private Label nbGemBlue;
 	private boolean isHalf = false;
-	Table tableVie = new Table();
-	Table table = new Table();
-	Table countPiece = new Table();
-	Table countGermBlue = new Table();
+	private Table tableVie = new Table();
+	private Table table = new Table();
+	private Table countPiece = new Table();
+	private Table countGermBlue = new Table();
 	private Image[] vies = new Image[5];
-	private SpriteBatch sb;
 	private int indexVieMoins = 4;
 	private Player player;
 	private final float UPDATE_TIME = 1 / 60f;
 
 	public HudHero(SpriteBatch sb) {
 		// define our tracking variables
-		this.worldTimer = 0;
 		this.timeCount = 0;
-		score = 5;
 		this.nbPiece = 0;
-		this.sb = sb;
 
 		// setup the HUD viewport using a new camera seperate from our gamecam
 		// define our stage using that viewport and our games spritebatch
@@ -70,10 +63,6 @@ public class HudHero implements Disposable {
 		// define our labels using the String, and a Label style consisting of a
 		// font and color
 		this.nbGemBlue = new Label(String.format("%03d", this.nbGermeBlue), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		// scoreLabel = new Label(String.format("%01d", score), new
-		// Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		// this.timeLabel = new Label("TIME", new Label.LabelStyle(new
-		// BitmapFont(), Color.WHITE));
 		this.levelLabel = new Label(String.format("%03d", this.nbPiece), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
 		this.countPiece.add(this.piece);
@@ -109,9 +98,7 @@ public class HudHero implements Disposable {
 			this.timeCount = this.timeCount + this.UPDATE_TIME;
 
 			if (this.timeCount <= 1f) {
-
 			} else {
-
 				this.timeCount = 0;
 				this.player.isTouch = false;
 			}

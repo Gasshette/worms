@@ -107,7 +107,6 @@ public class Player extends Sprite implements InputProcessor {
 		if (currentCell != null && currentCell.getTile() != null) {
 			if (currentCell.getTile().getProperties().containsKey("collectible")) {
 				this.collectible(currentCell);
-				currentCell.setTile(null);
 			}
 		}
 		if (this.background.getCell((int) (this.getX() / this.background.getTileWidth()), (int) (this.getY() / this.background.getTileHeight())) == null) {
@@ -178,10 +177,12 @@ public class Player extends Sprite implements InputProcessor {
 				String valueProperties = iter.next().toString();
 				if (valueProperties.equals("gold") == true) {
 					this.hud.setGold(1);
+					currentCell.setTile(null);
 					break;
 				}
 				if (valueProperties.equals("germ") == true) {
 					this.hud.setGerm(1);
+					currentCell.setTile(null);
 					break;
 				}
 				if (valueProperties.equals("finish") == true) {
