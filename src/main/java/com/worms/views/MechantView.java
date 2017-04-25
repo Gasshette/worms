@@ -14,10 +14,12 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.worms.entities.Bullet;
 import com.worms.entities.Enemy;
 import com.worms.entities.Mechant;
 import com.worms.entities.Player;
 import com.worms.game.GameWorms;
+import com.worms.hud.HudHero;
 import com.worms.hud.HudMechant;
 import com.worms.network.Client;
 
@@ -30,6 +32,9 @@ public class MechantView implements Screen {
 
 	// Solo
 	private Mechant mechant;
+
+	private HashMap<Integer, Texture> hashmapBullets = new HashMap<Integer, Texture>();
+	private HashMap<Integer, Bullet> bullets;
 
 	// Multi
 	private Client client = null;
@@ -66,8 +71,13 @@ public class MechantView implements Screen {
 		this.mechant.setPosition(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.mechant.setHud(this.hud);
 
+		this.bullets = new HashMap<Integer, Bullet>();
+		this.hashmapBullets.put(1, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
+		this.hashmapBullets.put(2, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
+		this.hashmapBullets.put(3, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
+
 		try {
-			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers, this.enemies, this.hashmapEnemies);
+			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers, this.enemies, this.hashmapEnemies, this.bullets, this.hashmapBullets);
 			this.client.configSocketEvents();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -136,45 +146,28 @@ public class MechantView implements Screen {
 			this.mechant.setAddEnemy(false);
 		}
 
-		// Display enemies
+		// BEGIN DISPLAY BLOC
+		// players
+		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
+			if (entry.getValue().getHud() == null) {
+				entry.getValue().setHud(new HudHero(this.game.getSb()));
+			}
+			entry.getValue().draw(this.renderer.getBatch());
+		}
+
+		// enemies
 		for (HashMap.Entry<Integer, Enemy> entry : this.enemies.entrySet()) {
-			entry.getValue().update(Gdx.graphics.getDeltaTime());
 			entry.getValue().draw(this.renderer.getBatch());
 		}
 
-		// Display players
-		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
-			entry.getValue().draw(this.renderer.getBatch());
+		// bullets
+		for (HashMap.Entry<Integer, Bullet> bullet : this.bullets.entrySet()) {
+			bullet.getValue().render(this.renderer.getBatch());
 		}
+		// END DISPLAY BLOC
 
 		this.renderer.getBatch().end();
-
-		// Display HUD
 		this.hud.stage.draw();
-		/**
-		 * Gestion de la camera
-		 */
-		this.camera.position.set(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight(), 0);
-		this.camera.update();
-		this.renderer.setView(this.camera);
-
-		/**
-		 * Gestion du rendu
-		 */
-		this.renderer.getBatch().begin();
-		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("background"));
-		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("foreground"));
-		this.player.draw(this.renderer.getBatch());
-		this.renderer.getBatch().end();
-
-		/**
-		 * Affichage des autres joueurs
-		 */
-		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
-			this.renderer.getBatch().begin();
-			entry.getValue().draw(this.renderer.getBatch());
-			this.renderer.getBatch().end();
-		}
 	}
 
 	@Override

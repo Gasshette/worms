@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.worms.entities.Bullet;
 import com.worms.entities.Enemy;
 import com.worms.entities.Player;
 
@@ -22,10 +23,15 @@ public class Client {
 	private HashMap<String, Player> friendlyPlayers;
 	private HashMap<Integer, Enemy> enemies;
 	private HashMap<Integer, Texture> hashmapEnemies;
+	private HashMap<Integer, Bullet> bullets;
+	private HashMap<Integer, Texture> hashmapBullets;
 	private Texture friendPlayer;
 	private TiledMap map;
 
-	public Client(TiledMap map, Texture friendPlayer, HashMap<String, Player> friendlyPlayers, HashMap<Integer, Enemy> enemies, HashMap<Integer, Texture> hashmapEnemies) throws Exception {
+	public Client(TiledMap map, Texture friendPlayer, HashMap<String, Player> friendlyPlayers, 
+			HashMap<Integer, Enemy> enemies, HashMap<Integer, Texture> hashmapEnemies, 
+			HashMap<Integer, Bullet> bullets, HashMap<Integer, Texture> hashmapBullets
+			) throws Exception {
 		this.connectSocket();
 
 		this.map = map;
@@ -33,6 +39,8 @@ public class Client {
 		this.friendlyPlayers = friendlyPlayers;
 		this.enemies = enemies;
 		this.hashmapEnemies = hashmapEnemies;
+		this.bullets = bullets;
+		this.hashmapBullets = hashmapBullets;
 	}
 
 	private void connectSocket() throws Exception {
@@ -130,8 +138,8 @@ public class Client {
 			@Override
 			public void call(Object... args) {
 				JSONObject data = (JSONObject) args[0];
-
 				Texture texture = null;
+
 				try {
 					int id = data.getInt("id");
 					double x = data.getDouble("x");
@@ -150,7 +158,8 @@ public class Client {
 					e.printStackTrace();
 				}
 			}
-		}).on("getEnemies", new Listener() {
+		})
+		.on("moveEnemies", new Listener() {
 
 			@Override
 			public void call(Object... args) {
@@ -158,18 +167,10 @@ public class Client {
 
 				try {
 					for (int i = 0; i < objects.length(); i++) {
-						int texture = objects.getJSONObject(i).getInt("texture");
-
 						double x = objects.getJSONObject(i).getDouble("x");
 						double y = objects.getJSONObject(i).getDouble("y");
 
 						int id = objects.getJSONObject(i).getInt("id");
-
-						System.out.println("Texture : " + texture);
-						System.out.println("X : " + x);
-						System.out.println("Y : " + y);
-						System.out.println("id : " + id);
-						System.out.println("------");
 
 						if (Client.this.enemies.get(id) != null) {
 							Enemy enemy = Client.this.enemies.get(id);
@@ -183,23 +184,84 @@ public class Client {
 					e.printStackTrace();
 				}
 
-				// try {
-				// for (int i = 0; i < objects.length(); i++) {
-				// String playerId = objects.getJSONObject(i).getString("id");
-				// double x = objects.getJSONObject(i).getDouble("x");
-				// double y = objects.getJSONObject(i).getDouble("y");
-				//
-				// if (Client.this.friendlyPlayers.get(playerId) != null) {
-				// Player player = Client.this.friendlyPlayers.get(playerId);
-				// player.setX((float) x);
-				// player.setY((float) y);
-				//
-				// Client.this.friendlyPlayers.put(playerId, player);
-				// }
-				// }
-				// } catch (JSONException e) {
-				// e.printStackTrace();
-				// }
+			}
+
+		}).on("deleteEnemy", new Listener() {
+
+			@Override
+			public void call(Object... args) {
+				int id = (int) args[0];
+				Client.this.enemies.remove(id);
+				
+				for (HashMap.Entry<Integer, Enemy> entry : Client.this.enemies.entrySet()) {
+					if(entry.getKey() == id) {
+						Client.this.enemies.remove(entry.getKey());
+					}
+				}
+			}
+
+		}).on("newBullet", new Listener() {
+
+			@Override
+			public void call(Object... args) {
+				JSONObject data = (JSONObject) args[0];
+				Texture texture = null;
+
+				try {
+					int id = data.getInt("id");
+					double x = data.getDouble("x");
+					double y = data.getDouble("y");
+					int idTexture = data.getInt("texture");
+					
+					for (HashMap.Entry<Integer, Texture> entry : Client.this.hashmapBullets.entrySet()) {
+						if (entry.getKey() == idTexture) {
+							texture = entry.getValue();
+						}
+					}
+
+					Bullet bullet = new Bullet(texture, (float) x, (float) y);
+					Client.this.bullets.put(id, bullet);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		})
+		.on("moveBullets", new Listener() {
+
+			@Override
+			public void call(Object... args) {
+				JSONArray objects = (JSONArray) args[0];
+
+				try {
+					for (int i = 0; i < objects.length(); i++) {
+						double x = objects.getJSONObject(i).getDouble("x");
+						int id = objects.getJSONObject(i).getInt("id");
+
+						if (Client.this.bullets.get(id) != null) {
+							Bullet bullet = Client.this.bullets.get(id);
+							bullet.setX((float) x);
+
+							Client.this.bullets.put(id, bullet);
+						}
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+		}).on("deleteBullet", new Listener() {
+
+			@Override
+			public void call(Object... args) {
+				int id = (int) args[0];
+				Client.this.bullets.remove(id);
+				
+				for (HashMap.Entry<Integer, Bullet> bullet : Client.this.bullets.entrySet()) {
+					if(bullet.getKey() == id) {
+						Client.this.bullets.remove(bullet.getKey());
+					}
+				}
 			}
 
 		});

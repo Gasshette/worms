@@ -1,6 +1,5 @@
 package com.worms.views;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONException;
@@ -19,8 +18,8 @@ import com.worms.entities.Bullet;
 import com.worms.entities.Enemy;
 import com.worms.entities.Player;
 import com.worms.game.GameWorms;
+import com.worms.hud.HudHero;
 import com.worms.network.Client;
-
 
 public class PlayView implements Screen {
 	private TiledMap map;
@@ -31,56 +30,60 @@ public class PlayView implements Screen {
 	private Texture friendPlayer;
 
 	// Shooting
-	private ArrayList<Bullet> bullets;
-	private ArrayList<Bullet> bulletsToRemove;
+	private HashMap<Integer, Texture> hashmapBullets = new HashMap<Integer, Texture>();
+	private HashMap<Integer, Bullet> bullets;
+	private int bulletRemove;
 	private int decalage = 15;
 
 	// Ennemies
+	private HashMap<Integer, Texture> hashmapEnemies = new HashMap<Integer, Texture>();
 	private HashMap<Integer, Enemy> enemies;
-	private ArrayList<Integer> enemiesToRemove;
+	private int enemyRemove;
 
 	// Multi
 	private Client client = null;
-	private HashMap<String, Player> mates;
+	private HashMap<String, Player> friendlyPlayers;
 	private final float UPDATE_TIME = 1 / 60f;
 	private float timer = 0;
-	private HashMap<Integer, Texture> hashmapEnemies;
+	private HudHero hud;
 
-	public PlayView(GameWorms game, Client client) {
+	public PlayView(GameWorms game) {
 		this.game = game;
-		this.client = client;
+		// this.client = client;
+		this.hud = new HudHero(this.game.getSb());
 	}
 
 	@Override
 	public void show() {
-		this.map = new TmxMapLoader().load("carte.tmx");
+		this.map = new TmxMapLoader().load(this.game.getMap());
 		this.renderer = new OrthogonalTiledMapRenderer(this.map);
 		this.camera = new OrthographicCamera();
 
 		this.friendPlayer = new Texture(Gdx.files.internal("Base pack/Player/p2_front.png"));
-		this.mates = new HashMap<String, Player>();
+		this.friendlyPlayers = new HashMap<String, Player>();
 
-		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")),
-				(TiledMapTileLayer) this.map.getLayers().get("background"),
-				(TiledMapTileLayer) this.map.getLayers().get("foreground"));
+		this.player = new Player(new Texture(Gdx.files.internal("Base pack/Player/p1_front.png")), (TiledMapTileLayer) this.map.getLayers().get("background"), (TiledMapTileLayer) this.map.getLayers().get("foreground"));
 		this.player.setPosition(2 * 70, 19 * 70);
+		this.player.setHud(this.hud);
 
 		this.enemies = new HashMap<Integer, Enemy>();
-		this.hashmapEnemies = new HashMap<Integer, Texture>();
 		this.hashmapEnemies.put(1, new Texture(Gdx.files.internal("Base pack/Enemies/flyFly1.png")));
 		this.hashmapEnemies.put(2, new Texture(Gdx.files.internal("Base pack/Enemies/slimeWalk1.png")));
 		this.hashmapEnemies.put(3, new Texture(Gdx.files.internal("Extra animations and enemies/Enemy sprites/spider.png")));
-
+		
+		this.bullets = new HashMap<Integer, Bullet>();
+		this.hashmapBullets.put(1, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
+		this.hashmapBullets.put(2, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
+		this.hashmapBullets.put(3, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
+		
 		try {
-			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers, this.enemies, this.hashmapEnemies);
+			this.client = new Client(this.map, this.friendPlayer, this.friendlyPlayers, this.enemies, this.hashmapEnemies, this.bullets, this.hashmapBullets);
 			this.client.configSocketEvents();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		this.bullets = new ArrayList<Bullet>();
-		this.bulletsToRemove = new ArrayList<Bullet>();
-		this.enemiesToRemove = new ArrayList<Integer>();
+		
 
 		Gdx.input.setInputProcessor(this.player);
 	}
@@ -104,60 +107,64 @@ public class PlayView implements Screen {
 
 		// Shooting
 		if (this.player.isShoot() && this.decalage == this.player.getTimerDecalage()) {
-			this.bullets.add(new Bullet(new Texture(Gdx.files.internal("Request pack/Tiles/laserGreenBurst.png")), this.player.getX(), this.player.getY()));
+			JSONObject bullet = new JSONObject();
+			try {
+				bullet.put("x", this.player.getX());
+				bullet.put("y", this.player.getY());
+				bullet.put("texture", 1);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			this.client.emit("newBullet", bullet);
 		}
 		this.decalage--;
 		this.decalage = (this.decalage == 0) ? this.player.getTimerDecalage() : this.decalage;
 
-		// Affichage des bullets
-		for (Bullet bullet : this.bullets) {
-			bullet.update(Gdx.graphics.getDeltaTime());
-
-			if (bullet.getRemove()) {
-				this.bulletsToRemove.add(bullet);
-			}
-		}
-
 		// Gestion de la collision bullet / ennemy
-		for (Bullet bullet : this.bullets) {
-			for (HashMap.Entry<Integer, Enemy> entry : this.enemies.entrySet()) {
-				if (bullet.getCollision().collidesWith(entry.getValue().getCollision())) {
-					this.bulletsToRemove.add(bullet);
-					this.enemiesToRemove.add(entry.getKey());
-					System.out.println("collision");
+		for (HashMap.Entry<Integer, Bullet> bullet : this.bullets.entrySet()) {
+			for (HashMap.Entry<Integer, Enemy> enemy : this.enemies.entrySet()) {
+				if (bullet.getValue().getCollision().collidesWith(enemy.getValue().getCollision())) {
+					this.bulletRemove = bullet.getKey();
+					this.enemyRemove = enemy.getKey();
 					break;
 				}
 			}
 		}
-
-		// On supprime la balle et l'ennemi et on envoi au client
-		this.enemies.keySet().removeAll(this.enemiesToRemove);
-		this.bullets.removeAll(this.bulletsToRemove);
-
-		if (this.enemiesToRemove.size() > 0) {
-			this.client.emit("killEnemies", this.enemiesToRemove);
-			this.enemiesToRemove = new ArrayList<Integer>();
-		}
-
-		for (Bullet bullet : this.bullets) {
-			bullet.render(this.renderer.getBatch());
-		}
-
-		// Display enemies
-		this.majEnemiesPosition(Gdx.graphics.getDeltaTime());
-		for (HashMap.Entry<Integer, Enemy> entry : this.enemies.entrySet()) {
-			//entry.getValue().update(Gdx.graphics.getDeltaTime());
-			entry.getValue().draw(this.renderer.getBatch());
-		}
 		
-		// Display players
-		this.majPlayersPosition(Gdx.graphics.getDeltaTime());
-		for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
-			entry.getValue().draw(this.renderer.getBatch());
+		// BEGIN DELETE BLOC
+		// enemy
+		if (this.enemyRemove > 0) {
+			this.client.emit("deleteEnemy", this.enemyRemove);
+			this.enemyRemove = 0;
 		}
+
+		// bullet
+		if (this.bulletRemove > 0) {
+			this.client.emit("deleteBullet", this.bulletRemove);
+			this.bulletRemove = 0;
+		}
+		// END DELETE BLOC
+		
+		// BEGIN DISPLAY BLOC
+		// players
+		this.majPlayersPosition(Gdx.graphics.getDeltaTime());
+		for (HashMap.Entry<String, Player> player : this.friendlyPlayers.entrySet()) {
+			player.getValue().draw(this.renderer.getBatch());
+		}
+
+		// enemies
+		for (HashMap.Entry<Integer, Enemy> enemy : this.enemies.entrySet()) {
+			enemy.getValue().draw(this.renderer.getBatch());
+		}
+
+		// bullets
+		for (HashMap.Entry<Integer, Bullet> bullet : this.bullets.entrySet()) {
+			bullet.getValue().render(this.renderer.getBatch());
+		}
+		// END DISPLAY BLOC
 
 		this.renderer.getBatch().end();
-
+		this.hud.stage.draw();
 	}
 
 	@Override
@@ -165,27 +172,7 @@ public class PlayView implements Screen {
 		this.camera.viewportWidth = width;
 		this.camera.viewportHeight = height;
 	}
-	
-	public void majEnemiesPosition(float dt) {
-		for (HashMap.Entry<Integer, Enemy> entry : this.enemies.entrySet()) {
-			System.out.println(entry.getValue().getX());
-			System.out.println(entry.getValue().getY());
-			System.out.println(entry.getKey());
-		}
-//		this.timer += dt;
-//		if (this.timer >= this.UPDATE_TIME && this.player != null) {
-//			JSONObject data = new JSONObject();
-//			try {
-//				data.put("x", this.player.getX());
-//				data.put("y", this.player.getY());
-//
-//				this.client.emit("movePlayers", data);
-//			} catch (JSONException e) {
-//				e.printStackTrace();
-//			}
-//		}
-	}
-	
+
 	public void majPlayersPosition(float dt) {
 		this.timer += dt;
 		if (this.timer >= this.UPDATE_TIME && this.player != null) {

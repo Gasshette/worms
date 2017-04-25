@@ -37,41 +37,41 @@ public class LobbyView implements Screen {
 	private TextButton backButton;
 	private TextButton readyButton;
 
-	private Texture alien1Tex;                                              
-	private Texture alien2Tex;                                              
-	private Texture alien3Tex;                                              
-	private Texture leftArrowTex;                                           
-	private ImageButton leftArrow;                                          
-	private Texture rightArrowTex;                                          
-	private ImageButton rightArrow;                                         
-	private static int choice = 0;                                          
-	                                                                        
-	private Client client = null;                                           
-                                                                            
-	private static HashMap<Integer, TextureRegionDrawable> charSelect;      
-                                                                            
-	private static Image selection;                                         
-                                                                            
-	public LobbyView(GameWorms game) {                                      
-		this.game = game;                                                   
-		this.stage = new Stage();                                           
-		this.skin = new Skin();                                             
-		this.bfont = game.getFont();                                        
-                                                                            
-		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);                
-		this.pixmap.setColor(Color.WHITE);                                  
-		this.pixmap.fill();                                                 
-                                                                            
-		this.skin.add("pixmap", new Texture(this.pixmap));                  
-		this.skin.add("default", this.bfont);                               
-                                                                            
-		Gdx.input.setInputProcessor(this.stage);                            
-                                                                            
-		this.create();                                                      
-	}                                                                       
-                                                                            
-	public void create() {                                                  
-                                                                            
+	private Texture alien1Tex;
+	private Texture alien2Tex;
+	private Texture alien3Tex;
+	private Texture leftArrowTex;
+	private ImageButton leftArrow;
+	private Texture rightArrowTex;
+	private ImageButton rightArrow;
+	private static int choice = 0;
+
+	private Client client = null;
+
+	private static HashMap<Integer, TextureRegionDrawable> charSelect;
+
+	private static Image selection;
+
+	public LobbyView(GameWorms game) {
+		this.game = game;
+		this.stage = new Stage();
+		this.skin = new Skin();
+		this.bfont = game.getFont();
+
+		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);
+		this.pixmap.setColor(Color.WHITE);
+		this.pixmap.fill();
+
+		this.skin.add("pixmap", new Texture(this.pixmap));
+		this.skin.add("default", this.bfont);
+
+		Gdx.input.setInputProcessor(this.stage);
+
+		this.create();
+	}
+
+	public void create() {
+
 		this.textButtonStyle = new TextButtonStyle();
 		this.textButtonStyle.up = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
 		this.textButtonStyle.down = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
@@ -80,16 +80,16 @@ public class LobbyView implements Screen {
 		this.textButtonStyle.font = this.skin.getFont("default");
 		this.skin.add("default", this.textButtonStyle);
 
-		alien1Tex = new Texture(Gdx.files.internal("Base pack/Player/p1_hurt.png"));
-		alien2Tex = new Texture(Gdx.files.internal("Base pack/Player/p2_stand.png"));
-		alien3Tex = new Texture(Gdx.files.internal("Base pack/Player/p3_jump.png"));
-		leftArrowTex = new Texture(Gdx.files.internal("Base pack/HUD/left-off.png"));
-		rightArrowTex = new Texture(Gdx.files.internal("Base pack/HUD/right-off.png"));
-		TextureRegionDrawable alien1Draw = new TextureRegionDrawable(new TextureRegion(alien1Tex));
-		TextureRegionDrawable alien2Draw = new TextureRegionDrawable(new TextureRegion(alien2Tex));
-		TextureRegionDrawable alien3Draw = new TextureRegionDrawable(new TextureRegion(alien3Tex));
-		TextureRegionDrawable leftArrowDraw = new TextureRegionDrawable(new TextureRegion(leftArrowTex));
-		TextureRegionDrawable rightArrowDraw = new TextureRegionDrawable(new TextureRegion(rightArrowTex));
+		this.alien1Tex = new Texture(Gdx.files.internal("Base pack/Player/p1_hurt.png"));
+		this.alien2Tex = new Texture(Gdx.files.internal("Base pack/Player/p2_stand.png"));
+		this.alien3Tex = new Texture(Gdx.files.internal("Base pack/Player/p3_jump.png"));
+		this.leftArrowTex = new Texture(Gdx.files.internal("Base pack/HUD/left-off.png"));
+		this.rightArrowTex = new Texture(Gdx.files.internal("Base pack/HUD/right-off.png"));
+		TextureRegionDrawable alien1Draw = new TextureRegionDrawable(new TextureRegion(this.alien1Tex));
+		TextureRegionDrawable alien2Draw = new TextureRegionDrawable(new TextureRegion(this.alien2Tex));
+		TextureRegionDrawable alien3Draw = new TextureRegionDrawable(new TextureRegion(this.alien3Tex));
+		TextureRegionDrawable leftArrowDraw = new TextureRegionDrawable(new TextureRegion(this.leftArrowTex));
+		TextureRegionDrawable rightArrowDraw = new TextureRegionDrawable(new TextureRegion(this.rightArrowTex));
 
 		selection = new Image(alien1Draw);
 		selection.setPosition(this.stage.getWidth() / 2 - selection.getWidth() / 2, 600);
@@ -106,8 +106,8 @@ public class LobbyView implements Screen {
 
 		System.out.println(charSelect);
 		this.stage.addActor(selection);
-		this.stage.addActor(leftArrow);
-		this.stage.addActor(rightArrow);
+		this.stage.addActor(this.leftArrow);
+		this.stage.addActor(this.rightArrow);
 
 		/*
 		 * left arrow
@@ -134,24 +134,29 @@ public class LobbyView implements Screen {
 		/*
 		 * Creation du bouton READY
 		 */
-		this.readyButton = new TextButton("READY", textButtonStyle);
-		this.readyButton.setPosition(this.stage.getWidth() / 2 - readyButton.getWidth() / 2, 100);
-		this.stage.addActor(readyButton);
+		this.readyButton = new TextButton("READY", this.textButtonStyle);
+		this.readyButton.setPosition(this.stage.getWidth() / 2 - this.readyButton.getWidth() / 2, 100);
+		this.stage.addActor(this.readyButton);
 
 		this.readyButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println();
+				boolean isMechant = true;
+				if(isMechant) {
+					LobbyView.this.game.setScreen(new MechantView(LobbyView.this.game));
+				} else {
+					LobbyView.this.game.setScreen(new PlayView(LobbyView.this.game));
+				}
 			}
 		});
 
 		/*
 		 * Creation du bouton de retour
 		 */
-		this.backButton = new TextButton("BACK", textButtonStyle);
+		this.backButton = new TextButton("BACK", this.textButtonStyle);
 		this.backButton.setPosition(50, 50);
 		this.backButton.setHeight(35);
-		this.stage.addActor(backButton);
+		this.stage.addActor(this.backButton);
 
 		this.backButton.addListener(new ChangeListener() {
 			@Override
