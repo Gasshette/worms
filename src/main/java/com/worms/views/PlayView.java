@@ -95,7 +95,9 @@ public class PlayView implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// Camera
-		this.camera.position.set(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight(), 0);
+
+		this.camera.position.set(this.player.getX() + this.player.getWidth(),
+				this.player.getY() + this.player.getHeight(), 0);
 		this.camera.update();
 		this.renderer.setView(this.camera);
 
@@ -207,6 +209,7 @@ public class PlayView implements Screen {
 		this.renderer.dispose();
 		this.player.getTexture().dispose();
 		this.client.close();
+		this.hud.dispose();
 	}
 
 }

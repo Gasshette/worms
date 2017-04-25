@@ -141,7 +141,7 @@ public class LobbyView implements Screen {
 		this.readyButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				boolean isMechant = true;
+				boolean isMechant = false;
 				if(isMechant) {
 					LobbyView.this.game.setScreen(new MechantView(LobbyView.this.game));
 				} else {

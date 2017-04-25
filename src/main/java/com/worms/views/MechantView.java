@@ -69,7 +69,7 @@ public class MechantView implements Screen {
 
 		this.mechant = new Mechant();
 		this.mechant.setPosition(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		this.mechant.setHud(this.hud);
+		
 
 		this.bullets = new HashMap<Integer, Bullet>();
 		this.hashmapBullets.put(1, new Texture(Gdx.files.internal("Request pack/Tiles/laserPurple.png")));
@@ -82,7 +82,7 @@ public class MechantView implements Screen {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		this.mechant.setHud(this.hud);
 		Gdx.input.setInputProcessor(this.mechant);
 	}
 
@@ -111,6 +111,10 @@ public class MechantView implements Screen {
 			// Get the player the X position of the 1st player
 			float maxPositionPlayer = 0;
 			for (HashMap.Entry<String, Player> entry : this.friendlyPlayers.entrySet()) {
+				/*if(entry.getValue().getHud() == null) {
+					entry.getValue().setHud(new HudHero(this.game.getSb()));
+				}*/
+				
 				if (entry.getValue().getX() > maxPositionPlayer) {
 					maxPositionPlayer = entry.getValue().getX();
 				}
@@ -194,6 +198,7 @@ public class MechantView implements Screen {
 		this.map.dispose();
 		this.renderer.dispose();
 		this.mechant.getTexture().dispose();
+		this.hud.dispose();
 		this.client.close();
 	}
 

@@ -27,6 +27,9 @@ public class Player extends Sprite implements InputProcessor {
 	private boolean shoot = false;
 	private final int timerDecalage = 15;
 	private float pv = 100f;
+	public boolean isTouch = false;
+	private boolean isLife = true;
+	private float timeCount = 0;
 
 	private HudHero hud;
 
@@ -37,6 +40,7 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public void update(float delta) {
+
 		float oldX = this.getX(), oldY = this.getY();
 		boolean collisionRight = false, collisionLeft = false, collisionTop = false, collisionBottom = false;
 		boolean enemy = false;
@@ -106,6 +110,10 @@ public class Player extends Sprite implements InputProcessor {
 				currentCell.setTile(null);
 			}
 		}
+		if (this.background.getCell((int) (this.getX() / this.background.getTileWidth()), (int) (this.getY() / this.background.getTileHeight())) == null) {
+			this.isLife = false;
+		}
+
 	}
 
 	private boolean isCell(TiledMapTileLayer layer, float x, float y, String property) {
@@ -157,6 +165,12 @@ public class Player extends Sprite implements InputProcessor {
 		return false;
 	}
 
+	private void isStillLife() {
+		if (this.hud.nbVieRestant() <= -1) {
+			this.isLife = false;
+		}
+	}
+
 	public void collectible(Cell currentCell) {
 		MapProperties mapPropety = currentCell.getTile().getProperties();
 		if (mapPropety.containsKey("collectible")) {
@@ -170,14 +184,17 @@ public class Player extends Sprite implements InputProcessor {
 					this.hud.setGerm(1);
 					break;
 				}
-
 				if (valueProperties.equals("finish") == true) {
 					System.exit(0);
 					break;
 				}
+				if (valueProperties.equals("trap") == true) {
+					this.hud.lifeMoins();
+				}
 			}
 
 		}
+		this.isStillLife();
 	}
 
 	@Override
@@ -299,9 +316,14 @@ public class Player extends Sprite implements InputProcessor {
 
 	public void setHud(HudHero hud) {
 		this.hud = hud;
+		this.hud.setPlayer(this);
 	}
 
 	public HudHero getHud() {
 		return this.hud;
+	}
+
+	public boolean isLife() {
+		return this.isLife;
 	}
 }

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.worms.entities.Player;
 
 public class HudHero implements Disposable {
 
@@ -22,8 +23,9 @@ public class HudHero implements Disposable {
 
 	// Mario score/time Tracking Variables
 	private Integer worldTimer;
-	private boolean timeUp;
-	private float timeCount;
+	private boolean timeUp; // true when the world timer reaches 0
+	private float timeCount = 0;
+	private static Integer score;
 	private int nbPiece;
 	private int nbGermeBlue = 0;
 
@@ -34,14 +36,24 @@ public class HudHero implements Disposable {
 	private Image piece = new Image(new Texture("Base pack/HUD/hud_coins.png"));
 	private Image gemBlue = new Image(new Texture("Base pack/HUD/hud_gem_blue.png"));
 	private Label nbGemBlue;
-
+	private boolean isHalf = false;
+	Table tableVie = new Table();
+	Table table = new Table();
+	Table countPiece = new Table();
+	Table countGermBlue = new Table();
 	private Image[] vies = new Image[5];
+	private SpriteBatch sb;
+	private int indexVieMoins = 4;
+	private Player player;
+	private final float UPDATE_TIME = 1 / 60f;
 
 	public HudHero(SpriteBatch sb) {
 		// define our tracking variables
 		this.worldTimer = 0;
 		this.timeCount = 0;
+		score = 5;
 		this.nbPiece = 0;
+		this.sb = sb;
 
 		// setup the HUD viewport using a new camera seperate from our gamecam
 		// define our stage using that viewport and our games spritebatch
@@ -49,25 +61,26 @@ public class HudHero implements Disposable {
 		this.stage = new Stage(this.viewport, sb);
 
 		// define a table used to organize our hud's labels
-		Table table = new Table();
-		Table tableVie = new Table();
-		Table countPiece = new Table();
-		Table countGermBlue = new Table();
+
 		// Top-Align table
-		table.top();
+		this.table.top();
 		// make the table fill the entire stage
-		table.setFillParent(true);
+		this.table.setFillParent(true);
 
 		// define our labels using the String, and a Label style consisting of a
 		// font and color
 		this.nbGemBlue = new Label(String.format("%03d", this.nbGermeBlue), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		// scoreLabel = new Label(String.format("%01d", score), new
+		// Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		// this.timeLabel = new Label("TIME", new Label.LabelStyle(new
+		// BitmapFont(), Color.WHITE));
 		this.levelLabel = new Label(String.format("%03d", this.nbPiece), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-		countPiece.add(this.piece);
-		countPiece.add(this.levelLabel).expandX().padTop(10);
+		this.countPiece.add(this.piece);
+		this.countPiece.add(this.levelLabel).expandX().padTop(10);
 
-		countGermBlue.add(this.gemBlue);
-		countGermBlue.add(this.nbGemBlue);
+		this.countGermBlue.add(this.gemBlue);
+		this.countGermBlue.add(this.nbGemBlue);
 		for (int i = 0; i < 5; i++) {
 			Image vie = new Image(new Texture("Base pack/HUD/hud_heartFull.png"));
 			this.vies[i] = vie;
@@ -77,31 +90,31 @@ public class HudHero implements Disposable {
 		// add our labels to our table, padding the top, and giving them all
 		// equal width with expandX
 
-		tableVie.add(this.vies);
-		table.add(this.joueur).expandX().padTop(10);
-		table.add(countPiece).expandX().padTop(10);
+		this.tableVie.add(this.vies);
+		this.table.add(this.joueur).expandX().padTop(10);
+		this.table.add(this.countPiece).expandX().padTop(10);
 
 		// add a second row to our table
-		table.row();
-		table.add(tableVie).expandX();
-		table.add(countGermBlue).expandX();
+		this.table.row();
+		this.table.add(this.tableVie).expandX();
+		this.table.add(this.countGermBlue).expandX();
 
 		// add our table to the stage
-		this.stage.addActor(table);
+		this.stage.addActor(this.table);
 
 	}
 
 	public void update(float dt) {
-		this.timeCount += dt;
-		if (this.timeCount >= 1) {
-			if (this.worldTimer > 0) {
-				this.worldTimer--;
+		if (this.player.isTouch == true) {
+			this.timeCount = this.timeCount + this.UPDATE_TIME;
+
+			if (this.timeCount <= 1f) {
+
 			} else {
-				this.timeUp = true;
+
+				this.timeCount = 0;
+				this.player.isTouch = false;
 			}
-			this.nbGermeBlue++;
-			this.nbGemBlue.setText(String.format("%03d", this.nbGermeBlue));
-			this.timeCount = 0;
 		}
 	}
 
@@ -118,6 +131,42 @@ public class HudHero implements Disposable {
 	public void setGerm(int germ) {
 		this.nbGermeBlue++;
 		this.nbGemBlue.setText(String.format("%03d", this.nbGermeBlue));
+	}
+
+	public void lifeMoins() {
+		if (this.indexVieMoins > -1 && this.player.isTouch == false) {
+			if (this.isHalf == false) {
+				this.isHalf = true;
+				Image demi = new Image(new Texture("Base pack/HUD/hud_heartHalf.png"));
+				this.vies[this.indexVieMoins] = demi;
+			} else {
+				Image vide = new Image(new Texture("Base pack/HUD/hud_heartEmpty.png"));
+				this.vies[this.indexVieMoins] = vide;
+				this.isHalf = false;
+				this.indexVieMoins--;
+
+			}
+			this.tableVie.clear();
+			this.tableVie.add(this.vies);
+			this.player.isTouch = true;
+		}
+
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public int nbVieRestant() {
+		return this.indexVieMoins;
+	}
+
+	public int getGold() {
+		return this.nbPiece;
+	}
+
+	public int getGeme() {
+		return this.nbGermeBlue;
 	}
 
 }
