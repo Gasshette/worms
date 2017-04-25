@@ -1,0 +1,38 @@
+.footer{
+    margin-top : 20px;
+    position:fixed;
+    bottom : 0;
+    width : 100%;
+}
+
+.footer-container{
+    width : 1170px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-size: 1.1em;
+    padding-top: 25px;
+    padding-bottom : 20px;
+    background-image: url("../resources/images/grassMid.png");
+    background-repeat: repeat;
+    border-radius: 10px 10px 0px 0px;
+    -moz-border-radius: 10px 10px 0px 0px;
+    -webkit-border-radius: 10px 10px 0px 0px;
+    border: 0px solid #000000;
+}
+.wide-content{
+    width : 100%;
+    background-image: url("../resources/images/liquidWaterTop.png");
+    -webkit-animation: backgroundScroll 20s linear infinite;
+    animation: backgroundScroll 20s linear infinite;
+}
+
+@-webkit-keyframes backgroundScroll{
+    from {background-position: 0 0;}
+    to {background-position: -400px 0;}
+}
+
+@keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: -400px 0;}
+}
