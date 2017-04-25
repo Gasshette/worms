@@ -43,6 +43,8 @@ dependencies {
 	compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 	compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 	compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+	compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+	compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         
     //=====HIBERNATE
 	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.9.Final'

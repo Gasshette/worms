@@ -154,7 +154,7 @@ public class MechantView implements Screen {
 		/**
 		 * Gestion de la camera
 		 */
-		this.camera.position.set(this.player.getX() + this.player.getWidth(), this.player.getY() + this.player.getHeight(), 0);
+		this.camera.position.set(this.mechant.getX() + this.mechant.getWidth(), this.mechant.getY() + this.mechant.getHeight(), 0);
 		this.camera.update();
 		this.renderer.setView(this.camera);
 
@@ -164,7 +164,7 @@ public class MechantView implements Screen {
 		this.renderer.getBatch().begin();
 		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("background"));
 		this.renderer.renderTileLayer((TiledMapTileLayer) this.map.getLayers().get("foreground"));
-		this.player.draw(this.renderer.getBatch());
+		this.mechant.draw(this.renderer.getBatch());
 		this.renderer.getBatch().end();
 
 		/**

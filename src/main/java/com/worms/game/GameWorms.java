@@ -14,12 +14,13 @@ public class GameWorms extends Game {
 	private BitmapFont font;
 	private String map;
 	private FreeTypeFontGenerator generator;
+	private String pseudo;
 
 	@Override
 	public void create() {
 		this.generator = new FreeTypeFontGenerator(Gdx.files.internal("font1.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 30;
+		parameter.size = 45;
 		
 		this.sb = new SpriteBatch();
 		this.font = new BitmapFont();
@@ -72,5 +73,13 @@ public class GameWorms extends Game {
 	
 	public BitmapFont getFont() {
 		return this.font;
+	}
+
+	public String getPseudo() {
+		return pseudo;
+	}
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
 	}
 }

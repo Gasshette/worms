@@ -1,5 +1,8 @@
 package com.worms.views;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -30,11 +33,12 @@ public class LoginView implements Screen {
 	private TextButtonStyle textButtonStyle;
 	private TextFieldStyle textFieldStyle;
 
-	private TextField login;
-	private TextField pwd;
+	private static TextField login;
+	private static TextField pwd;
 	private TextButton exitButton;
 	private TextButton connectButton;
 	private TextButton playButton;
+	private static HashMap<String, String> users;
 
 	public LoginView(GameWorms game) {
 		this.game = game;
@@ -56,8 +60,18 @@ public class LoginView implements Screen {
 
 	public void create() {
 		/*
+		 * fill user list
+		 */
+		users = new HashMap<>();
+		users.put("louis", "louis");
+		users.put("rod", "rod");
+		users.put("df", "df");
+		users.put("dj", "dj");
+		
+		/*
 		 * Configuration du style d'un bouton
 		 */
+		
 		this.textButtonStyle = new TextButtonStyle();
 		this.textButtonStyle.up = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
 		this.textButtonStyle.down = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
@@ -75,17 +89,17 @@ public class LoginView implements Screen {
 		this.textFieldStyle.background = this.skin.newDrawable("pixmap", Color.WHITE);
 
 		// LOGIN textfield
-		this.login = new TextField("", textFieldStyle);
-		this.login.setWidth(400);
-		this.login.setPosition(this.stage.getWidth() / 2 - login.getWidth() / 2, 400);
-		this.login.setMessageText("Username");
-		this.stage.addActor(login);
+		login = new TextField("", textFieldStyle);
+		login.setWidth(400);
+		login.setPosition(this.stage.getWidth() / 2 - login.getWidth() / 2, 400);
+		login.setMessageText("Username");
+		stage.addActor(login);
 
 		// PWD textfield
-		this.pwd = new TextField("", textFieldStyle);
-		this.pwd.setWidth(400);
-		this.pwd.setPosition(this.stage.getWidth() / 2 - login.getWidth() / 2, 250);
-		this.pwd.setMessageText("Password");
+		pwd = new TextField("", textFieldStyle);
+		pwd.setWidth(400);
+		pwd.setPosition(this.stage.getWidth() / 2 - login.getWidth() / 2, 250);
+		pwd.setMessageText("Password");
 		this.stage.addActor(pwd);
 
 		/*
@@ -98,7 +112,18 @@ public class LoginView implements Screen {
 		this.connectButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				LoginView.this.game.setScreen(new MainMenuView(game));
+				String logEntry = login.getText();
+				String pwdEntry = pwd.getText();
+				for (Entry<String, String> entry : users .entrySet()){
+					if (logEntry.equals(entry.getKey())){
+						if(pwdEntry.equals(entry.getValue())){
+							LoginView.this.game.setPseudo(logEntry);
+							LoginView.this.game.setScreen(new MainMenuView(game));
+						}
+					} else {
+						
+					}
+				}
 			}
 		});
 		

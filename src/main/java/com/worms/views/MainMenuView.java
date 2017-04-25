@@ -72,7 +72,7 @@ public class MainMenuView implements Screen {
 		 * Creation du bouton connexion
 		 */
 		final TextButton connectButton = new TextButton("CONNECT", textButtonStyle);
-		connectButton.setPosition(this.stage.getWidth() / 2 - playButton.getWidth() / 2, 225);
+		connectButton.setPosition(this.stage.getWidth() / 2 - connectButton.getWidth() / 2, 225);
 		this.stage.addActor(connectButton);
 		connectButton.addListener(new ChangeListener() {
 			@Override

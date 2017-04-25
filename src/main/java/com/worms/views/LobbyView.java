@@ -1,6 +1,10 @@
 package com.worms.views;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,6 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -37,41 +43,96 @@ public class LobbyView implements Screen {
 	private TextButton backButton;
 	private TextButton readyButton;
 
-	private Texture alien1Tex;                                              
-	private Texture alien2Tex;                                              
-	private Texture alien3Tex;                                              
-	private Texture leftArrowTex;                                           
-	private ImageButton leftArrow;                                          
-	private Texture rightArrowTex;                                          
-	private ImageButton rightArrow;                                         
-	private static int choice = 0;                                          
-	                                                                        
-	private Client client = null;                                           
-                                                                            
-	private static HashMap<Integer, TextureRegionDrawable> charSelect;      
-                                                                            
-	private static Image selection;                                         
-                                                                            
-	public LobbyView(GameWorms game) {                                      
-		this.game = game;                                                   
-		this.stage = new Stage();                                           
-		this.skin = new Skin();                                             
-		this.bfont = game.getFont();                                        
-                                                                            
-		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);                
-		this.pixmap.setColor(Color.WHITE);                                  
-		this.pixmap.fill();                                                 
-                                                                            
-		this.skin.add("pixmap", new Texture(this.pixmap));                  
-		this.skin.add("default", this.bfont);                               
-                                                                            
-		Gdx.input.setInputProcessor(this.stage);                            
-                                                                            
-		this.create();                                                      
-	}                                                                       
-                                                                            
-	public void create() {                                                  
-                                                                            
+	private LabelStyle labelStyle;
+	private Label p1Pseudo;
+	private Label p2Pseudo;
+	private Label p3Pseudo;
+	private Label p4Pseudo;
+	private TextureRegionDrawable alien1Draw;
+	private TextureRegionDrawable alien2Draw;
+	private TextureRegionDrawable alien3Draw;
+	private HashMap<Integer, Label> dispPlayers;
+	private HashMap<Integer, Label> dispPseudos;
+
+	private Texture alien1Tex;
+	private Texture alien2Tex;
+	private Texture alien3Tex;
+	private Texture leftArrowTex;
+	private ImageButton leftArrow;
+	private Texture rightArrowTex;
+	private ImageButton rightArrow;
+	private static int choice = 0;
+	private boolean isReady = false;
+
+	private Client client = null;
+
+	private static HashMap<Integer, TextureRegionDrawable> charSelect;
+	private HashMap<String, JSONObject> lobbyPlayers;
+
+	private static Image selection;
+
+	public LobbyView(GameWorms game) {
+		this.game = game;
+		this.stage = new Stage();
+		this.skin = new Skin();
+		this.bfont = game.getFont();
+
+		this.pixmap = new Pixmap(100, 100, Format.RGBA8888);
+		this.pixmap.setColor(Color.WHITE);
+		this.pixmap.fill();
+
+		this.skin.add("pixmap", new Texture(this.pixmap));
+		this.skin.add("default", this.bfont);
+
+		Gdx.input.setInputProcessor(this.stage);
+
+		this.create();
+		this.lobbyPlayers = new HashMap<String, JSONObject>();
+		try {
+			this.client = new Client(lobbyPlayers);
+			this.client.configSocketEvents();
+
+			JSONObject player = new JSONObject();
+			try {
+				player.put("pseudo", game.getPseudo());
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			this.client.emit("newPlayer", player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void create() {
+
+		this.labelStyle = new LabelStyle(this.bfont, Color.BLACK);
+		this.labelStyle.background = this.skin.newDrawable("pixmap", Color.WHITE);
+
+		p1Pseudo = new Label("empty", labelStyle);
+		p1Pseudo.setPosition(this.stage.getWidth() * 0.125F - (p1Pseudo.getWidth() / 2), 350);
+		this.stage.addActor(p1Pseudo);
+
+		p2Pseudo = new Label("empty", labelStyle);
+		p2Pseudo.setPosition(this.stage.getWidth() * 0.375F - (p2Pseudo.getWidth() / 2), 350);
+		this.stage.addActor(p2Pseudo);
+
+		p3Pseudo = new Label("empty", labelStyle);
+		p3Pseudo.setPosition(this.stage.getWidth() * 0.625F - (p3Pseudo.getWidth() / 2), 350);
+		this.stage.addActor(p3Pseudo);
+
+		p4Pseudo = new Label("empty", labelStyle);
+		p4Pseudo.setPosition(this.stage.getWidth() * 0.875F - (p4Pseudo.getWidth() / 2), 350);
+		this.stage.addActor(p4Pseudo);
+
+		this.dispPseudos = new HashMap<>();
+		this.dispPseudos.put(1, p1Pseudo);
+		this.dispPseudos.put(2, p2Pseudo);
+		this.dispPseudos.put(3, p3Pseudo);
+		this.dispPseudos.put(4, p4Pseudo);
+
 		this.textButtonStyle = new TextButtonStyle();
 		this.textButtonStyle.up = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
 		this.textButtonStyle.down = this.skin.newDrawable("pixmap", Color.DARK_GRAY);
@@ -85,9 +146,9 @@ public class LobbyView implements Screen {
 		alien3Tex = new Texture(Gdx.files.internal("Base pack/Player/p3_jump.png"));
 		leftArrowTex = new Texture(Gdx.files.internal("Base pack/HUD/left-off.png"));
 		rightArrowTex = new Texture(Gdx.files.internal("Base pack/HUD/right-off.png"));
-		TextureRegionDrawable alien1Draw = new TextureRegionDrawable(new TextureRegion(alien1Tex));
-		TextureRegionDrawable alien2Draw = new TextureRegionDrawable(new TextureRegion(alien2Tex));
-		TextureRegionDrawable alien3Draw = new TextureRegionDrawable(new TextureRegion(alien3Tex));
+		this.alien1Draw = new TextureRegionDrawable(new TextureRegion(alien1Tex));
+		this.alien2Draw = new TextureRegionDrawable(new TextureRegion(alien2Tex));
+		this.alien3Draw = new TextureRegionDrawable(new TextureRegion(alien3Tex));
 		TextureRegionDrawable leftArrowDraw = new TextureRegionDrawable(new TextureRegion(leftArrowTex));
 		TextureRegionDrawable rightArrowDraw = new TextureRegionDrawable(new TextureRegion(rightArrowTex));
 
@@ -141,7 +202,10 @@ public class LobbyView implements Screen {
 		this.readyButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println();
+
+				LobbyView.this.isReady = !LobbyView.this.isReady;
+
+				LobbyView.this.client.emit("updateReady", LobbyView.this.isReady);
 			}
 		});
 
@@ -168,6 +232,17 @@ public class LobbyView implements Screen {
 
 		this.stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		this.stage.draw();
+		Integer index = 1;
+		for (Entry<String, JSONObject> entry : this.lobbyPlayers.entrySet()) {
+			try {
+				System.out.println(index);
+				this.dispPseudos.get(index).setText(entry.getValue().getString("pseudo"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			;
+			index++;
+		}
 	}
 
 	public static void switchChar(boolean left) {

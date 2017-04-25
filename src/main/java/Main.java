@@ -6,8 +6,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1024;
-		config.height = 768;
+		config.width = 1920;
+		config.height = 1080;
 
 		new LwjglApplication(new GameWorms(), config);
 	}

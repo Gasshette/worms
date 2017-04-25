@@ -20,12 +20,19 @@ import io.socket.emitter.Emitter.Listener;
 public class Client {
 	private Socket socket;
 	private HashMap<String, Player> friendlyPlayers;
+	private HashMap<String, JSONObject> lobbyPlayers;
 	private HashMap<Integer, Enemy> enemies;
 	private HashMap<Integer, Texture> hashmapEnemies;
 	private Texture friendPlayer;
 	private TiledMap map;
 
-	public Client(TiledMap map, Texture friendPlayer, HashMap<String, Player> friendlyPlayers, HashMap<Integer, Enemy> enemies, HashMap<Integer, Texture> hashmapEnemies) throws Exception {
+	public Client( HashMap<String, JSONObject> lobbyPlayers) throws Exception {
+		this.connectSocket();
+		this.lobbyPlayers = lobbyPlayers;
+	}
+
+	public Client(TiledMap map, Texture friendPlayer, HashMap<String, Player> friendlyPlayers,
+			HashMap<Integer, Enemy> enemies, HashMap<Integer, Texture> hashmapEnemies) throws Exception {
 		this.connectSocket();
 
 		this.map = map;
@@ -57,7 +64,10 @@ public class Client {
 
 				try {
 					String id = data.getString("id");
-					Client.this.friendlyPlayers.put(id, new Player(Client.this.friendPlayer, (TiledMapTileLayer) Client.this.map.getLayers().get("background"), (TiledMapTileLayer) Client.this.map.getLayers().get("foreground")));
+					Client.this.friendlyPlayers.put(id,
+							new Player(Client.this.friendPlayer,
+									(TiledMapTileLayer) Client.this.map.getLayers().get("background"),
+									(TiledMapTileLayer) Client.this.map.getLayers().get("foreground")));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -114,7 +124,9 @@ public class Client {
 						double x = objects.getJSONObject(i).getDouble("x");
 						double y = objects.getJSONObject(i).getDouble("y");
 
-						Player player = new Player(Client.this.friendPlayer, (TiledMapTileLayer) Client.this.map.getLayers().get("background"), (TiledMapTileLayer) Client.this.map.getLayers().get("foreground"));
+						Player player = new Player(Client.this.friendPlayer,
+								(TiledMapTileLayer) Client.this.map.getLayers().get("background"),
+								(TiledMapTileLayer) Client.this.map.getLayers().get("foreground"));
 						player.setX((float) x);
 						player.setY((float) y);
 
@@ -125,7 +137,67 @@ public class Client {
 				}
 			}
 
-		}).on("newEnemy", new Listener() {
+		}).on("getLobbyPlayers", new Listener() {
+
+			@Override
+			public void call(Object... args) {
+				JSONArray objects = (JSONArray) args[0];
+
+				try {
+					for (int i = 0; i < objects.length(); i++) {
+						String id = objects.getJSONObject(i).getString("id");
+						String pseudo = objects.getJSONObject(i).getString("pseudo");
+						int idTexture = objects.getJSONObject(i).getInt("idTexture");
+						boolean isReady = objects.getJSONObject(i).getBoolean("isReady");
+
+						JSONObject player = new JSONObject();
+						try {
+							player.put("id", id);
+							player.put("pseudo", pseudo);
+							player.put("idTexture", idTexture);
+							player.put("isReady", isReady);
+							
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}						
+						
+						Client.this.lobbyPlayers.put(id, player);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+		})
+//		.on("updateReady", new Listener() {
+//
+//			@Override
+//			public void call(Object... args) {
+//				JSONArray datas = (JSONArray) args[0];
+//
+//				try {
+//					for (int i = 0; i < datas.length(); i++) {
+//						String id = datas.getJSONObject(i).getString("id");
+//						double x = datas.getJSONObject(i).getDouble("x");
+//						double y = datas.getJSONObject(i).getDouble("y");
+//
+//						if (Client.this.lobbyPlayers.get(id) != null) {
+//							Player player = Client.this.friendlyPlayers.get(id);
+//							player.setX((float) x);
+//							player.setY((float) y);
+//							
+//							Client.this.lobbyPlayers.get(id).
+//
+//							Client.this.lobbyPlayers.put(id, player);
+//						}
+//					}
+//				} catch (JSONException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//
+//		})
+		.on("newEnemy", new Listener() {
 
 			@Override
 			public void call(Object... args) {

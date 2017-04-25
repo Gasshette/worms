@@ -72,7 +72,7 @@ public class GameOverView implements Screen {
 		 * Configuration du style d'une zone de texte
 		 */
 		this.labelStyle = new LabelStyle(this.bfont, Color.WHITE);
-		this.labelStyle.background = this.skin.newDrawable("pixmap", Color.WHITE);
+		this.labelStyle.background = this.skin.newDrawable("pixmap", Color.BLUE);
 		
 		gameOver = new Label("", labelStyle);
 		gameOver.setPosition(this.stage.getWidth() / 2 - (gameOver.getWidth() / 2 + 50), this.stage.getHeight() / 2 + 100);
@@ -144,4 +144,5 @@ public class GameOverView implements Screen {
 		this.stage.dispose();
 		this.skin.dispose();
 	}
+
 }
