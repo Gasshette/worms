@@ -39,6 +39,7 @@ public class GameOverView implements Screen {
 	private Player player;
 
 	public GameOverView(GameWorms game, Player player) {
+
 		this.game = game;
 		this.stage = new Stage();
 		this.skin = new Skin();
@@ -50,7 +51,11 @@ public class GameOverView implements Screen {
 
 		this.skin.add("pixmap", new Texture(this.pixmap));
 		this.skin.add("default", this.bfont);
+
 		this.player = player;
+
+
+
 		Gdx.input.setInputProcessor(this.stage);
 
 		this.create();
@@ -75,9 +80,10 @@ public class GameOverView implements Screen {
 		 */
 		this.labelStyle = new LabelStyle(this.bfont, Color.WHITE);
 		this.labelStyle.background = this.skin.newDrawable("pixmap", Color.WHITE);
-		
+
 		gameOver = new Label("", labelStyle);
-		gameOver.setPosition(this.stage.getWidth() / 2 - (gameOver.getWidth() / 2 + 50), this.stage.getHeight() / 2 + 100);
+		gameOver.setPosition(this.stage.getWidth() / 2 - (gameOver.getWidth() / 2 + 50),
+				this.stage.getHeight() / 2 + 100);
 		gameOver.setText("GAME OVER");
 		this.stage.addActor(gameOver);
 
@@ -85,13 +91,17 @@ public class GameOverView implements Screen {
 		coinsResult.setWidth(400);
 		coinsResult.setPosition(this.stage.getWidth() / 2 - coinsResult.getWidth() / 2,
 				this.stage.getHeight() / 2 - 100);
-		coinsResult.setText("Coins : "+this.player.getHud().getGold());
+
+		coinsResult.setText("Coins : " + this.player.getHud().getGold());
+
 		this.stage.addActor(coinsResult);
 
 		gemsResult = new Label("", labelStyle);
 		gemsResult.setWidth(400);
 		gemsResult.setPosition(this.stage.getWidth() / 2 - gemsResult.getWidth() / 2, this.stage.getHeight() / 2 - 150);
-		gemsResult.setText("Gems : "+this.player.getHud().getGeme());
+
+		gemsResult.setText("Gems : " + this.player.getHud().getGeme());
+
 		this.stage.addActor(gemsResult);
 
 		/*
