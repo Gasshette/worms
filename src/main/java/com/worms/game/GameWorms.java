@@ -24,7 +24,7 @@ public class GameWorms extends Game {
 		
 		this.sb = new SpriteBatch();
 		this.font = new BitmapFont();
-		this.map = "carte.tmx";
+		this.map = "niv01.tmx";
 
 		this.font = this.generator.generateFont(parameter);
 		this.setScreen(new LoginView(this));

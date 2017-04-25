@@ -54,6 +54,7 @@ public class LobbyView implements Screen {
 	private HashMap<Integer, Label> dispPlayers;
 	private HashMap<Integer, Label> dispPseudos;
 
+
 	private Texture alien1Tex;
 	private Texture alien2Tex;
 	private Texture alien3Tex;
@@ -68,6 +69,7 @@ public class LobbyView implements Screen {
 
 	private static HashMap<Integer, TextureRegionDrawable> charSelect;
 	private HashMap<String, JSONObject> lobbyPlayers;
+
 
 	private static Image selection;
 
@@ -104,6 +106,7 @@ public class LobbyView implements Screen {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public void create() {
@@ -167,8 +170,8 @@ public class LobbyView implements Screen {
 
 		System.out.println(charSelect);
 		this.stage.addActor(selection);
-		this.stage.addActor(leftArrow);
-		this.stage.addActor(rightArrow);
+		this.stage.addActor(this.leftArrow);
+		this.stage.addActor(this.rightArrow);
 
 		/*
 		 * left arrow
@@ -195,9 +198,9 @@ public class LobbyView implements Screen {
 		/*
 		 * Creation du bouton READY
 		 */
-		this.readyButton = new TextButton("READY", textButtonStyle);
-		this.readyButton.setPosition(this.stage.getWidth() / 2 - readyButton.getWidth() / 2, 100);
-		this.stage.addActor(readyButton);
+		this.readyButton = new TextButton("READY", this.textButtonStyle);
+		this.readyButton.setPosition(this.stage.getWidth() / 2 - this.readyButton.getWidth() / 2, 100);
+		this.stage.addActor(this.readyButton);
 
 		this.readyButton.addListener(new ChangeListener() {
 			@Override
@@ -206,16 +209,22 @@ public class LobbyView implements Screen {
 				LobbyView.this.isReady = !LobbyView.this.isReady;
 
 				LobbyView.this.client.emit("updateReady", LobbyView.this.isReady);
+//				boolean isMechant = false;
+//				if(isMechant) {
+//					LobbyView.this.game.setScreen(new MechantView(LobbyView.this.game));
+//				} else {
+//					LobbyView.this.game.setScreen(new PlayView(LobbyView.this.game));
+//				}
 			}
 		});
 
 		/*
 		 * Creation du bouton de retour
 		 */
-		this.backButton = new TextButton("BACK", textButtonStyle);
+		this.backButton = new TextButton("BACK", this.textButtonStyle);
 		this.backButton.setPosition(50, 50);
 		this.backButton.setHeight(35);
-		this.stage.addActor(backButton);
+		this.stage.addActor(this.backButton);
 
 		this.backButton.addListener(new ChangeListener() {
 			@Override

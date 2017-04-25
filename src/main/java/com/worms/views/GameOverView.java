@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.worms.entities.Player;
 import com.worms.game.GameWorms;
 
 public class GameOverView implements Screen {
@@ -35,8 +36,10 @@ public class GameOverView implements Screen {
 	private Label gemsResult;
 	private Label gameOver;
 	private TextButton toMenuButton;
+	private Player player;
 
-	public GameOverView(GameWorms game) {
+	public GameOverView(GameWorms game, Player player) {
+
 		this.game = game;
 		this.stage = new Stage();
 		this.skin = new Skin();
@@ -48,6 +51,10 @@ public class GameOverView implements Screen {
 
 		this.skin.add("pixmap", new Texture(this.pixmap));
 		this.skin.add("default", this.bfont);
+
+		this.player = player;
+
+
 
 		Gdx.input.setInputProcessor(this.stage);
 
@@ -72,10 +79,12 @@ public class GameOverView implements Screen {
 		 * Configuration du style d'une zone de texte
 		 */
 		this.labelStyle = new LabelStyle(this.bfont, Color.WHITE);
-		this.labelStyle.background = this.skin.newDrawable("pixmap", Color.BLUE);
 		
+		this.labelStyle.background = this.skin.newDrawable("pixmap", Color.WHITE);
+
 		gameOver = new Label("", labelStyle);
-		gameOver.setPosition(this.stage.getWidth() / 2 - (gameOver.getWidth() / 2 + 50), this.stage.getHeight() / 2 + 100);
+		gameOver.setPosition(this.stage.getWidth() / 2 - (gameOver.getWidth() / 2 + 50),
+				this.stage.getHeight() / 2 + 100);
 		gameOver.setText("GAME OVER");
 		this.stage.addActor(gameOver);
 
@@ -83,13 +92,17 @@ public class GameOverView implements Screen {
 		coinsResult.setWidth(400);
 		coinsResult.setPosition(this.stage.getWidth() / 2 - coinsResult.getWidth() / 2,
 				this.stage.getHeight() / 2 - 100);
-		coinsResult.setText("Coins : {coins here}");
+
+		coinsResult.setText("Coins : " + this.player.getHud().getGold());
+
 		this.stage.addActor(coinsResult);
 
 		gemsResult = new Label("", labelStyle);
 		gemsResult.setWidth(400);
 		gemsResult.setPosition(this.stage.getWidth() / 2 - gemsResult.getWidth() / 2, this.stage.getHeight() / 2 - 150);
-		gemsResult.setText("Gems : {gems here}");
+
+		gemsResult.setText("Gems : " + this.player.getHud().getGeme());
+
 		this.stage.addActor(gemsResult);
 
 		/*

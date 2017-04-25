@@ -1,19 +1,23 @@
 package com.worms.entities;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
+import com.worms.hud.HudHero;
 
 public class Player extends Sprite implements InputProcessor {
 	/** The movement velocity */
 	private Vector2 velocity = new Vector2();
-	private float speed = 500, gravity = 800;
+	private float speed = 500, gravity = 500;
 
 	// Layers of the map
 	private TiledMapTileLayer background;
@@ -23,6 +27,11 @@ public class Player extends Sprite implements InputProcessor {
 	private boolean shoot = false;
 	private final int timerDecalage = 15;
 	private float pv = 100f;
+	public boolean isTouch = false;
+	private boolean isLife = true;
+	private float timeCount = 0;
+
+	private HudHero hud;
 
 	public Player(Texture texture, TiledMapTileLayer background, TiledMapTileLayer foreground) {
 		super(texture);
@@ -31,6 +40,7 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	public void update(float delta) {
+
 		float oldX = this.getX(), oldY = this.getY();
 		boolean collisionRight = false, collisionLeft = false, collisionTop = false, collisionBottom = false;
 		boolean enemy = false;
@@ -52,8 +62,8 @@ public class Player extends Sprite implements InputProcessor {
 			enemy = this.collidesLeft(this.foreground, "enemy");
 		} else if (this.velocity.x > 0) { // RIGHT
 			collisionRight = this.collidesRight(this.background, "blocked") || this.collidesRight(this.foreground, "blocked");
-			
-			if(!enemy) {
+
+			if (!enemy) {
 				enemy = this.collidesRight(this.foreground, "enemy");
 			}
 		}
@@ -68,14 +78,14 @@ public class Player extends Sprite implements InputProcessor {
 		if (this.velocity.y < 0) { // DOWN
 			collisionBottom = this.collidesBottom(this.background, "blocked") || this.collidesBottom(this.foreground, "blocked");
 			this.canJump = collisionBottom;
-			
-			if(!enemy) {
+
+			if (!enemy) {
 				enemy = this.collidesBottom(this.foreground, "enemy");
 			}
 		} else if (this.velocity.y > 0) { // UP
 			collisionTop = this.collidesTop(this.background, "blocked") || this.collidesTop(this.foreground, "blocked");
-			
-			if(!enemy) {
+
+			if (!enemy) {
 				enemy = this.collidesTop(this.foreground, "enemy");
 			}
 		}
@@ -86,19 +96,23 @@ public class Player extends Sprite implements InputProcessor {
 		}
 
 		// PV code
-		if(enemy) {
+		if (enemy) {
 			System.out.println("Perte de pv");
 			this.pv -= 0.2f;
 			System.out.println("Point de vie !! PV : " + this.pv);
 		}
-		
+
 		// Loot code
 		Cell currentCell = this.getCell(this.foreground);
 		if (currentCell != null && currentCell.getTile() != null) {
 			if (currentCell.getTile().getProperties().containsKey("collectible")) {
-				currentCell.setTile(null);
+				this.collectible(currentCell);
 			}
 		}
+		if (this.background.getCell((int) (this.getX() / this.background.getTileWidth()), (int) (this.getY() / this.background.getTileHeight())) == null) {
+			this.isLife = false;
+		}
+
 	}
 
 	private boolean isCell(TiledMapTileLayer layer, float x, float y, String property) {
@@ -148,6 +162,40 @@ public class Player extends Sprite implements InputProcessor {
 		}
 
 		return false;
+	}
+
+	private void isStillLife() {
+		if (this.hud.nbVieRestant() <= -1) {
+			this.isLife = false;
+		}
+	}
+
+	public void collectible(Cell currentCell) {
+		MapProperties mapPropety = currentCell.getTile().getProperties();
+		if (mapPropety.containsKey("collectible")) {
+			for (Iterator<Object> iter = mapPropety.getValues(); iter.hasNext();) {
+				String valueProperties = iter.next().toString();
+				if (valueProperties.equals("gold") == true) {
+					this.hud.setGold(1);
+					currentCell.setTile(null);
+					break;
+				}
+				if (valueProperties.equals("germ") == true) {
+					this.hud.setGerm(1);
+					currentCell.setTile(null);
+					break;
+				}
+				if (valueProperties.equals("finish") == true) {
+					System.exit(0);
+					break;
+				}
+				if (valueProperties.equals("trap") == true) {
+					this.hud.lifeMoins();
+				}
+			}
+
+		}
+		this.isStillLife();
 	}
 
 	@Override
@@ -265,5 +313,18 @@ public class Player extends Sprite implements InputProcessor {
 
 	public int getTimerDecalage() {
 		return this.timerDecalage;
+	}
+
+	public void setHud(HudHero hud) {
+		this.hud = hud;
+		this.hud.setPlayer(this);
+	}
+
+	public HudHero getHud() {
+		return this.hud;
+	}
+
+	public boolean isLife() {
+		return this.isLife;
 	}
 }
