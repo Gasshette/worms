@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_1hyu4jvbmq = function () {
-    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\download\\download.component.js",
-        hash = "875fe3d0e47137046ca5f3f85a18adeedde73fe9",
+var cov_164zol99q7 = function () {
+    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\download\\download.component.js",
+        hash = "3e17c747e15665e9757689f09b0f50c962eba4a3",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\download\\download.component.js",
+        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\download\\download.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -79,17 +79,17 @@ var cov_1hyu4jvbmq = function () {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_1hyu4jvbmq.s[0];
+    ++cov_164zol99q7.s[0];
 
     "use strict";
 
     var DownloadController = function DownloadController() {
         _classCallCheck(this, DownloadController);
 
-        ++cov_1hyu4jvbmq.f[0];
+        ++cov_164zol99q7.f[0];
     };
 
-    ++cov_1hyu4jvbmq.s[1];
+    ++cov_164zol99q7.s[1];
 
 
     angular.module("app").component("downloadComponent", {

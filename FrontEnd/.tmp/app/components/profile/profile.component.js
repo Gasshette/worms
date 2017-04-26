@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_ll4e1cs3q = function () {
-    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\profile\\profile.component.js",
-        hash = "8372e3bdef0279bcdd255f5edfdca69be278aaeb",
+var cov_14e5rdelqs = function () {
+    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\profile\\profile.component.js",
+        hash = "725a9bd67ddfb8f76d5f2c0a552e57dbe5bbc6d6",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\profile\\profile.component.js",
+        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\profile\\profile.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -242,22 +242,22 @@ var cov_ll4e1cs3q = function () {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_ll4e1cs3q.s[0];
+    ++cov_14e5rdelqs.s[0];
 
     "use strict";
 
     var ProfileController = function ProfileController(authProvider) {
         _classCallCheck(this, ProfileController);
 
-        ++cov_ll4e1cs3q.f[0];
-        ++cov_ll4e1cs3q.s[1];
+        ++cov_14e5rdelqs.f[0];
+        ++cov_14e5rdelqs.s[1];
 
         this._authProvider = authProvider;
-        ++cov_ll4e1cs3q.s[2];
+        ++cov_14e5rdelqs.s[2];
         this.authedUser = this._authProvider.authedUser;
     };
 
-    ++cov_ll4e1cs3q.s[3];
+    ++cov_14e5rdelqs.s[3];
 
 
     angular.module("app").component("profileComponent", {
@@ -265,8 +265,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         controllerAs: 'PrCtrl',
         templateUrl: "app/components/profile/profile.component.html"
     }).directive("progressBar", function (authProvider) {
-        ++cov_ll4e1cs3q.f[1];
-        ++cov_ll4e1cs3q.s[4];
+        ++cov_14e5rdelqs.f[1];
+        ++cov_14e5rdelqs.s[4];
 
         return {
             scope: {
@@ -274,19 +274,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             },
             restrict: 'E',
             link: function link(scope) {
-                ++cov_ll4e1cs3q.f[2];
-                ++cov_ll4e1cs3q.s[5];
+                ++cov_14e5rdelqs.f[2];
+                ++cov_14e5rdelqs.s[5];
 
                 if (authProvider.authedUser !== null) {
-                    ++cov_ll4e1cs3q.b[0][0];
+                    ++cov_14e5rdelqs.b[0][0];
 
-                    var progbar = (++cov_ll4e1cs3q.s[6], angular.element(document.querySelector("#progressbar > div")));
-                    ++cov_ll4e1cs3q.s[7];
+                    var progbar = (++cov_14e5rdelqs.s[6], angular.element(document.querySelector("#progressbar > div")));
+                    ++cov_14e5rdelqs.s[7];
                     scope.percent = authProvider.authedUser.exp / 10 + "%";
-                    ++cov_ll4e1cs3q.s[8];
+                    ++cov_14e5rdelqs.s[8];
                     angular.element(progbar).css("width", scope.percent);
                 } else {
-                    ++cov_ll4e1cs3q.b[0][1];
+                    ++cov_14e5rdelqs.b[0][1];
                 }
             },
             templateUrl: "app/components/globalview/progressbar.html"

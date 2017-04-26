@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_2985c3140o = function () {
-    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\score\\score.component.js",
-        hash = "8f3d413a765dc8903e5a067561eb27d40f47ae31",
+var cov_1yvgq8jsco = function () {
+    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\score\\score.component.js",
+        hash = "055656f4cddef7707d96cbc1121cdd19877a9cb0",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\score\\score.component.js",
+        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\score\\score.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -540,7 +540,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_2985c3140o.s[0];
+    ++cov_1yvgq8jsco.s[0];
 
     "use strict";
 
@@ -548,59 +548,59 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function ScoreController($http, authProvider) {
             _classCallCheck(this, ScoreController);
 
-            ++cov_2985c3140o.f[0];
-            ++cov_2985c3140o.s[1];
+            ++cov_1yvgq8jsco.f[0];
+            ++cov_1yvgq8jsco.s[1];
 
             this._authProvider = authProvider;
-            ++cov_2985c3140o.s[2];
+            ++cov_1yvgq8jsco.s[2];
             this._http = $http;
-            ++cov_2985c3140o.s[3];
+            ++cov_1yvgq8jsco.s[3];
             this.listUsers = {};
-            ++cov_2985c3140o.s[4];
+            ++cov_1yvgq8jsco.s[4];
             this.currentView = "Normal view";
 
-            ++cov_2985c3140o.s[5];
+            ++cov_1yvgq8jsco.s[5];
             this.compactView = angular.element(document.querySelector(".compact"));
-            ++cov_2985c3140o.s[6];
+            ++cov_1yvgq8jsco.s[6];
             this.normalView = angular.element(document.querySelector(".normal"));
 
-            ++cov_2985c3140o.s[7];
+            ++cov_1yvgq8jsco.s[7];
             this.compactView.css("display", "none");
 
-            ++cov_2985c3140o.s[8];
+            ++cov_1yvgq8jsco.s[8];
             this.getUsers();
         }
 
         _createClass(ScoreController, [{
             key: "switchView",
             value: function switchView() {
-                ++cov_2985c3140o.f[1];
-                ++cov_2985c3140o.s[9];
+                ++cov_1yvgq8jsco.f[1];
+                ++cov_1yvgq8jsco.s[9];
 
                 if (this.currentView == "Normal view") {
-                    ++cov_2985c3140o.b[0][0];
-                    ++cov_2985c3140o.s[10];
+                    ++cov_1yvgq8jsco.b[0][0];
+                    ++cov_1yvgq8jsco.s[10];
 
                     this.currentView = "Compact view";
-                    ++cov_2985c3140o.s[11];
+                    ++cov_1yvgq8jsco.s[11];
                     this.compactView.css("display", "block");
-                    ++cov_2985c3140o.s[12];
+                    ++cov_1yvgq8jsco.s[12];
                     this.normalView.css("display", "none");
                 } else {
-                        ++cov_2985c3140o.b[0][1];
-                        ++cov_2985c3140o.s[13];
+                        ++cov_1yvgq8jsco.b[0][1];
+                        ++cov_1yvgq8jsco.s[13];
                         if (this.currentView == "Compact view") {
-                            ++cov_2985c3140o.b[1][0];
-                            ++cov_2985c3140o.s[14];
+                            ++cov_1yvgq8jsco.b[1][0];
+                            ++cov_1yvgq8jsco.s[14];
 
                             this.currentView = "Normal view";
-                            ++cov_2985c3140o.s[15];
+                            ++cov_1yvgq8jsco.s[15];
                             this.normalView.css("display", "block");
-                            ++cov_2985c3140o.s[16];
+                            ++cov_1yvgq8jsco.s[16];
                             this.compactView.css("display", "none");
                         } else {
-                            ++cov_2985c3140o.b[1][1];
-                            ++cov_2985c3140o.s[17];
+                            ++cov_1yvgq8jsco.b[1][1];
+                            ++cov_1yvgq8jsco.s[17];
 
                             console.log("fail to load view. please check the value of ScCtrl.currentView variable");
                         }
@@ -609,8 +609,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "getUsers",
             value: function getUsers() {
-                ++cov_2985c3140o.f[2];
-                ++cov_2985c3140o.s[18];
+                ++cov_1yvgq8jsco.f[2];
+                ++cov_1yvgq8jsco.s[18];
 
                 this.listUsers = this._authProvider.allUsers;
             }
@@ -619,7 +619,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return ScoreController;
     }();
 
-    ++cov_2985c3140o.s[19];
+    ++cov_1yvgq8jsco.s[19];
 
 
     angular.module("app").component("scoreComponent", {
@@ -627,24 +627,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         controllerAs: 'ScCtrl',
         templateUrl: "app/components/score/score.component.html"
     }).directive("progressBarScore", function (authProvider) {
-        ++cov_2985c3140o.f[3];
-        ++cov_2985c3140o.s[20];
+        ++cov_1yvgq8jsco.f[3];
+        ++cov_1yvgq8jsco.s[20];
 
         return {
             link: function link(scope, element, attrs) {
-                ++cov_2985c3140o.f[4];
+                ++cov_1yvgq8jsco.f[4];
 
-                var progbar = (++cov_2985c3140o.s[21], angular.element(document.querySelector(".progress")));
-                ++cov_2985c3140o.s[22];
+                var progbar = (++cov_1yvgq8jsco.s[21], angular.element(document.querySelector(".progress")));
+                ++cov_1yvgq8jsco.s[22];
                 progbar.find("div").css("width", attrs.percent / 10 + "%");
-                ++cov_2985c3140o.s[23];
+                ++cov_1yvgq8jsco.s[23];
                 progbar.removeClass("progress");
 
                 //Shortly, it notify the view with the new value of percent (we could bypass this by scope:{percent="@"} as parameter of the "return" object of the directive)
-                ++cov_2985c3140o.s[24];
+                ++cov_1yvgq8jsco.s[24];
                 attrs.$observe('percent', function (percent) {
-                    ++cov_2985c3140o.f[5];
-                    ++cov_2985c3140o.s[25];
+                    ++cov_1yvgq8jsco.f[5];
+                    ++cov_1yvgq8jsco.s[25];
 
                     scope.percent = percent / 10 + "%";
                 });

@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_28823ylrs0 = function () {
-    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\footer\\footer.component.js",
-        hash = "6bfee3b7311f0aa3564090d3099f072064437b3e",
+var cov_7xzhssvvt = function () {
+    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\footer\\footer.component.js",
+        hash = "ad13a07ae08b258280e2b6f3589d6dd145924ce2",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\footer\\footer.component.js",
+        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\footer\\footer.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -79,17 +79,17 @@ var cov_28823ylrs0 = function () {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_28823ylrs0.s[0];
+    ++cov_7xzhssvvt.s[0];
 
     "use strict";
 
     var FooterController = function FooterController() {
         _classCallCheck(this, FooterController);
 
-        ++cov_28823ylrs0.f[0];
+        ++cov_7xzhssvvt.f[0];
     };
 
-    ++cov_28823ylrs0.s[1];
+    ++cov_7xzhssvvt.s[1];
 
 
     angular.module("app").component("footerComponent", {

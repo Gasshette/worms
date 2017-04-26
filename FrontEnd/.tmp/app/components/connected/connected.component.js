@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_882t58ic7 = function () {
-    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\connected\\connected.component.js",
-        hash = "e62ec8c6c65ea30dfcc3236249daf0d4c745aa55",
+var cov_2dypqfqfbj = function () {
+    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\connected\\connected.component.js",
+        hash = "332121b285c8172472666c233e4be9b4e3777b0e",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\connected\\connected.component.js",
+        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\connected\\connected.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -79,17 +79,17 @@ var cov_882t58ic7 = function () {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_882t58ic7.s[0];
+    ++cov_2dypqfqfbj.s[0];
 
     "use strict";
 
     var connectedController = function connectedController() {
         _classCallCheck(this, connectedController);
 
-        ++cov_882t58ic7.f[0];
+        ++cov_2dypqfqfbj.f[0];
     };
 
-    ++cov_882t58ic7.s[1];
+    ++cov_2dypqfqfbj.s[1];
 
 
     angular.module("app").component("connectedComponent", {

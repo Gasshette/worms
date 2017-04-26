@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_ze5yfzgyq = function () {
-    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\directives\\progressbar.directive.js",
-        hash = "af690b1b9499b9d742232433a8b533f05532e00a",
+var cov_26pzu63sxz = function () {
+    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\directives\\progressbar.directive.js",
+        hash = "c5f49e8d4a41990274cf7fbc96a7651ffa259969",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\directives\\progressbar.directive.js",
+        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\directives\\progressbar.directive.js",
         statementMap: {
             "0": {
                 start: {
@@ -176,8 +176,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var ProgressBar = function ProgressBar(authProvider) {
         _classCallCheck(this, ProgressBar);
 
-        ++cov_ze5yfzgyq.f[0];
-        ++cov_ze5yfzgyq.s[0];
+        ++cov_26pzu63sxz.f[0];
+        ++cov_26pzu63sxz.s[0];
 
         return {
             scope: {
@@ -185,19 +185,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             },
             restrict: 'E',
             link: function link(scope) {
-                ++cov_ze5yfzgyq.f[1];
-                ++cov_ze5yfzgyq.s[1];
+                ++cov_26pzu63sxz.f[1];
+                ++cov_26pzu63sxz.s[1];
 
                 if (authProvider.authedUser !== null) {
-                    ++cov_ze5yfzgyq.b[0][0];
+                    ++cov_26pzu63sxz.b[0][0];
 
-                    var progbar = (++cov_ze5yfzgyq.s[2], angular.element(document.querySelector("#progressbar > div")));
-                    ++cov_ze5yfzgyq.s[3];
+                    var progbar = (++cov_26pzu63sxz.s[2], angular.element(document.querySelector("#progressbar > div")));
+                    ++cov_26pzu63sxz.s[3];
                     scope.percent = authProvider.authedUser.exp / 10 + "%";
-                    ++cov_ze5yfzgyq.s[4];
+                    ++cov_26pzu63sxz.s[4];
                     angular.element(progbar).css("width", scope.percent);
                 } else {
-                    ++cov_ze5yfzgyq.b[0][1];
+                    ++cov_26pzu63sxz.b[0][1];
                 }
             },
             templateUrl: "app/components/globalview/progressbar.html"

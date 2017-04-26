@@ -1,12 +1,12 @@
 'use strict';
 
-var cov_6h6pka2g3 = function () {
-    var path = 'C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\connection\\connection.component.js',
-        hash = 'fbaca6e25e888c0906703fca6ba5df783dc60f7e',
+var cov_2d6q6k17c9 = function () {
+    var path = 'C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\connection\\connection.component.js',
+        hash = 'ac75b8ce40e6b823d8713974ac46aabf6f90a87a',
         global = new Function('return this')(),
         gcv = '__coverage__',
         coverageData = {
-        path: 'C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\connection\\connection.component.js',
+        path: 'C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\connection\\connection.component.js',
         statementMap: {
             '0': {
                 start: {
@@ -322,7 +322,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_6h6pka2g3.s[0];
+    ++cov_2d6q6k17c9.s[0];
 
     "use strict";
 
@@ -330,44 +330,44 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function connectionController($http, authProvider, $location) {
             _classCallCheck(this, connectionController);
 
-            ++cov_6h6pka2g3.f[0];
-            ++cov_6h6pka2g3.s[1];
+            ++cov_2d6q6k17c9.f[0];
+            ++cov_2d6q6k17c9.s[1];
 
             this._location = $location;
-            ++cov_6h6pka2g3.s[2];
+            ++cov_2d6q6k17c9.s[2];
             this._authProvider = authProvider;
-            ++cov_6h6pka2g3.s[3];
+            ++cov_2d6q6k17c9.s[3];
             this._http = $http;
-            ++cov_6h6pka2g3.s[4];
+            ++cov_2d6q6k17c9.s[4];
             this.login = '';
-            ++cov_6h6pka2g3.s[5];
+            ++cov_2d6q6k17c9.s[5];
             this.password = '';
-            ++cov_6h6pka2g3.s[6];
+            ++cov_2d6q6k17c9.s[6];
             this.authedUser = this._authProvider.authedUser;
         }
 
         _createClass(connectionController, [{
             key: 'authenticate',
             value: function authenticate() {
-                ++cov_6h6pka2g3.f[1];
-                ++cov_6h6pka2g3.s[7];
+                ++cov_2d6q6k17c9.f[1];
+                ++cov_2d6q6k17c9.s[7];
 
                 this._authProvider.allUsers.forEach(function (element) {
-                    ++cov_6h6pka2g3.f[2];
-                    ++cov_6h6pka2g3.s[8];
+                    ++cov_2d6q6k17c9.f[2];
+                    ++cov_2d6q6k17c9.s[8];
 
-                    if ((++cov_6h6pka2g3.b[1][0], element.nickname == this.login) && (++cov_6h6pka2g3.b[1][1], element.password == this.password)) {
-                        ++cov_6h6pka2g3.b[0][0];
-                        ++cov_6h6pka2g3.s[9];
+                    if ((++cov_2d6q6k17c9.b[1][0], element.nickname == this.login) && (++cov_2d6q6k17c9.b[1][1], element.password == this.password)) {
+                        ++cov_2d6q6k17c9.b[0][0];
+                        ++cov_2d6q6k17c9.s[9];
 
                         this._authProvider.authedUser = element;
-                        ++cov_6h6pka2g3.s[10];
+                        ++cov_2d6q6k17c9.s[10];
                         this._location.url("/");
                     } else {
-                        ++cov_6h6pka2g3.b[0][1];
+                        ++cov_2d6q6k17c9.b[0][1];
                     }
                 }, this);
-                ++cov_6h6pka2g3.s[11];
+                ++cov_2d6q6k17c9.s[11];
                 this.login = this.password = '';
             }
         }]);
@@ -375,7 +375,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return connectionController;
     }();
 
-    ++cov_6h6pka2g3.s[12];
+    ++cov_2d6q6k17c9.s[12];
 
 
     angular.module("app").component("connectionComponent", {

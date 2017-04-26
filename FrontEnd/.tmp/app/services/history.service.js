@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_i2ozap5s = function () {
-    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\services\\history.service.js",
-        hash = "8330989c4a0ed6efc271e8b63cf9b1dfdf996450",
+var cov_yyj2ki35y = function () {
+    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\services\\history.service.js",
+        hash = "5f8aef3a4458d602f1f146b2048a4112eb362d91",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\services\\history.service.js",
+        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\services\\history.service.js",
         statementMap: {
             "0": {
                 start: {
@@ -273,8 +273,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function History() {
             _classCallCheck(this, History);
 
-            ++cov_i2ozap5s.f[0];
-            ++cov_i2ozap5s.s[0];
+            ++cov_yyj2ki35y.f[0];
+            ++cov_yyj2ki35y.s[0];
 
             this.requestBuffer = {};
         }
@@ -282,38 +282,38 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _createClass(History, [{
             key: "getBuffer",
             value: function getBuffer() {
-                ++cov_i2ozap5s.f[1];
-                ++cov_i2ozap5s.s[1];
+                ++cov_yyj2ki35y.f[1];
+                ++cov_yyj2ki35y.s[1];
 
                 return this.requestBuffer;
             }
         }, {
             key: "getResult",
             value: function getResult(date, titre) {
-                ++cov_i2ozap5s.f[2];
-                ++cov_i2ozap5s.s[2];
+                ++cov_yyj2ki35y.f[2];
+                ++cov_yyj2ki35y.s[2];
 
                 console.log(this.getBuffer());
-                var hash = (++cov_i2ozap5s.s[3], date + titre);
-                ++cov_i2ozap5s.s[4];
+                var hash = (++cov_yyj2ki35y.s[3], date + titre);
+                ++cov_yyj2ki35y.s[4];
                 return this.requestBuffer[hash];
             }
         }, {
             key: "setRequest",
             value: function setRequest(date, titre) {
-                ++cov_i2ozap5s.f[3];
+                ++cov_yyj2ki35y.f[3];
 
-                var hash = (++cov_i2ozap5s.s[5], date + titre);
-                ++cov_i2ozap5s.s[6];
+                var hash = (++cov_yyj2ki35y.s[5], date + titre);
+                ++cov_yyj2ki35y.s[6];
                 this.requestBuffer[hash] = null;
             }
         }, {
             key: "setResult",
             value: function setResult(date, titre, result) {
-                ++cov_i2ozap5s.f[4];
+                ++cov_yyj2ki35y.f[4];
 
-                var hash = (++cov_i2ozap5s.s[7], date + titre);
-                ++cov_i2ozap5s.s[8];
+                var hash = (++cov_yyj2ki35y.s[7], date + titre);
+                ++cov_yyj2ki35y.s[8];
                 this.requestBuffer[hash] = result;
             }
         }]);
@@ -321,7 +321,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return History;
     }();
 
-    ++cov_i2ozap5s.s[9];
+    ++cov_yyj2ki35y.s[9];
 
 
     angular.module("app").service('history', History);

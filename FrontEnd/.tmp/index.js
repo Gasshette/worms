@@ -1,12 +1,12 @@
 'use strict';
 
-var cov_za76jjeuj = function () {
-  var path = 'C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\index.js',
-      hash = '45f4b282b19537c7ebd127dc9a3b0f8b327bd230',
+var cov_23zr1ngo3c = function () {
+  var path = 'C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\index.js',
+      hash = '9a319866b3f6aad8bc825cde56c2dbb86397648f',
       global = new Function('return this')(),
       gcv = '__coverage__',
       coverageData = {
-    path: 'C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\index.js',
+    path: 'C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\index.js',
     statementMap: {
       '0': {
         start: {
@@ -38,5 +38,5 @@ var cov_za76jjeuj = function () {
   return coverage[path] = coverageData;
 }();
 
-++cov_za76jjeuj.s[0];
+++cov_23zr1ngo3c.s[0];
 angular.module('app', ['ui.router']);

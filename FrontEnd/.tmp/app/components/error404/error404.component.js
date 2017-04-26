@@ -1,12 +1,12 @@
 "use strict";
 
-var cov_2lenlci6ts = function () {
-    var path = "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\error404\\error404.component.js",
-        hash = "6a09124549dc20f7edc7faa108baf13a96e309e8",
+var cov_6eawdi2lu = function () {
+    var path = "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\error404\\error404.component.js",
+        hash = "425667187c5baa2c7eee4ade2415f4b1932d4766",
         global = new Function('return this')(),
         gcv = "__coverage__",
         coverageData = {
-        path: "C:\\Users\\Quentin\\Documents\\github\\worms\\FrontEnd\\src\\app\\components\\error404\\error404.component.js",
+        path: "C:\\Users\\Kotin\\Documents\\developpement\\github\\worms\\FrontEnd\\src\\app\\components\\error404\\error404.component.js",
         statementMap: {
             "0": {
                 start: {
@@ -79,17 +79,17 @@ var cov_2lenlci6ts = function () {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    ++cov_2lenlci6ts.s[0];
+    ++cov_6eawdi2lu.s[0];
 
     "use strict";
 
     var Error404Controller = function Error404Controller() {
         _classCallCheck(this, Error404Controller);
 
-        ++cov_2lenlci6ts.f[0];
+        ++cov_6eawdi2lu.f[0];
     };
 
-    ++cov_2lenlci6ts.s[1];
+    ++cov_6eawdi2lu.s[1];
 
 
     angular.module("app").component("error404Component", {
