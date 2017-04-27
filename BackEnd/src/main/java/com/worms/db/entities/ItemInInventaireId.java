@@ -1,5 +1,5 @@
 package com.worms.db.entities;
-// Generated 13 avr. 2017 14:41:15 by Hibernate Tools 5.2.1.Final
+// Generated 27 avr. 2017 17:03:09 by Hibernate Tools 5.2.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -10,7 +10,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ItemInInventaireId implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1L;
 	private int idUser;
 	private int idItem;
 

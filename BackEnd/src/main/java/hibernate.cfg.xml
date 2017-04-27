@@ -13,7 +13,7 @@
         <property name="hibernate.search.autoregister_listeners">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
         <mapping class="com.worms.db.entities.User" />
-        <mapping class="com.worms.db.entities.ItemInInventaire" />
+        <mapping class="com.worms.db.entities.Inventaire" />
         <mapping class="com.worms.db.entities.Item" />
     </session-factory>
 </hibernate-configuration>

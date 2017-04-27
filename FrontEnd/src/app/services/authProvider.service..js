@@ -10,8 +10,9 @@
 
         getAllUsers() {
             let that = this;
-            this._http.get("/resources/users.json")
+            this._http.get("http://localhost:8080/users")
                 .then(function (response) {
+                    console.log(response.data);
                     response.data.forEach(function (el) {
                         that.allUsers.push(el);
                     }, this);
@@ -19,7 +20,7 @@
                     console.log("An error occured while trying to get all users.");
                 });
         }
-        
+
 
         registerUser(user) {
             let flag = false;
