@@ -1,0 +1,24 @@
+.header-container{
+    overflow: hidden;
+    background: red;
+    font-family : "Comic Sans MS", "Comic Sans", sans-serif;
+
+    .header{
+        .jumbotron {
+            width: 100%;
+            overflow: hidden;
+            margin-bottom : 0;
+            color : white;
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#729fcf+0,a6cbea+70,ffffff+100 */
+            background: #24b8ff; /* Old browsers */
+            background: -moz-linear-gradient(top, #24b8ff 0%, #ffffff 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #24b8ff 0%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #24b8ff 0%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#24b8ff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+        }
+    }
+
+    .cloud {
+        display: none;
+    }
+}
