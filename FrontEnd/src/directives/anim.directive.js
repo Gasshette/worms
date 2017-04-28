@@ -1,6 +1,6 @@
 {
+    "use strict";
     function animCloud($interval) {
-
         return {
             scope: {
                 nbr: "<",
@@ -41,6 +41,7 @@
                     let defaultSpeed = defaultRand < 0.3 ? 0.3 : defaultRand;
                     speed = defaultSpeed*300;
 
+                    //Ser the ramdom position of the clone inside the header
                     clone.style.height = height + 'px';
                     clone.style.width = width + 'px';
                     clone.style.opacity = coeff-0.2;
@@ -53,14 +54,13 @@
                     clone.style.display = 'inline-block';
                     clouds.push(clone);
 
+                    //Execute lamba method running every random miliseecond to make the cloud moving from left to right
+                    //If the cloud get out of the screen then he come back from the left side
                     $interval(() => {
                         x = (x >= parent.offsetWidth) ? -width : x+1 ;
                         clone.style.left = x + 'px';
                     }, speed);
                 }
-
-
-
             },
         };
 

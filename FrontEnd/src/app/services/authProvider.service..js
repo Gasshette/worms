@@ -8,6 +8,8 @@
             this.getAllUsers();
         }
 
+        // Get all users from the database.
+        // This url is defined in the rest service "UserRestService" and return as JSON Object every users
         getAllUsers() {
             let that = this;
             this._http.get("http://localhost:8080/users")

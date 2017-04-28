@@ -1,5 +1,10 @@
 {
     "use strict";
+
+    /**
+     * Score controller
+     * From score component
+     */
     class ScoreController {
         constructor($http, authProvider) {
             this._authProvider = authProvider;
@@ -16,6 +21,9 @@
 
         }
 
+
+        //Switch method
+        // Executed when the user click on the button to switch from normal view to compact view
         switchView() {
             if (this.currentView == "Normal view") {
                 this.currentView = "Compact view";
@@ -31,7 +39,7 @@
                 console.log("fail to load view. please check the value of ScCtrl.currentView variable");
             }
         }
-
+        
         getUsers() {
             this.listUsers = this._authProvider.allUsers;
         }
