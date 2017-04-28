@@ -45,27 +45,12 @@ public class UserRestService {
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public List<User> listAll() {
 		 return userRepository.findAll();
-		 
-//		 List<User> userList = null;
-		 
-//		JSONParser parser = new JSONParser();
-//		
-//		Object obj = null;
-//		try {
-//			obj = parser.parse(new FileReader("resources/users.json"));
-//		} catch (FileNotFoundException | ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		JSONObject jsonObject = (JSONObject) obj;
-//		return (List<User>) obj;
 	}
 
-	// @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-	// public User getOne(@PathVariable("id") Integer id) {
-	// return userRepository.findOne(id);
-	// }
+	 @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+	 public User getOne(@PathVariable("id") Integer id) {
+	 return userRepository.findOne(id);
+	 }
 	//
 	// @RequestMapping(value = "/users/create", method = RequestMethod.PUT)
 	// public User create(@RequestBody User user) {
